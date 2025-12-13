@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
-
+//hola
 Tool::Tool(const QString& svgResourcePath, QGraphicsItem* parent)
     : QGraphicsSvgItem(svgResourcePath, parent)
 {
