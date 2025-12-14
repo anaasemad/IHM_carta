@@ -9,6 +9,7 @@
 #include <QApplication> // NUEVO
 #include <QDebug>
 
+#include "tool.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_actDrawLine = ui->linea->addAction(tr("linea"));
     m_actDrawLine->setCheckable(true);
     connect(m_actDrawLine, &QAction::toggled, this, &MainWindow::setDrawLineMode);
+    //zoom
+    ui->horizontalSlider->setValue(60);//val inicial
 
     // ===============================TRANSPORTADOR
     transportador = new Tool(":/img/icons/transportador.svg");
@@ -55,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Z alta para que quede en overlay
     transportador->setZValue(1000);
     // Posición inicial en la esquina superior izquierda de la vista
-    transportador->setPos(QPointF(20, 20));
     transportador->setVisible(false);
     // ===============================REGLA
     regla = new Tool(":/img/icons/ruler.svg");
@@ -65,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Z alta para que quede en overlay
     regla->setZValue(1000);
     // Posición inicial en la esquina superior izquierda de la vista
-    regla->setPos(QPointF(20, 20));
     regla->setVisible(false);
 
 }
@@ -76,21 +77,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::applyZoom(double factor){
-    double newScale=scale * factor;
-    const double minScale=0.01;
-    const double maxScale=1;
-
-    if(newScale<minScale){
-        factor=minScale/scale;
-        newScale=minScale;
-    }else if(newScale>maxScale){
-        factor=maxScale/scale;
-        newScale=maxScale;}
-    view->scale(factor,factor);
-    scale=newScale;
-
-}
 
 void MainWindow::on_boton_lista_clicked()
 {
@@ -165,14 +151,96 @@ void MainWindow::setDrawLineMode(bool enabled)
 }
 
 
+//funcion para saber las coordenadas actuales del centro de la carta
+QPointF MainWindow::getCurrentMapCenter() const
+{
+    //punto central del viewport
+    QPoint viewCenter = view->viewport()->rect().center();
+
+    //Mapear ese punto a coordenadas de la escena (incluye pan y zoom)
+    QPointF sceneCenter = view->mapToScene(viewCenter);
+
+    return sceneCenter;
+}
 
 void MainWindow::on_Bregla_clicked()
 {
     if (!regla) return;
-    regla->setVisible(!regla->isVisible());
+
+    // visibilidad
+    bool isVisible = !regla->isVisible();
+    regla->setVisible(isVisible);
+
+    //posicionar en el centro
+    if (isVisible)
+    {
+        // centro del mapa
+        QPointF sceneCenter = getCurrentMapCenter();
+        //tamaño de la herramienta para centrarlo (si no se coloca la esquina sup izq del item)
+        QRectF herrBounds = regla->boundingRect();
+        //posición corregida
+        QPointF posCorregida = sceneCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
+        regla->setPos(posCorregida);
+    }
 }
 void MainWindow::on_Btransportador_clicked()
 {
     if (!transportador) return;
-    transportador->setVisible(!transportador->isVisible());
+
+    // visibilidad
+    bool isVisible = !transportador->isVisible();
+    transportador->setVisible(isVisible);
+
+    //posicionar en el centro
+    if (isVisible)
+    {
+        // centro del mapa
+        QPointF sceneCenter = getCurrentMapCenter();
+        //tamaño de la herramienta para centrarlo (si no se coloca la esquina sup izq del item)
+        QRectF herrBounds = transportador->boundingRect();
+        //posición corregida
+        QPointF posCorregida = sceneCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
+        transportador->setPos(posCorregida);
+    }
 }
+
+void MainWindow::applyZoom(double factor){
+    double newScale=scale * factor;
+    const double minScale=0.01;
+    const double maxScale=1;
+
+    if(newScale<minScale){
+        factor=minScale/scale;
+        newScale=minScale;
+    }else if(newScale>maxScale){
+        factor=maxScale/scale;
+        newScale=maxScale;}
+    view->scale(factor,factor);
+    scale=newScale;
+
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    const int sliderMin = 1;
+    const int sliderMax = 100;
+
+    const double targetMinScale = 0.1;
+    const double targetMaxScale = 1.0;
+
+    // posición relativa (0.0 a 1.0) del slider
+    double normalizedValue = (double)(value - sliderMin) / (sliderMax - sliderMin);
+    // Mapea la posición relativa al rango de escalado deseado
+    double desiredNewScale = targetMinScale + normalizedValue * (targetMaxScale - targetMinScale);
+
+    // Comprobar si hay un cambio significativo en la escala y evitar división por cero.
+    // Usamos 'scale' como la variable actual de la escala del mapa.
+    if (qAbs(desiredNewScale - scale) > 0.0001 && scale != 0.0)
+    {
+        // Factor de cambio = (Escala Deseada) / (Escala Actual)
+        double factor = desiredNewScale / scale;
+        applyZoom(factor);
+    }
+
+}
+

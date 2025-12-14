@@ -33,6 +33,7 @@ private slots:
     void on_boton_lista_clicked();
     void setDrawLineMode(bool enabled);
  //   void on_listWidget_itemClicked(QListWidgetItem *item);
+    void on_horizontalSlider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;
@@ -42,8 +43,8 @@ private:
     QGraphicsView *view;
     double scale=1.0;
 
-    Tool* transportador;
-    Tool* regla;
+    Tool* transportador = nullptr; //inicializar en null por si para evitar errores
+    Tool* regla = nullptr;
 
     void applyZoom(double factor);
     QAction *m_actDrawLine = nullptr;
@@ -51,5 +52,7 @@ private:
     QGraphicsLineItem *m_tempLine = nullptr;
     QGraphicsLineItem *m_currentLineItem = nullptr;
     QPointF m_lineStart;
+
+    QPointF getCurrentMapCenter() const; //función para saber el centro actual de la carta
 };
 #endif // MAINWINDOW_H
