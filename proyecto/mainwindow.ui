@@ -1318,6 +1318,9 @@
                  <property name="text">
                   <string>linea</string>
                  </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                 <widget class="QPushButton" name="punto">
                  <property name="geometry">
@@ -1354,6 +1357,9 @@
                    <width>10</width>
                    <height>16</height>
                   </size>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
                  </property>
                 </widget>
                 <widget class="QPushButton" name="goma">
@@ -1479,6 +1485,9 @@
                    <height>16</height>
                   </size>
                  </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                 <widget class="QPushButton" name="limpiar">
                  <property name="geometry">
@@ -1529,6 +1538,9 @@
                  <property name="text">
                   <string>regla</string>
                  </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                 <widget class="QPushButton" name="Btransportador">
                  <property name="geometry">
@@ -1564,6 +1576,9 @@
                    <width>8</width>
                    <height>16</height>
                   </size>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
                  </property>
                 </widget>
                 <widget class="QSlider" name="horizontalSlider">

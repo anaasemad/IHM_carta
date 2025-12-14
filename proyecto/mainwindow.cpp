@@ -7,7 +7,7 @@
 #include <QKeyEvent> // NUEVO
 #include <QPen> // NUEVO
 #include <QApplication> // NUEVO
-
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,6 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
+    view = ui->graphicsView;
+    ui->graphicsView->viewport()->installEventFilter(this);
+    ui->graphicsView->viewport()->setMouseTracking(true);
+
+
+
    // view->setScene(sceneMenu);
    // view->setScene(sceneMapa);
 
@@ -37,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 //NUEVO
     //dibuja linea
-    m_actDrawLine = ui->linea->addAction(tr("Línea"));
+    m_actDrawLine = ui->linea->addAction(tr("linea"));
     m_actDrawLine->setCheckable(true);
     connect(m_actDrawLine, &QAction::toggled, this, &MainWindow::setDrawLineMode);
 
@@ -86,8 +92,6 @@ void MainWindow::applyZoom(double factor){
 
 }
 
-
-
 void MainWindow::on_boton_lista_clicked()
 {
      ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
@@ -102,13 +106,16 @@ void MainWindow::on_boton_lista_clicked()
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == ui->graphicsView->viewport()) {
+
         if (!m_drawLineMode)
-            return false; // no estamos en modo línea, que lo gestione la vista
+            return QMainWindow::eventFilter(obj, event);
 
         if (event->type() == QEvent::MouseButtonPress) {
             auto *e = static_cast<QMouseEvent*>(event);
+            qDebug() << "Botón pulsado:" << e->button();
             if (e->button() == Qt::RightButton) {
-                QPointF scenePos = view->mapToScene(e->pos());
+
+                QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
                 m_lineStart = scenePos;
 
                 QPen pen(Qt::red, 8);
@@ -116,14 +123,14 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 m_currentLineItem->setZValue(10);
                 m_currentLineItem->setPen(pen);
                 m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
-                sceneMapa->addItem(m_currentLineItem);
 
-                return true; // consumimos el evento
+                sceneMapa->addItem(m_currentLineItem);
+                return true; // aquí sí consumimos
             }
         }
         else if (event->type() == QEvent::MouseMove) {
             auto *e = static_cast<QMouseEvent*>(event);
-            if (e->buttons() & Qt::RightButton && m_currentLineItem) {
+            if ((e->buttons() & Qt::RightButton) && m_currentLineItem) {
                 QPointF p2 = ui->graphicsView->mapToScene(e->pos());
                 m_currentLineItem->setLine(QLineF(m_lineStart, p2));
                 return true;
@@ -132,15 +139,16 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         else if (event->type() == QEvent::MouseButtonRelease) {
             auto *e = static_cast<QMouseEvent*>(event);
             if (e->button() == Qt::RightButton && m_currentLineItem) {
-                // aquí podrías validar la longitud, borrar si es muy corta, etc.
                 m_currentLineItem = nullptr;
                 return true;
             }
         }
     }
 
+     qDebug() << "eventFilter llamado para:" << obj;
     return QMainWindow::eventFilter(obj, event);
 }
+
 
 
 void MainWindow::setDrawLineMode(bool enabled)
@@ -149,10 +157,14 @@ void MainWindow::setDrawLineMode(bool enabled)
 
     if (m_drawLineMode) {
         ui->graphicsView->setCursor(Qt::CrossCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);  // desactiva arrastre
     } else {
         ui->graphicsView->unsetCursor();
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag); // vuelve a arrastrar
     }
 }
+
+
 
 void MainWindow::on_Bregla_clicked()
 {

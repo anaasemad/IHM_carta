@@ -403,6 +403,7 @@ public:
         sizePolicy2.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
         linea->setSizePolicy(sizePolicy2);
         linea->setMaximumSize(QSize(167, 167));
+        linea->setCheckable(true);
         punto = new QPushButton(widget_2);
         punto->setObjectName("punto");
         punto->setGeometry(QRect(0, 0, 40, 24));
@@ -411,6 +412,7 @@ public:
         punto->setMinimumSize(QSize(0, 0));
         punto->setMaximumSize(QSize(167, 167));
         punto->setIconSize(QSize(10, 16));
+        punto->setCheckable(true);
         goma = new QPushButton(widget_2);
         goma->setObjectName("goma");
         goma->setGeometry(QRect(270, 0, 41, 24));
@@ -443,6 +445,7 @@ public:
         Bcompas->setSizePolicy(sizePolicy2);
         Bcompas->setMaximumSize(QSize(167, 167));
         Bcompas->setIconSize(QSize(10, 16));
+        Bcompas->setCheckable(true);
         limpiar = new QPushButton(widget_2);
         limpiar->setObjectName("limpiar");
         limpiar->setGeometry(QRect(310, 0, 41, 24));
@@ -455,6 +458,7 @@ public:
         sizePolicy2.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
         Bregla->setSizePolicy(sizePolicy2);
         Bregla->setMaximumSize(QSize(167, 167));
+        Bregla->setCheckable(true);
         Btransportador = new QPushButton(widget_2);
         Btransportador->setObjectName("Btransportador");
         Btransportador->setGeometry(QRect(110, 0, 40, 24));
@@ -465,6 +469,7 @@ public:
         font.setKerning(true);
         Btransportador->setFont(font);
         Btransportador->setIconSize(QSize(8, 16));
+        Btransportador->setCheckable(true);
         horizontalSlider = new QSlider(widget_2);
         horizontalSlider->setObjectName("horizontalSlider");
         horizontalSlider->setGeometry(QRect(350, 10, 51, 20));
