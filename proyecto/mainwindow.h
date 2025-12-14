@@ -2,12 +2,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <qlistwidget.h>
-//#include <QGraphicsSvgItem>
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QMainWindow>
+#include <QGraphicsLineItem>
+#include "tool.h"
+
+#include <qlistwidget.h>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -22,19 +24,32 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_arco_clicked();
-    void on_boton_lista_clicked();
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
-    void on_listWidget_itemClicked(QListWidgetItem *item);
+private slots:
+    void on_Btransportador_clicked();
+    void on_Bregla_clicked();
+    void on_boton_lista_clicked();
+    void setDrawLineMode(bool enabled);
+ //   void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *sceneMenu;
+   // QGraphicsScene *sceneMenu;
     QGraphicsScene *sceneMapa;
-    QGraphicsScene *sceneCompas;
+  //  QGraphicsScene *sceneCompas;
     QGraphicsView *view;
     double scale=1.0;
+
+    Tool* transportador;
+    Tool* regla;
+
     void applyZoom(double factor);
+    QAction *m_actDrawLine = nullptr;
+    bool m_drawLineMode = false;
+    QGraphicsLineItem *m_tempLine = nullptr;
+    QGraphicsLineItem *m_currentLineItem = nullptr;
+    QPointF m_lineStart;
 };
 #endif // MAINWINDOW_H
