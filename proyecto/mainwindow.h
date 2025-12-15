@@ -59,5 +59,8 @@ private:
     QPointF m_lineStart;
 
     QPointF getCurrentMapCenter() const; //función para saber el centro actual de la carta
+    void updateToolPositions();
+
+    void updateStatusLabel(const QPointF &scenePos, const QString &status); //label coordenadas y actividad
 };
 #endif // MAINWINDOW_H

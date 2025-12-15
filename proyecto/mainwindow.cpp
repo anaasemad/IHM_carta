@@ -50,14 +50,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     QGraphicsPixmapItem *itemMapa = sceneMapa->addPixmap(mapa);
     itemMapa->setZValue(0);
-    itemMapa->setScale(0.25);
+    //itemMapa->setScale(0.25); MAL
 
     ui->graphicsView->setScene(sceneMapa);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    double initialScale = 0.3;
+    ui->graphicsView->scale(initialScale, initialScale);
+
+    scale = initialScale;
 
 //NUEVO
 
-    ui->horizontalSlider->setValue(60);//val inicial
+    ui->horizontalSlider->setValue(30);//val inicial
 
     // ===============================TRANSPORTADOR
     transportador = new Tool(":/img/icons/transportador.svg");
@@ -103,12 +107,49 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     int gros = ui->grosor->value();
     if (obj == ui->graphicsView->viewport()) {
 
+        auto *e = static_cast<QMouseEvent*>(event);
+        QPointF scenePos;
+
+        // =================================================================
+        // BLOQUE 1: MANEJO DE MOUSE MOVE (Actualización de Coordenadas/Estado)
+        // =================================================================
+
+        if (event->type() == QEvent::MouseMove)
+        {
+            // 1. RECOGIDA DE COORDENADAS:
+            // ASIGNAR el valor a la variable declarada arriba.
+            scenePos = ui->graphicsView->mapToScene(e->pos());
+
+            QString currentStatus = "Navegación (Arrastrar mapa)";
+
+            if (m_eraserMode) {
+                currentStatus = "Modo Goma de Borrar";
+            } else if (m_textMode) {
+                currentStatus = "Modo Anotar Texto (Clic Izquierdo)";
+            } else if (m_drawLineMode) {
+                currentStatus = m_currentLineItem ? "Dibujando Línea (Botón Derecho pulsado)" : "Modo Línea (Clic Derecho para empezar)";
+            } else if (regla && regla->isVisible()) {
+                currentStatus = "Regla visible";
+            } else if (transportador && transportador->isVisible()) {
+                currentStatus = "Transportador visible";
+            }
+            //AÑADIR COMPÁS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            updateStatusLabel(scenePos, currentStatus);
+        }
+
+        // =================================================================
+        // BLOQUE 2: MANEJO DE ACCIONES (Press, Release, Move con botones)
+        // =================================================================
+
         if (event->type() == QEvent::MouseButtonPress ||
             event->type() == QEvent::MouseButtonRelease ||
-            event->type() == QEvent::MouseMove)
+            (event->type() == QEvent::MouseMove && e->buttons() != Qt::NoButton))
         {
-            auto *e = static_cast<QMouseEvent*>(event);
-            QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
+            // IMPORTANTE: Si el evento no fue un MouseMove, scenePos debe calcularse.
+            // Si fue un MouseMove con botón, usamos la última scenePos calculada arriba.
+            if (event->type() != QEvent::MouseMove) {
+                scenePos = ui->graphicsView->mapToScene(e->pos());
+            }
 
             if (m_eraserMode)
             {
@@ -131,16 +172,13 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 }
                 return false;
             }
+
             if (m_textMode)
             {
                 if (event->type() == QEvent::MouseButtonPress)
                 {
-                    auto *e = static_cast<QMouseEvent*>(event);
                     if (e->button() == Qt::LeftButton)
                     {
-                        QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
-
-                        // Crear item de texto
                         QGraphicsTextItem* texto = new QGraphicsTextItem("Nuevo texto");
                         texto->setTextInteractionFlags(Qt::TextEditorInteraction);
                         texto->setFont(QFont("Arial", gros));
@@ -151,11 +189,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                         texto->setPos(scenePos);
 
                         sceneMapa->addItem(texto);
-
-                        return true; // consumimos el evento
+                        return true;
                     }
                 }
-
                 return false;
             }
 
@@ -165,9 +201,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             // Dibujar línea
             if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::RightButton) {
                 m_lineStart = scenePos;
-
-
-
                 QPen pen(Qt::red, gros);
                 m_currentLineItem = new QGraphicsLineItem();
                 m_currentLineItem->setZValue(10);
@@ -191,9 +224,8 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     return QMainWindow::eventFilter(obj, event);
 }
 
-
 //##############################################################################################################################
-//####################################  DIBUJAR   ##############################################################################
+//####################################_DIBUJAR_##############################################################################
 
 void MainWindow::setDrawLineMode(bool enabled)
 {
@@ -249,7 +281,7 @@ void MainWindow::borrarGoma(bool enabled)
     }
 }
 
-//################################################TEXTO###########################################################################
+//################################################_TEXTO_###########################################################################
 void MainWindow::ponerTexto(bool enabled)
 {
     m_textMode = enabled;
@@ -267,7 +299,7 @@ void MainWindow::ponerTexto(bool enabled)
 }
 
 
-//#####################################REGLAS#######################################################################################
+//#####################################_REGLAS_#######################################################################################
 //funcion para saber las coordenadas actuales del centro de la carta
 QPointF MainWindow::getCurrentMapCenter() const
 {
@@ -280,47 +312,57 @@ QPointF MainWindow::getCurrentMapCenter() const
     return sceneCenter;
 }
 
+void MainWindow::updateToolPositions()
+{
+    QPoint viewCenter = ui->graphicsView->viewport()->rect().center();
+
+    // La posición Top-Left debe ser el centro del viewport menos la mitad del tamaño de la herramienta en PIXELES DE PANTALLA.
+
+    //Regla:
+    if (regla && regla->isVisible()) {
+        // Obtenemos el tamaño del objeto en coordenadas de ESCENA (que para ItemIgnoresTransformations es el tamaño en píxeles de pantalla)
+        QRectF herrBounds = regla->boundingRect();
+        QPointF screenPos = viewCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
+        QPointF scenePos = ui->graphicsView->mapToScene(screenPos.toPoint());
+
+        regla->setPos(scenePos);
+    }
+    //Transportador:
+    if (transportador && transportador->isVisible()) {
+        QRectF herrBounds = transportador->boundingRect();
+        QPointF screenPos = viewCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
+        QPointF scenePos = ui->graphicsView->mapToScene(screenPos.toPoint());
+
+        transportador->setPos(scenePos);
+    }
+}
+
 void MainWindow::on_Bregla_clicked()
 {
     if (!regla) return;
-
-    // visibilidad
     bool isVisible = !regla->isVisible();
     regla->setVisible(isVisible);
 
-    //posicionar en el centro
     if (isVisible)
     {
-        // centro del mapa
-        QPointF sceneCenter = getCurrentMapCenter();
-        //tamaño de la herramienta para centrarlo (si no se coloca la esquina sup izq del item)
-        QRectF herrBounds = regla->boundingRect();
-        //posición corregida
-        QPointF posCorregida = sceneCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
-        regla->setPos(posCorregida);
+        updateToolPositions();
     }
 }
+
 void MainWindow::on_Btransportador_clicked()
 {
     if (!transportador) return;
-
-    // visibilidad
     bool isVisible = !transportador->isVisible();
     transportador->setVisible(isVisible);
 
-    //posicionar en el centro
     if (isVisible)
     {
-        // centro del mapa
-        QPointF sceneCenter = getCurrentMapCenter();
-        //tamaño de la herramienta para centrarlo (si no se coloca la esquina sup izq del item)
-        QRectF herrBounds = transportador->boundingRect();
-        //posición corregida
-        QPointF posCorregida = sceneCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
-        transportador->setPos(posCorregida);
+        updateToolPositions();
     }
 }
 
+
+//##########################################_ZOOM_####################################################################
 void MainWindow::applyZoom(double factor){
     double newScale=scale * factor;
     const double minScale=0.01;
@@ -357,7 +399,25 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
         // Factor de cambio = (Escala Deseada) / (Escala Actual)
         double factor = desiredNewScale / scale;
         applyZoom(factor);
+        updateToolPositions();
     }
 
 }
 
+//#################################_BARRA INFERIOR COORD/ACTIV_###################################################
+
+void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &status)
+{
+    //scenePos y status los recibe desde eventFilter
+    QString xStr = QString::number(scenePos.x(), 'f', 1); // Convierte X a string con 1 decimal
+    QString yStr = QString::number(scenePos.y(), 'f', 1); // Convierte Y a string con 1 decimal
+
+    QString coordText = QString("Posición (Escena): X=%1, Y=%2")
+                            .arg(xStr)
+                            .arg(yStr);
+
+    QString fullText = coordText + " | Estado: " + status;
+
+    // Actualizar el QLabel en la UI
+    ui->labelStatus->setText(fullText);
+}

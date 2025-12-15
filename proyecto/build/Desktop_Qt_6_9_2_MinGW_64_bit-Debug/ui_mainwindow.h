@@ -72,6 +72,7 @@ public:
     QSpinBox *grosor;
     QPushButton *texto;
     QGraphicsView *graphicsView;
+    QLabel *labelStatus;
     QWidget *editar_perfil;
     QWidget *registro;
     QMenuBar *menubar;
@@ -81,7 +82,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(811, 626);
+        MainWindow->resize(855, 689);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
@@ -499,6 +500,11 @@ public:
 
         verticalLayout_3->addWidget(graphicsView);
 
+        labelStatus = new QLabel(verticalWidget);
+        labelStatus->setObjectName("labelStatus");
+
+        verticalLayout_3->addWidget(labelStatus);
+
         verticalLayout_3->setStretch(0, 1);
         verticalLayout_3->setStretch(1, 18);
 
@@ -522,7 +528,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 811, 21));
+        menubar->setGeometry(QRect(0, 0, 855, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -569,6 +575,7 @@ public:
         Bregla->setText(QCoreApplication::translate("MainWindow", "regla", nullptr));
         Btransportador->setText(QCoreApplication::translate("MainWindow", "transportador", nullptr));
         texto->setText(QCoreApplication::translate("MainWindow", "texto", nullptr));
+        labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
     } // retranslateUi
 
 };

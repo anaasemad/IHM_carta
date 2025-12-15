@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>626</height>
+    <width>855</width>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -767,7 +767,7 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,18">
+             <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,18,0">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1618,6 +1618,13 @@
               <item>
                <widget class="QGraphicsView" name="graphicsView"/>
               </item>
+              <item>
+               <widget class="QLabel" name="labelStatus">
+                <property name="text">
+                 <string>labelStatus</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1637,7 +1644,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>811</width>
+     <width>855</width>
      <height>21</height>
     </rect>
    </property>
