@@ -8,7 +8,7 @@
 #include <QPen> // NUEVO
 #include <QApplication> // NUEVO
 #include <QDebug>
-
+#include <QColorDialog>
 #include "tool.h"
 
 
@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QGraphicsPixmapItem *itemMapa = sceneMapa->addPixmap(mapa);
     itemMapa->setZValue(0);
-    //itemMapa->setScale(0.25); MAL
+
 
     ui->graphicsView->setScene(sceneMapa);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->scale(initialScale, initialScale);
 
     scale = initialScale;
+    m_currentColor = Qt::red;
 
 //NUEVO
 
@@ -201,7 +202,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             // Dibujar línea
             if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::RightButton) {
                 m_lineStart = scenePos;
-                QPen pen(Qt::red, gros);
+                QPen pen(m_currentColor, gros); //cambia al color seleccionado
                 m_currentLineItem = new QGraphicsLineItem();
                 m_currentLineItem->setZValue(10);
                 m_currentLineItem->setPen(pen);
@@ -280,6 +281,28 @@ void MainWindow::borrarGoma(bool enabled)
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
     }
 }
+
+
+void MainWindow::on_color_clicked()
+{
+    // Diálogo de color-> QColorDialog::getColor()
+    QColor newColor = QColorDialog::getColor(
+        m_currentColor,
+        this,
+        tr("Seleccionar color de dibujo") // Título del diálogo
+        );
+
+    //Verificar
+    if (newColor.isValid())
+    {
+        //Actualizar
+        m_currentColor = newColor;
+
+        //pista visual de que el color cambió
+        qDebug() << "Nuevo color seleccionado:" << m_currentColor.name();
+    }
+}
+
 
 //################################################_TEXTO_###########################################################################
 void MainWindow::ponerTexto(bool enabled)
@@ -421,3 +444,6 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
     // Actualizar el QLabel en la UI
     ui->labelStatus->setText(fullText);
 }
+
+
+

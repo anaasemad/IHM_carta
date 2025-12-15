@@ -38,6 +38,8 @@ private slots:
     void borrarGoma(bool enabled);
     void ponerTexto(bool enabled);
 
+    void on_color_clicked();
+
 private:
     Ui::MainWindow *ui;
    // QGraphicsScene *sceneMenu;
@@ -57,6 +59,7 @@ private:
     QGraphicsLineItem *m_tempLine = nullptr;
     QGraphicsLineItem *m_currentLineItem = nullptr;
     QPointF m_lineStart;
+    QColor m_currentColor;
 
     QPointF getCurrentMapCenter() const; //función para saber el centro actual de la carta
     void updateToolPositions();
