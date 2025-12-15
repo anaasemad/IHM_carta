@@ -102,13 +102,32 @@ void MainWindow::on_boton_lista_clicked()
      ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
 }
 
+
+//#############################################################################################
 void MainWindow::on_boton_historial_clicked()
 {
+    m_previousWidgetIndex = ui->stackedWidget->currentIndex();
+
     ui->stackedWidget->setCurrentWidget(ui->historial);
 }
 
+void MainWindow::on_boton_Modificar_perfil()
+{
+    m_previousWidgetIndex = ui->stackedWidget->currentIndex();
 
-//#############################################################################################
+    ui->stackedWidget->setCurrentWidget(ui->editar_perfil);
+}
+
+
+void MainWindow::on_boton_volver_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
+}
+void MainWindow::on_boton_volver_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
+}
+
 
 /*bool MainWindow::initDatabase()
 {

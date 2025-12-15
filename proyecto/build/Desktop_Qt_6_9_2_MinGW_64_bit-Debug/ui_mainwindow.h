@@ -27,6 +27,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -46,10 +47,11 @@ public:
     QTableView *tableViewHistorial;
     QLabel *label_filtro;
     QDateEdit *dateEditFiltro;
+    QPushButton *Boton_volver;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
-    QPushButton *Boton_volver;
     QLabel *barra_arriba;
+    QPushButton *Modificar_perfil;
     QPushButton *boton_historial;
     QWidget *horizontalWidget;
     QHBoxLayout *horizontalLayout_2;
@@ -84,6 +86,17 @@ public:
     QGraphicsView *graphicsView;
     QLabel *labelStatus;
     QWidget *editar_perfil;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QTextEdit *textEdit;
+    QTextEdit *textEdit_2;
+    QTextEdit *textEdit_3;
+    QDateEdit *dateEdit;
+    QPushButton *Boton_guardar;
+    QPushButton *Boton_volver_2;
     QWidget *registro;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -122,7 +135,7 @@ public:
         historial->setObjectName("historial");
         verticalLayoutWidget = new QWidget(historial);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(20, 60, 781, 461));
+        verticalLayoutWidget->setGeometry(QRect(30, 130, 781, 461));
         verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout_5->setObjectName("verticalLayout_5");
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
@@ -133,10 +146,13 @@ public:
 
         label_filtro = new QLabel(historial);
         label_filtro->setObjectName("label_filtro");
-        label_filtro->setGeometry(QRect(480, 20, 121, 20));
+        label_filtro->setGeometry(QRect(480, 100, 121, 20));
         dateEditFiltro = new QDateEdit(historial);
         dateEditFiltro->setObjectName("dateEditFiltro");
-        dateEditFiltro->setGeometry(QRect(630, 20, 110, 26));
+        dateEditFiltro->setGeometry(QRect(620, 100, 110, 26));
+        Boton_volver = new QPushButton(historial);
+        Boton_volver->setObjectName("Boton_volver");
+        Boton_volver->setGeometry(QRect(40, 20, 93, 29));
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -148,11 +164,6 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setSizeConstraint(QLayout::SizeConstraint::SetMaximumSize);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        Boton_volver = new QPushButton(mapa);
-        Boton_volver->setObjectName("Boton_volver");
-
-        verticalLayout->addWidget(Boton_volver);
-
         barra_arriba = new QLabel(mapa);
         barra_arriba->setObjectName("barra_arriba");
         sizePolicy.setHeightForWidth(barra_arriba->sizePolicy().hasHeightForWidth());
@@ -247,6 +258,11 @@ public:
         barra_arriba->setFrameShadow(QFrame::Shadow::Plain);
 
         verticalLayout->addWidget(barra_arriba);
+
+        Modificar_perfil = new QPushButton(mapa);
+        Modificar_perfil->setObjectName("Modificar_perfil");
+
+        verticalLayout->addWidget(Modificar_perfil);
 
         boton_historial = new QPushButton(mapa);
         boton_historial->setObjectName("boton_historial");
@@ -550,11 +566,44 @@ public:
 
         verticalLayout->addWidget(horizontalWidget);
 
-        verticalLayout->setStretch(1, 1);
+        verticalLayout->setStretch(0, 1);
         verticalLayout->setStretch(3, 15);
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
+        label = new QLabel(editar_perfil);
+        label->setObjectName("label");
+        label->setGeometry(QRect(30, 60, 63, 20));
+        label_2 = new QLabel(editar_perfil);
+        label_2->setObjectName("label_2");
+        label_2->setGeometry(QRect(100, 140, 63, 20));
+        label_3 = new QLabel(editar_perfil);
+        label_3->setObjectName("label_3");
+        label_3->setGeometry(QRect(100, 220, 63, 20));
+        label_4 = new QLabel(editar_perfil);
+        label_4->setObjectName("label_4");
+        label_4->setGeometry(QRect(100, 300, 63, 20));
+        label_5 = new QLabel(editar_perfil);
+        label_5->setObjectName("label_5");
+        label_5->setGeometry(QRect(100, 390, 63, 20));
+        textEdit = new QTextEdit(editar_perfil);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(100, 170, 171, 31));
+        textEdit_2 = new QTextEdit(editar_perfil);
+        textEdit_2->setObjectName("textEdit_2");
+        textEdit_2->setGeometry(QRect(100, 250, 211, 31));
+        textEdit_3 = new QTextEdit(editar_perfil);
+        textEdit_3->setObjectName("textEdit_3");
+        textEdit_3->setGeometry(QRect(100, 340, 151, 31));
+        dateEdit = new QDateEdit(editar_perfil);
+        dateEdit->setObjectName("dateEdit");
+        dateEdit->setGeometry(QRect(100, 420, 110, 26));
+        Boton_guardar = new QPushButton(editar_perfil);
+        Boton_guardar->setObjectName("Boton_guardar");
+        Boton_guardar->setGeometry(QRect(340, 470, 111, 71));
+        Boton_volver_2 = new QPushButton(editar_perfil);
+        Boton_volver_2->setObjectName("Boton_volver_2");
+        Boton_volver_2->setGeometry(QRect(20, 10, 93, 29));
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
@@ -587,6 +636,7 @@ public:
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
         Boton_volver->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         barra_arriba->setText(QString());
+        Modificar_perfil->setText(QCoreApplication::translate("MainWindow", "Modificar perfil", nullptr));
         boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
@@ -616,6 +666,13 @@ public:
         Btransportador->setText(QCoreApplication::translate("MainWindow", "transportador", nullptr));
         texto->setText(QCoreApplication::translate("MainWindow", "texto", nullptr));
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        Boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
+        Boton_volver_2->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
     } // retranslateUi
 
 };

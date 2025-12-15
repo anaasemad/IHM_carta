@@ -46,6 +46,9 @@ private slots:
 
 //#################################################################################################################
     void on_boton_historial_clicked();
+    void on_boton_volver_clicked();
+    void on_boton_volver_2_clicked();
+    void on_boton_Modificar_perfil();
 //#################################################################################################################
 
 
@@ -65,7 +68,8 @@ private:
     //#########################################################################################################
     // --- Variables para la BBDD ---
     QSqlDatabase m_db; // Objeto de conexión a la BBDD
-    QSqlQueryModel *m_historialModel; // Modelo para vincular datos a tableView
+    int m_previousWidgetIndex = 0; //para guardar widget anterior para volver
+    QSqlQueryModel *m_historialModel = nullptr; // Modelo para vincular datos a tableView
 
     // --- Funciones de BBDD ---
     bool initDatabase(); // Inicializa la conexión y el modelo
