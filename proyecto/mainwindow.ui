@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
-    <height>640</height>
+    <width>811</width>
+    <height>626</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -796,7 +796,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>404</width>
+                   <width>401</width>
                    <height>29</height>
                   </rect>
                  </property>
@@ -1327,7 +1327,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>40</width>
+                   <width>31</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1365,9 +1365,9 @@
                 <widget class="QPushButton" name="goma">
                  <property name="geometry">
                   <rect>
-                   <x>270</x>
+                   <x>290</x>
                    <y>0</y>
-                   <width>41</width>
+                   <width>31</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1390,9 +1390,9 @@
                 <widget class="QPushButton" name="color">
                  <property name="geometry">
                   <rect>
-                   <x>230</x>
+                   <x>269</x>
                    <y>0</y>
-                   <width>40</width>
+                   <width>21</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1427,38 +1427,13 @@
                   <bool>false</bool>
                  </property>
                 </widget>
-                <widget class="QPushButton" name="grosor">
-                 <property name="geometry">
-                  <rect>
-                   <x>190</x>
-                   <y>0</y>
-                   <width>40</width>
-                   <height>24</height>
-                  </rect>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>167</width>
-                   <height>167</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>grosor</string>
-                 </property>
-                </widget>
                 <widget class="QPushButton" name="Bcompas">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
                  <property name="geometry">
                   <rect>
-                   <x>39</x>
+                   <x>30</x>
                    <y>0</y>
                    <width>31</width>
                    <height>24</height>
@@ -1492,9 +1467,9 @@
                 <widget class="QPushButton" name="limpiar">
                  <property name="geometry">
                   <rect>
-                   <x>310</x>
+                   <x>320</x>
                    <y>0</y>
-                   <width>41</width>
+                   <width>31</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1517,9 +1492,9 @@
                 <widget class="QPushButton" name="Bregla">
                  <property name="geometry">
                   <rect>
-                   <x>70</x>
+                   <x>60</x>
                    <y>0</y>
-                   <width>40</width>
+                   <width>31</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1545,9 +1520,9 @@
                 <widget class="QPushButton" name="Btransportador">
                  <property name="geometry">
                   <rect>
-                   <x>110</x>
+                   <x>90</x>
                    <y>0</y>
-                   <width>40</width>
+                   <width>31</width>
                    <height>24</height>
                   </rect>
                  </property>
@@ -1594,17 +1569,50 @@
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
+                <widget class="QSpinBox" name="grosor">
+                 <property name="geometry">
+                  <rect>
+                   <x>190</x>
+                   <y>0</y>
+                   <width>51</width>
+                   <height>25</height>
+                  </rect>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>6</number>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="texto">
+                 <property name="geometry">
+                  <rect>
+                   <x>120</x>
+                   <y>0</y>
+                   <width>31</width>
+                   <height>24</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>texto</string>
+                 </property>
+                </widget>
                 <zorder>barra_herramientas</zorder>
                 <zorder>linea</zorder>
                 <zorder>punto</zorder>
                 <zorder>goma</zorder>
                 <zorder>color</zorder>
-                <zorder>grosor</zorder>
                 <zorder>Bcompas</zorder>
                 <zorder>Bregla</zorder>
                 <zorder>Btransportador</zorder>
                 <zorder>horizontalSlider</zorder>
                 <zorder>limpiar</zorder>
+                <zorder>grosor</zorder>
+                <zorder>texto</zorder>
                </widget>
               </item>
               <item>
@@ -1629,7 +1637,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>810</width>
+     <width>811</width>
      <height>21</height>
     </rect>
    </property>

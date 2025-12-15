@@ -11,6 +11,8 @@
 
 #include "tool.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
@@ -24,6 +26,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->viewport()->installEventFilter(this);
     ui->graphicsView->viewport()->setMouseTracking(true);
 
+    ui->linea->setCheckable(true);
+    ui->goma->setCheckable(true);
+    ui->texto->setCheckable(true);
+    connect(ui->linea, &QPushButton::toggled,
+            this, &MainWindow::setDrawLineMode);
+  connect(ui->limpiar, &QPushButton::clicked,
+       this, &MainWindow::limpiarTodo);
+
+   connect(ui->goma, &QPushButton::toggled,
+         this, &MainWindow::borrarGoma);
+
+  connect(ui->texto, &QPushButton::toggled, this, &MainWindow::ponerTexto);
+
 
 
    // view->setScene(sceneMenu);
@@ -31,11 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     QPixmap mapa(":/img/carta_nautica");
-   // QPixmap regla(":/img/icons/ruler");
 
 
     QGraphicsPixmapItem *itemMapa = sceneMapa->addPixmap(mapa);
-    //QGraphicsPixmapItem *ruler = scene->addPixmap(regla);
     itemMapa->setZValue(0);
     itemMapa->setScale(0.25);
 
@@ -43,11 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
 //NUEVO
-    //dibuja linea
-    m_actDrawLine = ui->linea->addAction(tr("linea"));
-    m_actDrawLine->setCheckable(true);
-    connect(m_actDrawLine, &QAction::toggled, this, &MainWindow::setDrawLineMode);
-    //zoom
+
     ui->horizontalSlider->setValue(60);//val inicial
 
     // ===============================TRANSPORTADOR
@@ -91,54 +100,104 @@ void MainWindow::on_boton_lista_clicked()
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
+    int gros = ui->grosor->value();
     if (obj == ui->graphicsView->viewport()) {
 
-        if (!m_drawLineMode)
-            return QMainWindow::eventFilter(obj, event);
-
-        if (event->type() == QEvent::MouseButtonPress) {
+        if (event->type() == QEvent::MouseButtonPress ||
+            event->type() == QEvent::MouseButtonRelease ||
+            event->type() == QEvent::MouseMove)
+        {
             auto *e = static_cast<QMouseEvent*>(event);
-            qDebug() << "Botón pulsado:" << e->button();
-            if (e->button() == Qt::RightButton) {
+            QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
 
-                QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
+            if (m_eraserMode)
+            {
+                if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::LeftButton)
+                {
+                    QGraphicsItem* item = sceneMapa->itemAt(scenePos, QTransform());
+                    QGraphicsLineItem* line = qgraphicsitem_cast<QGraphicsLineItem*>(item);
+
+                    if (line) {
+                        sceneMapa->removeItem(line);
+                        delete line;
+                        return true;
+                    }
+                    else if (auto text = qgraphicsitem_cast<QGraphicsTextItem*>(item))
+                    {
+                        sceneMapa->removeItem(text);
+                        delete text;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if (m_textMode)
+            {
+                if (event->type() == QEvent::MouseButtonPress)
+                {
+                    auto *e = static_cast<QMouseEvent*>(event);
+                    if (e->button() == Qt::LeftButton)
+                    {
+                        QPointF scenePos = ui->graphicsView->mapToScene(e->pos());
+
+                        // Crear item de texto
+                        QGraphicsTextItem* texto = new QGraphicsTextItem("Nuevo texto");
+                        texto->setTextInteractionFlags(Qt::TextEditorInteraction);
+                        texto->setFont(QFont("Arial", gros));
+                        texto->setDefaultTextColor(Qt::black);
+                        texto->setFlag(QGraphicsItem::ItemIsMovable);
+                        texto->setFlag(QGraphicsItem::ItemIsSelectable);
+
+                        texto->setPos(scenePos);
+
+                        sceneMapa->addItem(texto);
+
+                        return true; // consumimos el evento
+                    }
+                }
+
+                return false;
+            }
+
+            if (!m_drawLineMode)
+                return QMainWindow::eventFilter(obj, event);
+
+            // Dibujar línea
+            if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::RightButton) {
                 m_lineStart = scenePos;
 
-                QPen pen(Qt::red, 8);
+
+
+                QPen pen(Qt::red, gros);
                 m_currentLineItem = new QGraphicsLineItem();
                 m_currentLineItem->setZValue(10);
                 m_currentLineItem->setPen(pen);
                 m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
-
                 sceneMapa->addItem(m_currentLineItem);
-                return true; // aquí sí consumimos
+                return true;
             }
-        }
-        else if (event->type() == QEvent::MouseMove) {
-            auto *e = static_cast<QMouseEvent*>(event);
-            if ((e->buttons() & Qt::RightButton) && m_currentLineItem) {
-                QPointF p2 = ui->graphicsView->mapToScene(e->pos());
+            else if (event->type() == QEvent::MouseMove && (e->buttons() & Qt::RightButton) && m_currentLineItem) {
+                QPointF p2 = scenePos;
                 m_currentLineItem->setLine(QLineF(m_lineStart, p2));
                 return true;
             }
-        }
-        else if (event->type() == QEvent::MouseButtonRelease) {
-            auto *e = static_cast<QMouseEvent*>(event);
-            if (e->button() == Qt::RightButton && m_currentLineItem) {
+            else if (event->type() == QEvent::MouseButtonRelease && e->button() == Qt::RightButton && m_currentLineItem) {
                 m_currentLineItem = nullptr;
                 return true;
             }
         }
     }
 
-     qDebug() << "eventFilter llamado para:" << obj;
     return QMainWindow::eventFilter(obj, event);
 }
 
 
+//##############################################################################################################################
+//####################################  DIBUJAR   ##############################################################################
 
 void MainWindow::setDrawLineMode(bool enabled)
 {
+    qDebug() << "DrawLineMode:" << enabled;
     m_drawLineMode = enabled;
 
     if (m_drawLineMode) {
@@ -149,8 +208,66 @@ void MainWindow::setDrawLineMode(bool enabled)
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag); // vuelve a arrastrar
     }
 }
+void MainWindow::limpiarTodo()
+{
+    QList<QGraphicsItem*> items = sceneMapa->items();
+
+    for (QGraphicsItem* item : items)
+    {
+        if (auto line = qgraphicsitem_cast<QGraphicsLineItem*>(item))
+        {
+            sceneMapa->removeItem(line);
+            delete line;
+        }
+        else if (auto text = qgraphicsitem_cast<QGraphicsTextItem*>(item))
+        {
+            sceneMapa->removeItem(text);
+            delete text;
+        }
+    }
+}
 
 
+void MainWindow::borrarGoma(bool enabled)
+{
+    m_eraserMode = enabled;
+
+    // Cambiar cursor y modo de arrastre
+    if (enabled) {
+        ui->graphicsView->setCursor(Qt::CrossCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        // Desactivar el modo de dibujar línea si estaba activo
+        if (m_drawLineMode) {
+            m_drawLineMode = false;
+            ui->linea->setChecked(false);
+            ui->graphicsView->unsetCursor();
+            //ui->graphicsView->setDragMode(QGraphicsView::NoDrag); // opcional según diseño
+        }
+    } else {
+        ui->graphicsView->unsetCursor();
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    }
+}
+
+//################################################TEXTO###########################################################################
+void MainWindow::ponerTexto(bool enabled)
+{
+    m_textMode = enabled;
+
+    if (enabled) {
+        ui->graphicsView->setCursor(Qt::IBeamCursor); // cursor de texto
+        ui->linea->setChecked(false);    // desactivar modo línea
+        m_drawLineMode = false;
+        ui->goma->setChecked(false);     // desactivar goma
+        m_eraserMode = false;
+    } else {
+        ui->graphicsView->unsetCursor();
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    }
+}
+
+
+//#####################################REGLAS#######################################################################################
 //funcion para saber las coordenadas actuales del centro de la carta
 QPointF MainWindow::getCurrentMapCenter() const
 {

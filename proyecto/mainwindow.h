@@ -34,6 +34,9 @@ private slots:
     void setDrawLineMode(bool enabled);
  //   void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_horizontalSlider_valueChanged(int value);
+    void limpiarTodo();
+    void borrarGoma(bool enabled);
+    void ponerTexto(bool enabled);
 
 private:
     Ui::MainWindow *ui;
@@ -48,7 +51,9 @@ private:
 
     void applyZoom(double factor);
     QAction *m_actDrawLine = nullptr;
+    bool m_eraserMode = false;
     bool m_drawLineMode = false;
+    bool m_textMode = false;
     QGraphicsLineItem *m_tempLine = nullptr;
     QGraphicsLineItem *m_currentLineItem = nullptr;
     QPointF m_lineStart;

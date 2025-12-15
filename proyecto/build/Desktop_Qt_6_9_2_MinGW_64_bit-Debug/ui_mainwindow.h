@@ -21,6 +21,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
@@ -63,12 +64,13 @@ public:
     QPushButton *punto;
     QPushButton *goma;
     QPushButton *color;
-    QPushButton *grosor;
     QPushButton *Bcompas;
     QPushButton *limpiar;
     QPushButton *Bregla;
     QPushButton *Btransportador;
     QSlider *horizontalSlider;
+    QSpinBox *grosor;
+    QPushButton *texto;
     QGraphicsView *graphicsView;
     QWidget *editar_perfil;
     QWidget *registro;
@@ -79,7 +81,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(810, 640);
+        MainWindow->resize(811, 626);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
@@ -310,7 +312,7 @@ public:
         widget_2->setSizePolicy(sizePolicy);
         barra_herramientas = new QLabel(widget_2);
         barra_herramientas->setObjectName("barra_herramientas");
-        barra_herramientas->setGeometry(QRect(0, 0, 404, 29));
+        barra_herramientas->setGeometry(QRect(0, 0, 401, 29));
         QSizePolicy sizePolicy3(QSizePolicy::Policy::Maximum, QSizePolicy::Policy::Maximum);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
@@ -406,7 +408,7 @@ public:
         linea->setCheckable(true);
         punto = new QPushButton(widget_2);
         punto->setObjectName("punto");
-        punto->setGeometry(QRect(0, 0, 40, 24));
+        punto->setGeometry(QRect(0, 0, 31, 24));
         sizePolicy2.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
         punto->setSizePolicy(sizePolicy2);
         punto->setMinimumSize(QSize(0, 0));
@@ -415,13 +417,13 @@ public:
         punto->setCheckable(true);
         goma = new QPushButton(widget_2);
         goma->setObjectName("goma");
-        goma->setGeometry(QRect(270, 0, 41, 24));
+        goma->setGeometry(QRect(290, 0, 31, 24));
         sizePolicy2.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
         goma->setSizePolicy(sizePolicy2);
         goma->setMaximumSize(QSize(167, 167));
         color = new QPushButton(widget_2);
         color->setObjectName("color");
-        color->setGeometry(QRect(230, 0, 40, 24));
+        color->setGeometry(QRect(269, 0, 21, 24));
         QSizePolicy sizePolicy4(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::MinimumExpanding);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
@@ -431,16 +433,10 @@ public:
         color->setIconSize(QSize(9, 9));
         color->setAutoDefault(false);
         color->setFlat(false);
-        grosor = new QPushButton(widget_2);
-        grosor->setObjectName("grosor");
-        grosor->setGeometry(QRect(190, 0, 40, 24));
-        sizePolicy2.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
-        grosor->setSizePolicy(sizePolicy2);
-        grosor->setMaximumSize(QSize(167, 167));
         Bcompas = new QPushButton(widget_2);
         Bcompas->setObjectName("Bcompas");
         Bcompas->setEnabled(true);
-        Bcompas->setGeometry(QRect(39, 0, 31, 24));
+        Bcompas->setGeometry(QRect(30, 0, 31, 24));
         sizePolicy2.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
         Bcompas->setSizePolicy(sizePolicy2);
         Bcompas->setMaximumSize(QSize(167, 167));
@@ -448,20 +444,20 @@ public:
         Bcompas->setCheckable(true);
         limpiar = new QPushButton(widget_2);
         limpiar->setObjectName("limpiar");
-        limpiar->setGeometry(QRect(310, 0, 41, 24));
+        limpiar->setGeometry(QRect(320, 0, 31, 24));
         sizePolicy2.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
         limpiar->setSizePolicy(sizePolicy2);
         limpiar->setMaximumSize(QSize(167, 167));
         Bregla = new QPushButton(widget_2);
         Bregla->setObjectName("Bregla");
-        Bregla->setGeometry(QRect(70, 0, 40, 24));
+        Bregla->setGeometry(QRect(60, 0, 31, 24));
         sizePolicy2.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
         Bregla->setSizePolicy(sizePolicy2);
         Bregla->setMaximumSize(QSize(167, 167));
         Bregla->setCheckable(true);
         Btransportador = new QPushButton(widget_2);
         Btransportador->setObjectName("Btransportador");
-        Btransportador->setGeometry(QRect(110, 0, 40, 24));
+        Btransportador->setGeometry(QRect(90, 0, 31, 24));
         sizePolicy2.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
         Btransportador->setSizePolicy(sizePolicy2);
         Btransportador->setMaximumSize(QSize(167, 167));
@@ -474,17 +470,27 @@ public:
         horizontalSlider->setObjectName("horizontalSlider");
         horizontalSlider->setGeometry(QRect(350, 10, 51, 20));
         horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
+        grosor = new QSpinBox(widget_2);
+        grosor->setObjectName("grosor");
+        grosor->setGeometry(QRect(190, 0, 51, 25));
+        grosor->setMinimum(1);
+        grosor->setMaximum(20);
+        grosor->setValue(6);
+        texto = new QPushButton(widget_2);
+        texto->setObjectName("texto");
+        texto->setGeometry(QRect(120, 0, 31, 24));
         barra_herramientas->raise();
         linea->raise();
         punto->raise();
         goma->raise();
         color->raise();
-        grosor->raise();
         Bcompas->raise();
         Bregla->raise();
         Btransportador->raise();
         horizontalSlider->raise();
         limpiar->raise();
+        grosor->raise();
+        texto->raise();
 
         verticalLayout_3->addWidget(widget_2);
 
@@ -516,7 +522,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 810, 21));
+        menubar->setGeometry(QRect(0, 0, 811, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -558,11 +564,11 @@ public:
         punto->setText(QCoreApplication::translate("MainWindow", "punt", nullptr));
         goma->setText(QCoreApplication::translate("MainWindow", "goma", nullptr));
         color->setText(QCoreApplication::translate("MainWindow", "color", nullptr));
-        grosor->setText(QCoreApplication::translate("MainWindow", "grosor", nullptr));
         Bcompas->setText(QCoreApplication::translate("MainWindow", "compas", nullptr));
         limpiar->setText(QCoreApplication::translate("MainWindow", "limpiar", nullptr));
         Bregla->setText(QCoreApplication::translate("MainWindow", "regla", nullptr));
         Btransportador->setText(QCoreApplication::translate("MainWindow", "transportador", nullptr));
+        texto->setText(QCoreApplication::translate("MainWindow", "texto", nullptr));
     } // retranslateUi
 
 };
