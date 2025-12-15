@@ -71,7 +71,46 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4"/>
       </widget>
-      <widget class="QWidget" name="historial"/>
+      <widget class="QWidget" name="historial">
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>781</width>
+          <height>461</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QTableView" name="tableViewHistorial"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_filtro">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>20</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Filtar por fecha</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEditFiltro">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>20</y>
+          <width>110</width>
+          <height>26</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="mapa">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -85,7 +124,7 @@
          <height>628</height>
         </size>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,15">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -104,6 +143,13 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <widget class="QPushButton" name="Boton_volver">
+          <property name="text">
+           <string>&lt;</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QLabel" name="barra_arriba">
           <property name="sizePolicy">
@@ -592,6 +638,13 @@
           </property>
           <property name="text">
            <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="boton_historial">
+          <property name="text">
+           <string>Historial</string>
           </property>
          </widget>
         </item>
@@ -1645,7 +1698,7 @@
      <x>0</x>
      <y>0</y>
      <width>855</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

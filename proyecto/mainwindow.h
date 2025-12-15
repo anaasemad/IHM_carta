@@ -9,6 +9,9 @@
 #include <QGraphicsLineItem>
 #include "tool.h"
 
+#include <QSqlDatabase> // Necesario para la conexión
+#include <QSqlQueryModel> // Necesario para el modelo de la tabla
+
 #include <qlistwidget.h>
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,6 +43,13 @@ private slots:
 
     void on_color_clicked();
 
+
+//#################################################################################################################
+    void on_boton_historial_clicked();
+//#################################################################################################################
+
+
+
 private:
     Ui::MainWindow *ui;
    // QGraphicsScene *sceneMenu;
@@ -50,6 +60,19 @@ private:
 
     Tool* transportador = nullptr; //inicializar en null por si para evitar errores
     Tool* regla = nullptr;
+
+
+    //#########################################################################################################
+    // --- Variables para la BBDD ---
+    QSqlDatabase m_db; // Objeto de conexión a la BBDD
+    QSqlQueryModel *m_historialModel; // Modelo para vincular datos a tableView
+
+    // --- Funciones de BBDD ---
+    bool initDatabase(); // Inicializa la conexión y el modelo
+    void setupHistorialTable(); // Configura la tabla y el modelo
+    //#########################################################################################################
+
+
 
     void applyZoom(double factor);
     QAction *m_actDrawLine = nullptr;

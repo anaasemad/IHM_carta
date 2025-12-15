@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
@@ -24,6 +26,7 @@
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -38,9 +41,16 @@ public:
     QWidget *ini_sesion;
     QVBoxLayout *verticalLayout_4;
     QWidget *historial;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout_5;
+    QTableView *tableViewHistorial;
+    QLabel *label_filtro;
+    QDateEdit *dateEditFiltro;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
+    QPushButton *Boton_volver;
     QLabel *barra_arriba;
+    QPushButton *boton_historial;
     QWidget *horizontalWidget;
     QHBoxLayout *horizontalLayout_2;
     QStackedWidget *stackedWidget_2;
@@ -110,6 +120,23 @@ public:
         stackedWidget->addWidget(ini_sesion);
         historial = new QWidget();
         historial->setObjectName("historial");
+        verticalLayoutWidget = new QWidget(historial);
+        verticalLayoutWidget->setObjectName("verticalLayoutWidget");
+        verticalLayoutWidget->setGeometry(QRect(20, 60, 781, 461));
+        verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout_5->setObjectName("verticalLayout_5");
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        tableViewHistorial = new QTableView(verticalLayoutWidget);
+        tableViewHistorial->setObjectName("tableViewHistorial");
+
+        verticalLayout_5->addWidget(tableViewHistorial);
+
+        label_filtro = new QLabel(historial);
+        label_filtro->setObjectName("label_filtro");
+        label_filtro->setGeometry(QRect(480, 20, 121, 20));
+        dateEditFiltro = new QDateEdit(historial);
+        dateEditFiltro->setObjectName("dateEditFiltro");
+        dateEditFiltro->setGeometry(QRect(630, 20, 110, 26));
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -121,6 +148,11 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setSizeConstraint(QLayout::SizeConstraint::SetMaximumSize);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        Boton_volver = new QPushButton(mapa);
+        Boton_volver->setObjectName("Boton_volver");
+
+        verticalLayout->addWidget(Boton_volver);
+
         barra_arriba = new QLabel(mapa);
         barra_arriba->setObjectName("barra_arriba");
         sizePolicy.setHeightForWidth(barra_arriba->sizePolicy().hasHeightForWidth());
@@ -215,6 +247,11 @@ public:
         barra_arriba->setFrameShadow(QFrame::Shadow::Plain);
 
         verticalLayout->addWidget(barra_arriba);
+
+        boton_historial = new QPushButton(mapa);
+        boton_historial->setObjectName("boton_historial");
+
+        verticalLayout->addWidget(boton_historial);
 
         horizontalWidget = new QWidget(mapa);
         horizontalWidget->setObjectName("horizontalWidget");
@@ -513,8 +550,8 @@ public:
 
         verticalLayout->addWidget(horizontalWidget);
 
-        verticalLayout->setStretch(0, 1);
-        verticalLayout->setStretch(1, 15);
+        verticalLayout->setStretch(1, 1);
+        verticalLayout->setStretch(3, 15);
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
@@ -528,7 +565,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 855, 21));
+        menubar->setGeometry(QRect(0, 0, 855, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -547,7 +584,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
+        Boton_volver->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         barra_arriba->setText(QString());
+        boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
 
