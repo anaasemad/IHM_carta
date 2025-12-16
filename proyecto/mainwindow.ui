@@ -60,7 +60,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -71,7 +71,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QWidget" name="widget" native="true">
+         <widget class="QWidget" name="fondo" native="true">
           <widget class="QFrame" name="recuadro_ini">
            <property name="geometry">
             <rect>
@@ -185,6 +185,9 @@
               <width>431</width>
               <height>28</height>
              </rect>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::EchoMode::Password</enum>
             </property>
            </widget>
            <widget class="QPushButton" name="boton_entrar">
@@ -1534,7 +1537,219 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="registro"/>
+      <widget class="QWidget" name="registro">
+       <widget class="QWidget" name="fondo_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>-1</x>
+          <y>-1</y>
+          <width>851</width>
+          <height>651</height>
+         </rect>
+        </property>
+        <widget class="QFrame" name="recuadro_reg">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>10</y>
+           <width>701</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <widget class="QLabel" name="et_registro">
+          <property name="geometry">
+           <rect>
+            <x>220</x>
+            <y>40</y>
+            <width>251</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>      Regístrate</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="et_name">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>120</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="et_correo">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>240</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Correo</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="et_pass_2">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>360</y>
+            <width>101</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Contraseña</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="et_cumple">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>480</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Cumple</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="campo_name">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>150</y>
+            <width>511</width>
+            <height>28</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="campo_correo">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>270</y>
+            <width>521</width>
+            <height>28</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="campo_pass_2">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>400</y>
+            <width>271</width>
+            <height>28</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDateEdit" name="campo_cumple">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>510</y>
+            <width>110</width>
+            <height>29</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QCalendarWidget" name="calendario">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>400</y>
+            <width>272</width>
+            <height>195</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="boton_registro">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>560</y>
+            <width>90</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Registrar</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="error_user">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>190</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="error_correo">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>320</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="error_pass">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>440</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="error_edad">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>560</y>
+            <width>63</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
      </widget>
     </item>
    </layout>
