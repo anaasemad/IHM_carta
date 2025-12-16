@@ -751,8 +751,8 @@ void MainWindow::on_boton_registro_clicked()
         usuarioRegistrado = usuario;
         passwordRegistrado = password;
 
-        // Ir a la pantalla de inicio de sesión
-        ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
+        // Ir a la pantalla de problemas
+        ui->stackedWidget->setCurrentWidget(ui->lista_problemas);
 
     }
 
@@ -791,8 +791,8 @@ void MainWindow::on_boton_entrar_clicked()
         ui->campo_user->clear();
         ui->campo_pass->clear();
 
-        // Acceso al resto de funciones
-        ui->stackedWidget->setCurrentWidget(ui->menu_principal);
+        // Acceso
+        ui->stackedWidget->setCurrentWidget(ui->lista_problemas);
 
     } else {
         QMessageBox::critical(
