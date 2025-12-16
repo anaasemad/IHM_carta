@@ -46,6 +46,8 @@ private slots:
     void on_boton_entrar_clicked();
     void on_boton_registro_clicked();
     void on_calendario_clicked(const QDate &date);
+    void on_label_registro_linkActivated(const QString &link);
+
 
 
 
@@ -99,9 +101,6 @@ private:
 
     void updateStatusLabel(const QPointF &scenePos, const QString &status); //label coordenadas y actividad
 
-    // Usuario registrado (simulación)
-    QString usuarioRegistrado;
-    QString passwordRegistrado;
 
 };
 #endif // MAINWINDOW_H

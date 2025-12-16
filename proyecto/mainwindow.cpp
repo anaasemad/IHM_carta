@@ -20,6 +20,9 @@
 #include <QSplitter>
 #include <QHBoxLayout>
 
+#include "navigation.h"
+#include "navdaoexception.h"
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -682,6 +685,7 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
 // Registrarse
 void MainWindow::on_boton_registro_clicked()
 {
+
     // Ocultar errores
     ui->error_user->hide();
     ui->error_correo->hide();
@@ -691,11 +695,11 @@ void MainWindow::on_boton_registro_clicked()
     QString usuario = ui->campo_name->text();
     QString correo = ui->campo_correo->text();
     QString password = ui->campo_pass_2->text();
-    QDate nacimiento = ui->campo_cumple->date(); //
+    QDate nacimiento = ui->campo_cumple->date();
 
     bool valido = true;
 
-    //
+    // Usuario
     QRegularExpression reUser("^[A-Za-z0-9_-]{6,15}$");
     if (!reUser.match(usuario).hasMatch()) {
         ui->error_user->setText(
@@ -706,7 +710,7 @@ void MainWindow::on_boton_registro_clicked()
         valido = false;
     }
 
-    //
+    // Correo
     QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
     if (!reMail.match(correo).hasMatch()) {
         ui->error_correo->setText("Correo electrónico no válido");
@@ -715,7 +719,7 @@ void MainWindow::on_boton_registro_clicked()
         valido = false;
     }
 
-    //
+    // Contraseña
     QRegularExpression rePass(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
         );
@@ -729,7 +733,7 @@ void MainWindow::on_boton_registro_clicked()
         valido = false;
     }
 
-    // EDAD > 16
+    // Edad > 16
     if (nacimiento.addYears(16) > QDate::currentDate()) {
         ui->error_edad->setText("Debes tener más de 16 años");
         ui->error_edad->setStyleSheet("color:red;");
@@ -737,27 +741,41 @@ void MainWindow::on_boton_registro_clicked()
         valido = false;
     }
 
-    // Cambiar para después
+    // Registro correcto
     if (valido) {
-        QMessageBox::information(
-            this,
-            "Registro completado",
-            "Usuario registrado correctamente"
-            );
+        try {
+            Navigation &nav = Navigation::instance();
+
+            // Usuario ya existe
+            if (nav.findUser(usuario)) {
+                ui->error_user->setText("El nombre de usuario ya existe");
+                ui->error_user->show();
+                return;
+            }
+
+            // Crear usuario
+            User u(
+                usuario,
+                correo,
+                password,
+                QImage(),      // avatar por defecto
+                nacimiento
+                );
+
+            nav.addUser(u);
+
+            QMessageBox::information(this, "DEBUG", "Registro correcto");
+
+            //
+            ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
 
 
-        // Aquí luego:
-        // Guardar usuario registrado
-        usuarioRegistrado = usuario;
-        passwordRegistrado = password;
-
-        // Ir a la pantalla de problemas
-        ui->stackedWidget->setCurrentWidget(ui->lista_problemas);
-
+        } catch (const NavDAOException &ex) {
+            QMessageBox::critical(this, tr("DB error"), ex.what());
+        }
     }
-
-
 }
+
 
 void MainWindow::on_calendario_clicked(const QDate &date)
 {
@@ -773,7 +791,6 @@ void MainWindow::on_boton_entrar_clicked()
     QString usuario = ui->campo_user->text();
     QString password = ui->campo_pass->text();
 
-
     if (usuario.isEmpty() || password.isEmpty()) {
         QMessageBox::warning(
             this,
@@ -783,26 +800,51 @@ void MainWindow::on_boton_entrar_clicked()
         return;
     }
 
-    // Comprobación de usuario existente
-    if (usuario == usuarioRegistrado &&
-        password == passwordRegistrado) {
+    try {
+        Navigation &nav = Navigation::instance();
 
-        // Login correcto
+        const User *u = nav.findUser(usuario);
+
+        // Usuario no existe
+        if (!u) {
+            QMessageBox::critical(
+                this,
+                "Error de autenticación",
+                "Usuario o contraseña incorrectos"
+                );
+            return;
+        }
+
+        // Contraseña incorrecta  (Cambiar a text label oculto si no gusta q salga así)
+        if (u->password() != password) {
+            QMessageBox::critical(
+                this,
+                "Error de autenticación",
+                "Usuario o contraseña incorrectos"
+                );
+            return;
+        }
+
+        // Login correcto → acceso al sistema
         ui->campo_user->clear();
         ui->campo_pass->clear();
 
-        // Acceso
-        ui->stackedWidget->setCurrentWidget(ui->lista_problemas);
+        // No se porque no me va a lista de problemas
 
-    } else {
-        QMessageBox::critical(
-            this,
-            "Error de autenticación",
-            "Usuario o contraseña incorrectos"
-            );
+        ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
+
+    } catch (const NavDAOException &ex) {
+        QMessageBox::critical(this, tr("DB error"), ex.what());
     }
 }
 
+void MainWindow::on_label_registro_linkActivated(const QString &)
+{
+    // No me cambia de pagina mirarlo
+    ui->stackedWidget->setCurrentWidget(ui->registro);
+}
+
+// realmente creo q lo unico q falla es el cambio de ventana, el resto creo q esta bien
 
 
 
