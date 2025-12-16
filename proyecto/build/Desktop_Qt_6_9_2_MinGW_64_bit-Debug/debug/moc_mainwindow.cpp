@@ -50,6 +50,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "limpiarTodo",
         "borrarGoma",
         "ponerTexto",
+        "ponerPunto",
         "on_color_clicked",
         "on_boton_historial_clicked",
         "on_boton_volver_clicked",
@@ -82,16 +83,20 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void(bool)>(11, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::Bool, 6 },
         }}),
+        // Slot 'ponerPunto'
+        QtMocHelpers::SlotData<void(bool)>(12, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Bool, 6 },
+        }}),
         // Slot 'on_color_clicked'
-        QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_historial_clicked'
         QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_volver_clicked'
+        // Slot 'on_boton_historial_clicked'
         QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_volver_2_clicked'
+        // Slot 'on_boton_volver_clicked'
         QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_Modificar_perfil'
+        // Slot 'on_boton_volver_2_clicked'
         QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_boton_Modificar_perfil'
+        QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -123,11 +128,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->limpiarTodo(); break;
         case 6: _t->borrarGoma((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 7: _t->ponerTexto((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
-        case 8: _t->on_color_clicked(); break;
-        case 9: _t->on_boton_historial_clicked(); break;
-        case 10: _t->on_boton_volver_clicked(); break;
-        case 11: _t->on_boton_volver_2_clicked(); break;
-        case 12: _t->on_boton_Modificar_perfil(); break;
+        case 8: _t->ponerPunto((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 9: _t->on_color_clicked(); break;
+        case 10: _t->on_boton_historial_clicked(); break;
+        case 11: _t->on_boton_volver_clicked(); break;
+        case 12: _t->on_boton_volver_2_clicked(); break;
+        case 13: _t->on_boton_Modificar_perfil(); break;
         default: ;
         }
     }
@@ -152,14 +158,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }

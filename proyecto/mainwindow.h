@@ -40,6 +40,7 @@ private slots:
     void limpiarTodo();
     void borrarGoma(bool enabled);
     void ponerTexto(bool enabled);
+    void ponerPunto(bool enabled);
 
     void on_color_clicked();
 
@@ -83,6 +84,7 @@ private:
     bool m_eraserMode = false;
     bool m_drawLineMode = false;
     bool m_textMode = false;
+    bool m_pointMode = false;
     QGraphicsLineItem *m_tempLine = nullptr;
     QGraphicsLineItem *m_currentLineItem = nullptr;
     QPointF m_lineStart;

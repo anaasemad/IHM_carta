@@ -16,6 +16,9 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#include <QSplitter>
+#include <QHBoxLayout>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,6 +30,26 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
+    //*****************************************************SPLITTER
+    if (ui->horizontalWidget->layout()) {
+        delete ui->horizontalWidget->layout();//si no borramos el layout el splitter se pone mal
+    }
+    QSplitter *splitter = new QSplitter(Qt::Horizontal, ui->horizontalWidget);
+    splitter->addWidget(ui->stackedWidget_2);//mete lo q teniamos en al ui en cada lado del splitter
+    splitter->addWidget(ui->verticalWidget);
+    ui->stackedWidget_2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);//declara sizepolicy de cada parte
+    ui->verticalWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    splitter->setSizes({400, 400});  // tamaño inicial
+    QHBoxLayout *layout = new QHBoxLayout(ui->horizontalWidget);
+    layout->setContentsMargins(0, 0, 0, 0); // para que ocupe todo el widget
+    layout->setSpacing(0);
+    layout->addWidget(splitter);
+    //*************************************************************
+
+    ui->widget_2->setAttribute(Qt::WA_StyledBackground, true);
+    ui->widget_2->setStyleSheet(
+        "QWidget#widget_2 { background-color:  #FFFFFF;}"//*****************barra herramientas blanca
+        );
 
 
     view = ui->graphicsView;
@@ -43,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->goma, &QPushButton::toggled,
         this, &MainWindow::borrarGoma);
     connect(ui->texto, &QPushButton::toggled, this, &MainWindow::ponerTexto);
+    connect(ui->punto, &QPushButton::toggled, this, &MainWindow::ponerPunto);
+
 
 
 
@@ -64,8 +89,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     scale = initialScale;
     m_currentColor = Qt::red;
-
-//NUEVO
 
     ui->horizontalSlider->setValue(30);//val inicial
 
@@ -313,6 +336,12 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                         delete text;
                         return true;
                     }
+                    else if (auto pix = qgraphicsitem_cast<QGraphicsPixmapItem*>(item)) {
+                        // Borrar solo los puntos creados por el usuario
+                        if (pix->data(0).toString() == "userPoint") {
+                            sceneMapa->removeItem(pix);
+                            delete pix;}
+                    }
                 }
                 return false;
             }
@@ -333,6 +362,30 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                         texto->setPos(scenePos);
 
                         sceneMapa->addItem(texto);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if (m_pointMode)
+            {
+                if (event->type() == QEvent::MouseButtonPress)
+                {
+                    if (e->button() == Qt::LeftButton)
+                    {
+                        QPixmap pixmap(":/img/icons/punto.png");  // Ruta de recurso
+                        if (!pixmap.isNull())
+                        {
+                            QGraphicsPixmapItem* item = new QGraphicsPixmapItem(pixmap);
+                            item->setScale(0.1);
+                            QRectF rect = item->boundingRect();
+                            QPointF centeredPos = scenePos - QPointF(pixmap.width()*0.1/2.0, pixmap.height()*0.1/2.0);
+                            item->setPos(centeredPos);
+                            item->setData(0, "userPoint");  // clave 0, valor identificador
+                            item->setFlag(QGraphicsItem::ItemIsMovable);
+                            item->setFlag(QGraphicsItem::ItemIsSelectable);
+                            sceneMapa->addItem(item);
+                        }
                         return true;
                     }
                 }
@@ -383,6 +436,11 @@ void MainWindow::setDrawLineMode(bool enabled)
         ui->graphicsView->unsetCursor();
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag); // vuelve a arrastrar
     }
+    if(m_eraserMode){
+        m_eraserMode=false;
+        ui->goma->setChecked(false);
+
+    }
 }
 void MainWindow::limpiarTodo()
 {
@@ -400,8 +458,17 @@ void MainWindow::limpiarTodo()
             sceneMapa->removeItem(text);
             delete text;
         }
+        else if (auto pix = qgraphicsitem_cast<QGraphicsPixmapItem*>(item))
+        {
+            // Borrar solo los puntos creados por el usuario
+            if (pix->data(0).toString() == "userPoint") {
+                sceneMapa->removeItem(pix);
+                delete pix;
+        }
+        }
     }
 }
+
 
 
 void MainWindow::borrarGoma(bool enabled)
@@ -417,7 +484,12 @@ void MainWindow::borrarGoma(bool enabled)
             m_drawLineMode = false;
             ui->linea->setChecked(false);
             ui->graphicsView->unsetCursor();
+
             //ui->graphicsView->setDragMode(QGraphicsView::NoDrag); // opcional según diseño
+        }
+        if(m_pointMode){
+            m_pointMode=false;
+            ui->punto->setChecked(false);     // desactivar punto
         }
     } else {
         ui->graphicsView->unsetCursor();
@@ -458,6 +530,24 @@ void MainWindow::ponerTexto(bool enabled)
         m_drawLineMode = false;
         ui->goma->setChecked(false);     // desactivar goma
         m_eraserMode = false;
+    } else {
+        ui->graphicsView->unsetCursor();
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    }
+}
+//################################################_PUNTO_###########################################################################
+void MainWindow::ponerPunto(bool enabled)
+{
+    m_pointMode = enabled;
+
+    if (enabled) {
+        ui->graphicsView->setCursor(Qt::PointingHandCursor); // cursor de mano apuntando
+        ui->linea->setChecked(false);    // desactivar modo línea
+        m_drawLineMode = false;
+        ui->goma->setChecked(false);     // desactivar goma
+        m_eraserMode = false;
+        ui->texto->setChecked(false);    // desactivar texto
+        m_textMode = false;
     } else {
         ui->graphicsView->unsetCursor();
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
