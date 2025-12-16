@@ -759,6 +759,13 @@ void MainWindow::on_boton_registro_clicked()
 
 }
 
+void MainWindow::on_calendario_clicked(const QDate &date)
+{
+    // Pasar la fecha del calendario al QDateEdit
+    ui->campo_cumple->setDate(date);
+}
+
+
 
 // Inicio sesion
 void MainWindow::on_boton_entrar_clicked()
