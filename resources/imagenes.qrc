@@ -4,6 +4,16 @@
         <file>icons/compass_leg.svg</file>
         <file>icons/ruler.svg</file>
         <file>icons/transportador.svg</file>
-        <file>icons/avatar.jpg</file>
+        <file>icons/I_avatar.png</file>
+        <file>icons/I_compas.png</file>
+        <file>icons/I_eliminar.png</file>
+        <file>icons/I_goma.png</file>
+        <file>icons/I_linea.png</file>
+        <file>icons/I_paleta.png</file>
+        <file>icons/I_regla.png</file>
+        <file>icons/I_texto.png</file>
+        <file>icons/I_transportador.png</file>
+        <file>icons/punto.png</file>
+        <file>icons/I_lapiz.png</file>
     </qresource>
 </RCC>

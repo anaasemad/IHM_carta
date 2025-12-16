@@ -111,6 +111,14 @@ MainWindow::MainWindow(QWidget *parent)
     regla->setZValue(1000);
     // Posición inicial en la esquina superior izquierda de la vista
     regla->setVisible(false);
+    // ===============================COMPÁS
+    compas = new Compass(":/img/icons/compass_leg.svg");
+    sceneMapa->addItem(compas);
+    regla->setToolSize(QSizeF(580, 380));
+    // Z alta para que quede en overlay
+    compas->setZValue(1000);
+    // Posición inicial en la esquina superior izquierda de la vista
+    compas->setVisible(false);
 
 }
 
@@ -235,7 +243,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         QPointF scenePos;
 
         // =================================================================
-        // BLOQUE 1: MANEJO DE MOUSE MOVE (Actualización de Coordenadas/Estado)
+        // BLOQUE 1: MOUSE MOVE (Coordenadas/Actividad)
         // =================================================================
 
         if (event->type() == QEvent::MouseMove)
@@ -256,8 +264,21 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 currentStatus = "Regla visible";
             } else if (transportador && transportador->isVisible()) {
                 currentStatus = "Transportador visible";
+            } else if (compas && compas->isVisible()) {
+
+                if (compas->isCursorInRotationZone(scenePos)) {
+                    // El cursor está sobre la zona de apertura de la punta
+                    ui->graphicsView->viewport()->setCursor(QCursor(Qt::SizeFDiagCursor));
+                    currentStatus = "Compás: Abrir/Cerrar";
+                } else {
+                    currentStatus = "Compás visible";
+                }
             }
-            //AÑADIR COMPÁS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Si ningún modo especial está activo y el compás está oculto, usamos el cursor por defecto (ArrowCursor).
+            else if (!m_eraserMode && !m_drawLineMode && !m_textMode) {
+                ui->graphicsView->viewport()->setCursor(Qt::ArrowCursor);
+            }
+
             updateStatusLabel(scenePos, currentStatus);
         }
 
@@ -548,6 +569,16 @@ void MainWindow::updateToolPositions()
 
         transportador->setPos(scenePos);
     }
+    //compas:
+    if (compas && compas->isVisible()) {
+        // Obtenemos el tamaño del objeto en coordenadas de ESCENA
+        // (boundingRect funciona para el grupo)
+        QRectF herrBounds = compas->boundingRect();
+        QPointF screenPos = viewCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
+        QPointF scenePos = ui->graphicsView->mapToScene(screenPos.toPoint());
+
+        compas->setPos(scenePos);
+    }
 }
 
 void MainWindow::on_Bregla_clicked()
@@ -567,6 +598,18 @@ void MainWindow::on_Btransportador_clicked()
     if (!transportador) return;
     bool isVisible = !transportador->isVisible();
     transportador->setVisible(isVisible);
+
+    if (isVisible)
+    {
+        updateToolPositions();
+    }
+}
+
+void MainWindow::on_Bcompas_clicked()
+{
+    if (!compas) return;
+    bool isVisible = !compas->isVisible();
+    compas->setVisible(isVisible);
 
     if (isVisible)
     {
@@ -635,6 +678,8 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
     ui->labelStatus->setText(fullText);
 }
 
+
+//##################################_REGISTRO_INI.SESION_##########################################################
 // Registrarse
 void MainWindow::on_boton_registro_clicked()
 {
@@ -798,6 +843,5 @@ void MainWindow::on_label_registro_linkActivated(const QString &)
 }
 
 // realmente creo q lo unico q falla es el cambio de ventana, el resto creo q esta bien
-
 
 

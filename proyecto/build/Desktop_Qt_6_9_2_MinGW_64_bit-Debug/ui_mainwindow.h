@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCalendarWidget>
 #include <QtWidgets/QDateEdit>
@@ -106,13 +107,13 @@ public:
     QLabel *label_email;
     QLabel *label_contrasenia;
     QLabel *label_compleanios;
-    QTextEdit *textName;
-    QTextEdit *textEmail;
-    QTextEdit *textcontrasenia;
-    QDateEdit *dateEditCumple;
+    QTextEdit *textEdit;
+    QTextEdit *textEdit_2;
+    QTextEdit *textEdit_3;
+    QDateEdit *dateEdit;
     QPushButton *Boton_guardar;
     QPushButton *Boton_volver_2;
-    QLabel *avatar;
+    QLabel *label;
     QPushButton *boton_editar;
     QWidget *registro;
     QWidget *fondo_2;
@@ -468,6 +469,9 @@ public:
         punto->setSizePolicy(sizePolicy2);
         punto->setMinimumSize(QSize(0, 0));
         punto->setMaximumSize(QSize(167, 167));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/img/icons/punto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        punto->setIcon(icon);
         punto->setIconSize(QSize(8, 16));
         punto->setCheckable(true);
         Bcompas = new QPushButton(barra_herramienta);
@@ -477,6 +481,9 @@ public:
         sizePolicy2.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
         Bcompas->setSizePolicy(sizePolicy2);
         Bcompas->setMaximumSize(QSize(167, 167));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/img/icons/I_compas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Bcompas->setIcon(icon1);
         Bcompas->setIconSize(QSize(10, 16));
         Bcompas->setCheckable(true);
         Bregla = new QPushButton(barra_herramienta);
@@ -485,6 +492,9 @@ public:
         sizePolicy2.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
         Bregla->setSizePolicy(sizePolicy2);
         Bregla->setMaximumSize(QSize(167, 167));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/img/icons/I_regla.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Bregla->setIcon(icon2);
         Bregla->setIconSize(QSize(10, 16));
         Bregla->setCheckable(true);
         Btransportador = new QPushButton(barra_herramienta);
@@ -497,11 +507,17 @@ public:
         font2.setBold(false);
         font2.setKerning(true);
         Btransportador->setFont(font2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Btransportador->setIcon(icon3);
         Btransportador->setIconSize(QSize(10, 16));
         Btransportador->setCheckable(true);
         texto = new QPushButton(barra_herramienta);
         texto->setObjectName("texto");
         texto->setGeometry(QRect(150, 0, 30, 23));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/img/icons/I_texto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        texto->setIcon(icon4);
         texto->setIconSize(QSize(10, 16));
         linea = new QPushButton(barra_herramienta);
         linea->setObjectName("linea");
@@ -509,6 +525,9 @@ public:
         sizePolicy2.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
         linea->setSizePolicy(sizePolicy2);
         linea->setMaximumSize(QSize(167, 167));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/img/icons/I_linea.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        linea->setIcon(icon5);
         linea->setIconSize(QSize(10, 16));
         linea->setCheckable(true);
         color = new QPushButton(barra_herramienta);
@@ -520,6 +539,9 @@ public:
         sizePolicy4.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
         color->setSizePolicy(sizePolicy4);
         color->setMaximumSize(QSize(167, 167));
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/img/icons/I_paleta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        color->setIcon(icon6);
         color->setIconSize(QSize(10, 16));
         color->setAutoDefault(false);
         color->setFlat(false);
@@ -529,6 +551,9 @@ public:
         sizePolicy2.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
         goma->setSizePolicy(sizePolicy2);
         goma->setMaximumSize(QSize(167, 167));
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/img/icons/I_goma.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        goma->setIcon(icon7);
         goma->setIconSize(QSize(10, 16));
         limpiar = new QPushButton(barra_herramienta);
         limpiar->setObjectName("limpiar");
@@ -536,6 +561,9 @@ public:
         sizePolicy2.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
         limpiar->setSizePolicy(sizePolicy2);
         limpiar->setMaximumSize(QSize(167, 167));
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/img/icons/I_eliminar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        limpiar->setIcon(icon8);
         limpiar->setIconSize(QSize(10, 16));
         grosor = new QSpinBox(barra_herramienta);
         grosor->setObjectName("grosor");
@@ -592,32 +620,35 @@ public:
         label_compleanios = new QLabel(editar_perfil);
         label_compleanios->setObjectName("label_compleanios");
         label_compleanios->setGeometry(QRect(100, 390, 91, 20));
-        textName = new QTextEdit(editar_perfil);
-        textName->setObjectName("textName");
-        textName->setGeometry(QRect(100, 170, 171, 31));
-        textEmail = new QTextEdit(editar_perfil);
-        textEmail->setObjectName("textEmail");
-        textEmail->setGeometry(QRect(100, 250, 211, 31));
-        textcontrasenia = new QTextEdit(editar_perfil);
-        textcontrasenia->setObjectName("textcontrasenia");
-        textcontrasenia->setGeometry(QRect(100, 340, 151, 31));
-        dateEditCumple = new QDateEdit(editar_perfil);
-        dateEditCumple->setObjectName("dateEditCumple");
-        dateEditCumple->setGeometry(QRect(100, 420, 110, 26));
+        textEdit = new QTextEdit(editar_perfil);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(100, 170, 171, 31));
+        textEdit_2 = new QTextEdit(editar_perfil);
+        textEdit_2->setObjectName("textEdit_2");
+        textEdit_2->setGeometry(QRect(100, 250, 211, 31));
+        textEdit_3 = new QTextEdit(editar_perfil);
+        textEdit_3->setObjectName("textEdit_3");
+        textEdit_3->setGeometry(QRect(100, 340, 151, 31));
+        dateEdit = new QDateEdit(editar_perfil);
+        dateEdit->setObjectName("dateEdit");
+        dateEdit->setGeometry(QRect(100, 420, 110, 26));
         Boton_guardar = new QPushButton(editar_perfil);
         Boton_guardar->setObjectName("Boton_guardar");
         Boton_guardar->setGeometry(QRect(340, 470, 111, 71));
         Boton_volver_2 = new QPushButton(editar_perfil);
         Boton_volver_2->setObjectName("Boton_volver_2");
         Boton_volver_2->setGeometry(QRect(20, 10, 93, 29));
-        avatar = new QLabel(editar_perfil);
-        avatar->setObjectName("avatar");
-        avatar->setGeometry(QRect(500, 160, 181, 171));
-        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/avatar.jpg")));
-        avatar->setScaledContents(true);
+        label = new QLabel(editar_perfil);
+        label->setObjectName("label");
+        label->setGeometry(QRect(500, 160, 181, 171));
+        label->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
+        label->setScaledContents(true);
         boton_editar = new QPushButton(editar_perfil);
         boton_editar->setObjectName("boton_editar");
-        boton_editar->setGeometry(QRect(540, 340, 93, 29));
+        boton_editar->setGeometry(QRect(550, 340, 93, 29));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/img/icons/I_lapiz.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        boton_editar->setIcon(icon9);
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
@@ -683,7 +714,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 855, 26));
+        menubar->setGeometry(QRect(0, 0, 855, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -731,15 +762,15 @@ public:
         ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Problema 5", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
-        punto->setText(QCoreApplication::translate("MainWindow", "punt", nullptr));
-        Bcompas->setText(QCoreApplication::translate("MainWindow", "compas", nullptr));
-        Bregla->setText(QCoreApplication::translate("MainWindow", "regla", nullptr));
-        Btransportador->setText(QCoreApplication::translate("MainWindow", "transportador", nullptr));
-        texto->setText(QCoreApplication::translate("MainWindow", "texto", nullptr));
-        linea->setText(QCoreApplication::translate("MainWindow", "linea", nullptr));
-        color->setText(QCoreApplication::translate("MainWindow", "color", nullptr));
-        goma->setText(QCoreApplication::translate("MainWindow", "goma", nullptr));
-        limpiar->setText(QCoreApplication::translate("MainWindow", "limpiar", nullptr));
+        punto->setText(QString());
+        Bcompas->setText(QString());
+        Bregla->setText(QString());
+        Btransportador->setText(QString());
+        texto->setText(QString());
+        linea->setText(QString());
+        color->setText(QString());
+        goma->setText(QString());
+        limpiar->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
         modificarperfil->setText(QCoreApplication::translate("MainWindow", "Modicicar Perfil", nullptr));
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
@@ -748,8 +779,7 @@ public:
         label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
         Boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
         Boton_volver_2->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
-        avatar->setText(QString());
-        boton_editar->setText(QCoreApplication::translate("MainWindow", "\342\234\217\357\270\217", nullptr));
+        label->setText(QString());
         et_registro->setText(QCoreApplication::translate("MainWindow", "      Reg\303\255strate", nullptr));
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         et_correo->setText(QCoreApplication::translate("MainWindow", "Correo", nullptr));

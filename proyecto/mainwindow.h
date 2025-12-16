@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QGraphicsLineItem>
 #include "tool.h"
+#include "compass.h"
 
 #include <QSqlDatabase> // Necesario para la conexión
 #include <QSqlQueryModel> // Necesario para el modelo de la tabla
@@ -61,6 +62,8 @@ private slots:
 
 
 
+    void on_Bcompas_clicked();
+
 private:
     Ui::MainWindow *ui;
    // QGraphicsScene *sceneMenu;
@@ -71,6 +74,8 @@ private:
 
     Tool* transportador = nullptr; //inicializar en null por si para evitar errores
     Tool* regla = nullptr;
+    Tool* compasFijo = nullptr;
+    Compass *compas = nullptr;
 
 
     //#########################################################################################################
