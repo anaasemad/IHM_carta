@@ -4,5 +4,6 @@
         <file>icons/compass_leg.svg</file>
         <file>icons/ruler.svg</file>
         <file>icons/transportador.svg</file>
+        <file>icons/avatar.jpg</file>
     </qresource>
 </RCC>

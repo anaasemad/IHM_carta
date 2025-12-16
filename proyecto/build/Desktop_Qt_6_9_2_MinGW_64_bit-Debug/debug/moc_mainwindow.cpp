@@ -52,10 +52,16 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "ponerTexto",
         "ponerPunto",
         "on_color_clicked",
+        "on_boton_entrar_clicked",
+        "on_boton_registro_clicked",
+        "on_calendario_clicked",
+        "date",
+        "on_label_registro_linkActivated",
+        "link",
         "on_boton_historial_clicked",
-        "on_boton_volver_clicked",
-        "on_boton_volver_2_clicked",
-        "on_boton_Modificar_perfil"
+        "on_Boton_volver_clicked",
+        "on_Boton_volver_2_clicked",
+        "on_Modificar_perfil_clicked"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -89,14 +95,26 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         }}),
         // Slot 'on_color_clicked'
         QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_historial_clicked'
+        // Slot 'on_boton_entrar_clicked'
         QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_volver_clicked'
+        // Slot 'on_boton_registro_clicked'
         QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_volver_2_clicked'
-        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_boton_Modificar_perfil'
-        QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_calendario_clicked'
+        QtMocHelpers::SlotData<void(const QDate &)>(16, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QDate, 17 },
+        }}),
+        // Slot 'on_label_registro_linkActivated'
+        QtMocHelpers::SlotData<void(const QString &)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 19 },
+        }}),
+        // Slot 'on_boton_historial_clicked'
+        QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_Boton_volver_clicked'
+        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_Boton_volver_2_clicked'
+        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_Modificar_perfil_clicked'
+        QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -130,10 +148,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->ponerTexto((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 8: _t->ponerPunto((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 9: _t->on_color_clicked(); break;
-        case 10: _t->on_boton_historial_clicked(); break;
-        case 11: _t->on_boton_volver_clicked(); break;
-        case 12: _t->on_boton_volver_2_clicked(); break;
-        case 13: _t->on_boton_Modificar_perfil(); break;
+        case 10: _t->on_boton_entrar_clicked(); break;
+        case 11: _t->on_boton_registro_clicked(); break;
+        case 12: _t->on_calendario_clicked((*reinterpret_cast< std::add_pointer_t<QDate>>(_a[1]))); break;
+        case 13: _t->on_label_registro_linkActivated((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 14: _t->on_boton_historial_clicked(); break;
+        case 15: _t->on_Boton_volver_clicked(); break;
+        case 16: _t->on_Boton_volver_2_clicked(); break;
+        case 17: _t->on_Modificar_perfil_clicked(); break;
         default: ;
         }
     }
@@ -158,14 +180,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 18;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 18)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 14;
+        _id -= 18;
     }
     return _id;
 }

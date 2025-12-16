@@ -12,10 +12,7 @@
 #include <QColorDialog>
 #include "tool.h"
 
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QSqlQuery>
-#include <QSqlError>
+#include <QStandardItemModel>
 
 #include <QSplitter>
 #include <QHBoxLayout>
@@ -131,140 +128,96 @@ void MainWindow::on_boton_lista_clicked()
 
 
 //#############################################################################################
+//################### historial ####################
+void MainWindow::setupHistorialTable()
+{
+    // --- 1. Gestión de Excepciones y Acceso al Singleton ---
+    try {
+        Navigation &nav = Navigation::instance();
+
+        // --- 2. Obtener el Usuario y Sesiones ---
+        // Debes saber qué usuario es el actual. Asumo que el nick es "alumno" como en el código del profesor.
+        const User *currentUser = nav.findUser("user1");
+
+        if (!currentUser) {
+            qDebug() << "ERROR: Usuario 'alumno' no encontrado para cargar historial.";
+            // Si el modelo existente es QSqlQueryModel, necesitamos cambiarlo para usar QStandardItemModel.
+            // Para simplificar, si no hay usuario, retornamos.
+            return;
+        }
+
+        const QList<Session> &sessions = currentUser->sessions();
+
+        // --- 3. Crear el QStandardItemModel (Modelo de Datos C++) ---
+        // 0 filas, 3 columnas (Fecha, Aciertos, Fallos)
+        // Usamos 'this' como padre para que se borre automáticamente.
+        QStandardItemModel *stdModel = new QStandardItemModel(0, 3, this);
+
+        // Configurar los encabezados (headers)
+        stdModel->setHeaderData(0, Qt::Horizontal, tr("Sesión"));
+        stdModel->setHeaderData(1, Qt::Horizontal, tr("Aciertos"));
+        stdModel->setHeaderData(2, Qt::Horizontal, tr("Fallos"));
+
+        // --- 4. Rellenar el Modelo con los Objetos Session ---
+        for (const Session &s : sessions) {
+            QList<QStandardItem*> row;
+
+            QDateTime timestamp = s.timeStamp();
+
+            QString dateString;
+
+            if (timestamp.isValid()) {
+                // Este formato de salida es más estándar y visible en la tabla:
+                dateString = timestamp.toString("dd/MM/yyyy hh:mm:ss");
+            } else {
+                // Si sigue siendo inválido, indica que la capa Navigation no lo lee bien.
+                dateString = "Timestamp Inválido o Nulo";
+            }
+
+            // DEBUG: Muestra la cadena que se está añadiendo (¡MUY IMPORTANTE!)
+            qDebug() << "DEBUG Fecha a tabla: " << dateString;
+
+            row.append(new QStandardItem(dateString));
+            row.append(new QStandardItem(QString::number(s.hits())));
+            row.append(new QStandardItem(QString::number(s.faults())));
+
+            stdModel->appendRow(row);
+        }
+
+        // --- 5. Asignar el nuevo modelo a la tabla ---
+        // ¡IMPORTANTE! Si ya había un modelo, Qt lo liberará automáticamente si le pones 'this' como padre.
+        ui->tableViewHistorial->setModel(stdModel);
+        ui->tableViewHistorial->setColumnWidth(0, 180); // Un poco más ancho para el formato completo
+        ui->tableViewHistorial->resizeColumnsToContents();
+
+    } catch (const NavDAOException &ex) {
+        // Mostrar un mensaje de error si hay un problema al acceder a Navigation (ej: BBDD cerrada)
+        QMessageBox::critical(this, tr("Error de BBDD"), tr("No se pudo cargar el historial: %1").arg(ex.what()));
+    }
+}
+
 void MainWindow::on_boton_historial_clicked()
 {
     m_previousWidgetIndex = ui->stackedWidget->currentIndex();
 
     ui->stackedWidget->setCurrentWidget(ui->historial);
 }
-
-void MainWindow::on_boton_Modificar_perfil()
+void MainWindow::on_Modificar_perfil_clicked()
 {
     m_previousWidgetIndex = ui->stackedWidget->currentIndex();
 
     ui->stackedWidget->setCurrentWidget(ui->editar_perfil);
 }
-
-
-void MainWindow::on_boton_volver_clicked()
+void MainWindow::on_Boton_volver_clicked()
 {
     ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
 }
-void MainWindow::on_boton_volver_2_clicked()
+void MainWindow::on_Boton_volver_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
-}
-
-
-/*bool MainWindow::initDatabase()
-{
-    qDebug() << "he llamado a init bbdd";
-    // Carga el driver y crea una conexión
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
-
-    // NOTA: El archivo .sqlite debe estar en la carpeta de ejecución de tu proyecto (build)
-    m_db.setDatabaseName("C:/Users/bolum/Documents/IHM/GITHUB/IHM_carta/navdb/navdb.sqlite");
-
-    if (!m_db.open()) {
-        qDebug() << "Error al abrir la base de datos:" << m_db.lastError().text();
-        return false;
-    }
-
-    qDebug() << "Conexión a la BBDD 'navdb.sqlite' establecida correctamente.";
-
-    QStringList tables = m_db.tables();
-    if (tables.isEmpty()) {
-        qDebug() << "ADVERTENCIA: No se encontraron tablas en la BBDD, ¿está vacía?";
-    } else {
-        qDebug() << "Tablas encontradas:" << tables; // Esto nos dirá el nombre REAL de la tabla
-    }
-
-    // Configurar el modelo la primera vez
-    //setupHistorialTable();
-
-    return true;
-}
-
-void MainWindow::setupHistorialTable()
-{
-    qDebug() << "he entrado en setup";
-    // 1. Inicialización del modelo (para evitar el error "No model set")
-    if (m_historialModel) {
-        delete m_historialModel;
-    }
-    qDebug() << "primera funcion";
-    m_historialModel = new QSqlQueryModel(this);
-
-    qDebug() << "segunda funcion";
-
-    // Asignamos el modelo inmediatamente (incluso si está vacío)
-    ui->tableViewHistorial->setModel(m_historialModel); // Importante que esto esté antes del posible fallo
-    qDebug() << "despues de asignar modelo";
-
-    if (!m_db.isOpen()) {
-        qDebug() << "ADVERTENCIA: La BBDD no está abierta. Mostrando tabla vacía.";
-    } else {
-        qDebug() << "DEBUG 1: BBDD abierta. Preparando consulta."; // <-- Nuevo Debug 1
-
-        // La consulta con la corrección de la tabla 'session'
-        //const QString queryStr = "SELECT timeStamp, hits, faults FROM session ORDER BY timeStamp DESC";
-        //const QString queryStr = "SELECT * FROM session"; // <-- ¡NUEVA PRUEBA CRÍTICA!
-        const QString queryStr = "SELECT * FROM user"; // <-- ¡NUEVA PRUEBA CRÍTICA!
-
-        //El fallo casi seguro ocurre en la siguiente línea:
-        m_historialModel->setQuery(queryStr, m_db);
-
-        qDebug() << "DEBUG 2: Consulta ejecutada. Verificando errores SQL."; // <-- Nuevo Debug 2
-
-        if (m_historialModel->lastError().isValid()) {
-            qDebug() << "Error en la consulta SQL:" << m_historialModel->lastError().text();
-            qDebug() << "La consulta fallida fue:" << queryStr;
-        }
-    }
-
-    // 3. Configura los encabezados de las columnas (funciona incluso si no hay datos)
-    m_historialModel->setHeaderData(0, Qt::Horizontal, tr("Fecha / Sesión"));
-    m_historialModel->setHeaderData(1, Qt::Horizontal, tr("Aciertos"));
-    m_historialModel->setHeaderData(2, Qt::Horizontal, tr("Fallos"));
-
-    ui->tableViewHistorial->resizeColumnsToContents();
-
-    qDebug() << "DEBUG 3: Configuración de tabla finalizada."; // <-- Nuevo Debug 3
-}
-
-void MainWindow::on_boton_historial_clicked()
-{
-
-    //##################################################################################################
-    // --- 1. Inicializar la BBDD ---
-    if (!initDatabase()) {
-        qDebug() << "ERROR: Falló la inicialización de la BBDD. La aplicación no funcionará correctamente.";
-    } else{
-        qDebug() << "he iniciado la bbdd";
-    }
-    //##################################################################################################
-    // 1. Corregido el stackedWidget (ver respuesta anterior)
-
-
-    ui->stackedWidget->setCurrentWidget(ui->historial);
-
-    // 2. Recargar/Actualizar los datos del modelo al entrar en la página
-    if (m_historialModel) {
-        // Ejecuta de nuevo la consulta para mostrar datos frescos
-        qDebug() << "antes de setup";
-       setupHistorialTable();
-        if (m_historialModel->lastError().isValid()) {
-            qDebug() << "Error al recargar el modelo:" << m_historialModel->lastError().text();
-        }
-    } else {
-        // Si por alguna razón el modelo es null, intenta configurarlo de nuevo
-        setupHistorialTable();
-    }
-
 }
 
 //#############################################################################################
-*/
 
 
 
