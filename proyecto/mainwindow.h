@@ -43,6 +43,8 @@ private slots:
     void ponerPunto(bool enabled);
 
     void on_color_clicked();
+    void on_boton_entrar_clicked();
+    void on_boton_registro_clicked();
 
 
 //#################################################################################################################
@@ -94,5 +96,10 @@ private:
     void updateToolPositions();
 
     void updateStatusLabel(const QPointF &scenePos, const QString &status); //label coordenadas y actividad
+
+    // Usuario registrado (simulación)
+    QString usuarioRegistrado;
+    QString passwordRegistrado;
+
 };
 #endif // MAINWINDOW_H
