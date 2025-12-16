@@ -1550,10 +1550,10 @@
         <widget class="QFrame" name="recuadro_reg">
          <property name="geometry">
           <rect>
-           <x>80</x>
+           <x>70</x>
            <y>10</y>
-           <width>701</width>
-           <height>611</height>
+           <width>731</width>
+           <height>621</height>
           </rect>
          </property>
          <property name="frameShape">
@@ -1661,6 +1661,9 @@
             <height>28</height>
            </rect>
           </property>
+          <property name="echoMode">
+           <enum>QLineEdit::EchoMode::Password</enum>
+          </property>
          </widget>
          <widget class="QDateEdit" name="campo_cumple">
           <property name="geometry">
@@ -1675,8 +1678,8 @@
          <widget class="QCalendarWidget" name="calendario">
           <property name="geometry">
            <rect>
-            <x>400</x>
-            <y>400</y>
+            <x>450</x>
+            <y>410</y>
             <width>272</width>
             <height>195</height>
            </rect>
@@ -1685,8 +1688,8 @@
          <widget class="QPushButton" name="boton_registro">
           <property name="geometry">
            <rect>
-            <x>240</x>
-            <y>560</y>
+            <x>320</x>
+            <y>570</y>
             <width>90</width>
             <height>29</height>
            </rect>
@@ -1700,12 +1703,12 @@
            <rect>
             <x>90</x>
             <y>190</y>
-            <width>63</width>
+            <width>591</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
          <widget class="QLabel" name="error_correo">
@@ -1713,12 +1716,12 @@
            <rect>
             <x>90</x>
             <y>320</y>
-            <width>63</width>
+            <width>511</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
          <widget class="QLabel" name="error_pass">
@@ -1726,12 +1729,12 @@
            <rect>
             <x>80</x>
             <y>440</y>
-            <width>63</width>
+            <width>291</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
          <widget class="QLabel" name="error_edad">
@@ -1739,12 +1742,12 @@
            <rect>
             <x>90</x>
             <y>560</y>
-            <width>63</width>
+            <width>151</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
         </widget>

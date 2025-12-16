@@ -7,6 +7,7 @@
 #include <QKeyEvent> // NUEVO
 #include <QPen> // NUEVO
 #include <QApplication> // NUEVO
+#include <QMessageBox>
 #include <QDebug>
 #include <QColorDialog>
 #include "tool.h"
@@ -677,6 +678,124 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
     // Actualizar el QLabel en la UI
     ui->labelStatus->setText(fullText);
 }
+
+// Registrarse
+void MainWindow::on_boton_registro_clicked()
+{
+    // Ocultar errores
+    ui->error_user->hide();
+    ui->error_correo->hide();
+    ui->error_pass->hide();
+    ui->error_edad->hide();
+
+    QString usuario = ui->campo_name->text();
+    QString correo = ui->campo_correo->text();
+    QString password = ui->campo_pass_2->text();
+    QDate nacimiento = ui->campo_cumple->date(); //
+
+    bool valido = true;
+
+    //
+    QRegularExpression reUser("^[A-Za-z0-9_-]{6,15}$");
+    if (!reUser.match(usuario).hasMatch()) {
+        ui->error_user->setText(
+            "Usuario entre 6 y 15 caracteres (letras, números, - o _)"
+            );
+        ui->error_user->setStyleSheet("color:red;");
+        ui->error_user->show();
+        valido = false;
+    }
+
+    //
+    QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    if (!reMail.match(correo).hasMatch()) {
+        ui->error_correo->setText("Correo electrónico no válido");
+        ui->error_correo->setStyleSheet("color:red;");
+        ui->error_correo->show();
+        valido = false;
+    }
+
+    //
+    QRegularExpression rePass(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
+        );
+
+    if (!rePass.match(password).hasMatch()) {
+        ui->error_pass->setText(
+            "8-20 caracteres, mayúscula, minúscula, número y carácter especial"
+            );
+        ui->error_pass->setStyleSheet("color:red;");
+        ui->error_pass->show();
+        valido = false;
+    }
+
+    // EDAD > 16
+    if (nacimiento.addYears(16) > QDate::currentDate()) {
+        ui->error_edad->setText("Debes tener más de 16 años");
+        ui->error_edad->setStyleSheet("color:red;");
+        ui->error_edad->show();
+        valido = false;
+    }
+
+    // Cambiar para después
+    if (valido) {
+        QMessageBox::information(
+            this,
+            "Registro completado",
+            "Usuario registrado correctamente"
+            );
+
+
+        // Aquí luego:
+        // Guardar usuario registrado
+        usuarioRegistrado = usuario;
+        passwordRegistrado = password;
+
+        // Ir a la pantalla de inicio de sesión
+        ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
+
+    }
+
+
+}
+
+
+// Inicio sesion
+void MainWindow::on_boton_entrar_clicked()
+{
+    QString usuario = ui->campo_user->text();
+    QString password = ui->campo_pass->text();
+
+
+    if (usuario.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "Introduce usuario y contraseña"
+            );
+        return;
+    }
+
+    // Comprobación de usuario existente
+    if (usuario == usuarioRegistrado &&
+        password == passwordRegistrado) {
+
+        // Login correcto
+        ui->campo_user->clear();
+        ui->campo_pass->clear();
+
+        // Acceso al resto de funciones
+        ui->stackedWidget->setCurrentWidget(ui->menu_principal);
+
+    } else {
+        QMessageBox::critical(
+            this,
+            "Error de autenticación",
+            "Usuario o contraseña incorrectos"
+            );
+    }
+}
+
 
 
 
