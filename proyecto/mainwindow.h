@@ -57,9 +57,10 @@ private slots:
     void on_boton_historial_clicked();
     void on_Boton_volver_clicked();
     void on_Boton_volver_2_clicked();
-    void on_Modificar_perfil_clicked();
+    //void on_B_MenuUsuario_clicked();
+    void on_boton_editar_avatar_clicked();
+    void on_boton_guardar_clicked();
 //#################################################################################################################
-
 
 
     void on_Bcompas_clicked();
@@ -87,6 +88,7 @@ private:
     // --- Funciones de BBDD ---
     bool initDatabase(); // Inicializa la conexión y el modelo
     void setupHistorialTable(); // Configura la tabla y el modelo
+    void setupPerfil();
     //#########################################################################################################
 
 

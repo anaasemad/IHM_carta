@@ -19,8 +19,7 @@
 
 #include "navigation.h"
 #include "navdaoexception.h"
-
-
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
-
-
 
     //*****************************************************SPLITTER
     if (ui->horizontalWidget->layout()) {
@@ -88,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Conectar acciones a los cambios de página
     connect(actionPerfil, &QAction::triggered, this, [=]() {
+        setupPerfil();
         ui->stackedWidget->setCurrentWidget(ui->editar_perfil);
     });
 
@@ -196,17 +194,12 @@ void MainWindow::setupHistorialTable()
         Navigation &nav = Navigation::instance();
 
         // --- 2. Obtener el Usuario y Sesiones ---
-        // Debes saber qué usuario es el actual. Asumo que el nick es "alumno" como en el código del profesor.
-        const User *currentUser = nav.findUser("user1");
+        //const auto &users = nav.users();
+        //const User *currentUser = nav.findUser("user1");
+        //QString usuario = ui->campo_user->text();
+        const User *u = nav.findUser("user1"); //CAMBIAR POR USUARIO CONCRETO
 
-        if (!currentUser) {
-            qDebug() << "ERROR: Usuario 'alumno' no encontrado para cargar historial.";
-            // Si el modelo existente es QSqlQueryModel, necesitamos cambiarlo para usar QStandardItemModel.
-            // Para simplificar, si no hay usuario, retornamos.
-            return;
-        }
-
-        const QList<Session> &sessions = currentUser->sessions();
+        const QList<Session> &sessions = u->sessions();
 
         // --- 3. Crear el QStandardItemModel (Modelo de Datos C++) ---
         // 0 filas, 3 columnas (Fecha, Aciertos, Fallos)
@@ -222,25 +215,35 @@ void MainWindow::setupHistorialTable()
         for (const Session &s : sessions) {
             QList<QStandardItem*> row;
 
-            QDateTime timestamp = s.timeStamp();
+            // 1. OBTENER EL DATETIME (Fecha y Hora)
+            // Usamos QDateTime porque el historial necesita saber la hora exacta de la sesión
+            //QDateTime sesion = s.timeStamp();
+            QDateTime sesion = s.timeStamp();
+            qDebug() << "Dato de la sesión:" << s.timeStamp() << "Aciertos:" << s.hits();
 
-            QString dateString;
+            // 2. CREAR EL OBJETO (¡Paso vital: el 'new'!)
+            // Sin el 'new', el programa intenta escribir en una memoria que no existe y se cierra.
+            QStandardItem* itemFecha = new QStandardItem();
 
-            if (timestamp.isValid()) {
-                // Este formato de salida es más estándar y visible en la tabla:
-                dateString = timestamp.toString("dd/MM/yyyy hh:mm:ss");
-            } else {
-                // Si sigue siendo inválido, indica que la capa Navigation no lo lee bien.
-                dateString = "Timestamp Inválido o Nulo";
-            }
+            // Guardamos el dato real (objeto QDateTime)
+            itemFecha->setData(sesion, Qt::EditRole);
+            qDebug() << "ItemFecha:" << itemFecha;
+            // Ponemos el texto que verá el usuario (Día/Mes/Año Hora:Min:Seg)
+            itemFecha->setText(sesion.toString("dd/MM/yyyy HH:mm:ss"));
+            qDebug() << "ItemFecha_final:" << itemFecha;
 
-            // DEBUG: Muestra la cadena que se está añadiendo (¡MUY IMPORTANTE!)
-            qDebug() << "DEBUG Fecha a tabla: " << dateString;
+            // 3. AÑADIR LAS COLUMNAS A LA FILA
+            // Primera columna: El objeto que acabamos de configurar
+            //row.append(new QStandardItem(sesion.toString("dd/MM/yyyy HH:mm:ss")));
+            row.append(itemFecha);
 
-            row.append(new QStandardItem(dateString));
+            // Segunda columna: Aciertos (hits)
             row.append(new QStandardItem(QString::number(s.hits())));
+
+            // Tercera columna: Fallos (faults)
             row.append(new QStandardItem(QString::number(s.faults())));
 
+            // 4. INSERTAR LA FILA EN EL MODELO
             stdModel->appendRow(row);
         }
 
@@ -251,8 +254,7 @@ void MainWindow::setupHistorialTable()
         ui->tableViewHistorial->resizeColumnsToContents();
 
     } catch (const NavDAOException &ex) {
-        // Mostrar un mensaje de error si hay un problema al acceder a Navigation (ej: BBDD cerrada)
-        QMessageBox::critical(this, tr("Error de BBDD"), tr("No se pudo cargar el historial: %1").arg(ex.what()));
+        QMessageBox::critical(this, tr("DB error"), ex.what());
     }
 }
 
@@ -260,26 +262,92 @@ void MainWindow::on_boton_historial_clicked()
 {
     m_previousWidgetIndex = ui->stackedWidget->currentIndex();
 
-    ui->stackedWidget->setCurrentWidget(ui->historial);
-}
-void MainWindow::on_Modificar_perfil_clicked()
-{
-    m_previousWidgetIndex = ui->stackedWidget->currentIndex();
+    setupHistorialTable();
 
-    ui->stackedWidget->setCurrentWidget(ui->editar_perfil);
+    ui->stackedWidget->setCurrentWidget(ui->historial);
 }
 void MainWindow::on_Boton_volver_clicked()
 {
     ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
 }
+
+//################################### Modificar perfil ###############################################
+void MainWindow::setupPerfil()
+{
+    try{
+        //QString usuario = ui->campo_user->text();
+        Navigation &nav = Navigation::instance();
+        const User *u = nav.findUser("user1");                  //CAMBIAR POR USUARIO ACTUAL!!!!!
+
+        ui->labelNombre->setText(u->nickName());
+        ui->labelEmail->setText(u->email());
+        ui->labelContrasenia->setText(u->password());
+        //ui->avatar->setPixmap(u->avatar());
+        ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
+        ui->dateEdit->setDate(u->birthdate());
+
+    } catch (const NavDAOException &ex) {
+        QMessageBox::critical(this, tr("DB error"), ex.what());
+    }
+}
+
 void MainWindow::on_Boton_volver_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
 }
 
+void MainWindow::on_boton_editar_avatar_clicked()
+{
+    // 1. Abrir el buscador de archivos
+    // Filtramos para que solo aparezcan imágenes
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Seleccionar Imagen de Perfil"), "", tr("Imágenes (*.png *.jpg *.jpeg *.bmp)"));
+
+    // 2. Comprobar si el usuario seleccionó algo o canceló
+    if (!fileName.isEmpty()) {
+        QImage imagen(fileName); // Cargamos la imagen desde la ruta
+
+        if (!imagen.isNull()) {
+            // 3. Actualizar la PREVIA en la interfaz
+            // Como vimos antes, QLabel necesita QPixmap
+            ui->avatar->setPixmap(QPixmap::fromImage(imagen));
+            ui->avatar->setScaledContents(true);
+
+            // 4. Guardar la imagen en el objeto User para luego hacer el updateUser
+            // Suponiendo que 'u' es tu puntero al usuario
+            // u->setAvatar(imagen);
+
+            qDebug() << "Nueva imagen cargada desde:" << fileName;
+        } else {
+            QMessageBox::warning(this, tr("Error"), tr("No se pudo cargar la imagen."));
+        }
+    }
+}
+
+void MainWindow::on_boton_guardar_clicked()
+{
+    Navigation &nav = Navigation::instance();
+    User *u = nav.findUser("user1");
+    u->setEmail(ui->labelEmail->text());
+    u->setPassword(ui->labelContrasenia->text());
+    u->setBirthdate(ui->dateEdit->date());
+    // Verificamos si el label 'avatar' tiene algún contenido
+    if (!ui->avatar->pixmap().isNull()) {
+        // 1. Obtenemos el QPixmap actual del label
+        QPixmap pix = ui->avatar->pixmap();
+
+        // 2. Lo convertimos a QImage y se lo pasamos al usuario
+        u->setAvatar(pix.toImage());
+    }
+    //ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
+    //cambiar nickname??
+
+    nav.updateUser(*u);
+
+    QMessageBox::information(this, "Éxito", "Perfil actualizado");
+
+}
+
 //#############################################################################################
-
-
 
 /*void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {

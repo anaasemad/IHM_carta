@@ -31,7 +31,6 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -62,11 +61,10 @@ public:
     QLineEdit *campo_pass;
     QPushButton *boton_entrar;
     QWidget *historial;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout_5;
-    QTableView *tableViewHistorial;
     QLabel *label_filtro;
     QDateEdit *dateEditFiltro;
+    QTableView *tableViewHistorial;
+    QLabel *modificarperfil_2;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
     QWidget *horizontalWidget;
@@ -112,13 +110,13 @@ public:
     QLabel *label_email;
     QLabel *label_contrasenia;
     QLabel *label_compleanios;
-    QTextEdit *textEdit;
-    QTextEdit *textEdit_2;
-    QTextEdit *textEdit_3;
     QDateEdit *dateEdit;
-    QPushButton *Boton_guardar;
-    QLabel *label;
-    QPushButton *boton_editar;
+    QPushButton *boton_guardar;
+    QLabel *avatar;
+    QPushButton *boton_editar_avatar;
+    QLineEdit *labelNombre;
+    QLineEdit *labelEmail;
+    QLineEdit *labelContrasenia;
     QWidget *registro;
     QWidget *fondo_2;
     QFrame *recuadro_reg;
@@ -237,7 +235,7 @@ public:
         link_registro->setOpenExternalLinks(false);
         campo_user = new QLineEdit(recuadro_ini);
         campo_user->setObjectName("campo_user");
-        campo_user->setGeometry(QRect(70, 160, 421, 28));
+        campo_user->setGeometry(QRect(70, 160, 281, 28));
         campo_pass = new QLineEdit(recuadro_ini);
         campo_pass->setObjectName("campo_pass");
         campo_pass->setGeometry(QRect(70, 270, 431, 28));
@@ -251,23 +249,19 @@ public:
         stackedWidget->addWidget(ini_sesion);
         historial = new QWidget();
         historial->setObjectName("historial");
-        verticalLayoutWidget = new QWidget(historial);
-        verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(30, 130, 781, 461));
-        verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout_5->setObjectName("verticalLayout_5");
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        tableViewHistorial = new QTableView(verticalLayoutWidget);
-        tableViewHistorial->setObjectName("tableViewHistorial");
-
-        verticalLayout_5->addWidget(tableViewHistorial);
-
         label_filtro = new QLabel(historial);
         label_filtro->setObjectName("label_filtro");
         label_filtro->setGeometry(QRect(480, 100, 121, 20));
         dateEditFiltro = new QDateEdit(historial);
         dateEditFiltro->setObjectName("dateEditFiltro");
         dateEditFiltro->setGeometry(QRect(620, 100, 110, 26));
+        tableViewHistorial = new QTableView(historial);
+        tableViewHistorial->setObjectName("tableViewHistorial");
+        tableViewHistorial->setGeometry(QRect(190, 140, 541, 459));
+        modificarperfil_2 = new QLabel(historial);
+        modificarperfil_2->setObjectName("modificarperfil_2");
+        modificarperfil_2->setGeometry(QRect(60, 30, 321, 31));
+        modificarperfil_2->setFont(font);
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -592,7 +586,8 @@ public:
         editar_perfil->setObjectName("editar_perfil");
         modificarperfil = new QLabel(editar_perfil);
         modificarperfil->setObjectName("modificarperfil");
-        modificarperfil->setGeometry(QRect(30, 60, 121, 20));
+        modificarperfil->setGeometry(QRect(10, 10, 321, 31));
+        modificarperfil->setFont(font);
         nombre = new QLabel(editar_perfil);
         nombre->setObjectName("nombre");
         nombre->setGeometry(QRect(100, 140, 63, 20));
@@ -605,30 +600,30 @@ public:
         label_compleanios = new QLabel(editar_perfil);
         label_compleanios->setObjectName("label_compleanios");
         label_compleanios->setGeometry(QRect(100, 390, 91, 20));
-        textEdit = new QTextEdit(editar_perfil);
-        textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(100, 170, 171, 31));
-        textEdit_2 = new QTextEdit(editar_perfil);
-        textEdit_2->setObjectName("textEdit_2");
-        textEdit_2->setGeometry(QRect(100, 250, 211, 31));
-        textEdit_3 = new QTextEdit(editar_perfil);
-        textEdit_3->setObjectName("textEdit_3");
-        textEdit_3->setGeometry(QRect(100, 340, 151, 31));
         dateEdit = new QDateEdit(editar_perfil);
         dateEdit->setObjectName("dateEdit");
         dateEdit->setGeometry(QRect(100, 420, 110, 26));
-        Boton_guardar = new QPushButton(editar_perfil);
-        Boton_guardar->setObjectName("Boton_guardar");
-        Boton_guardar->setGeometry(QRect(340, 470, 111, 71));
-        label = new QLabel(editar_perfil);
-        label->setObjectName("label");
-        label->setGeometry(QRect(500, 160, 181, 171));
-        label->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
-        label->setScaledContents(true);
-        boton_editar = new QPushButton(editar_perfil);
-        boton_editar->setObjectName("boton_editar");
-        boton_editar->setGeometry(QRect(550, 340, 93, 29));
-        boton_editar->setIcon(icon3);
+        boton_guardar = new QPushButton(editar_perfil);
+        boton_guardar->setObjectName("boton_guardar");
+        boton_guardar->setGeometry(QRect(340, 470, 111, 71));
+        avatar = new QLabel(editar_perfil);
+        avatar->setObjectName("avatar");
+        avatar->setGeometry(QRect(500, 160, 181, 171));
+        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
+        avatar->setScaledContents(true);
+        boton_editar_avatar = new QPushButton(editar_perfil);
+        boton_editar_avatar->setObjectName("boton_editar_avatar");
+        boton_editar_avatar->setGeometry(QRect(550, 340, 93, 29));
+        boton_editar_avatar->setIcon(icon3);
+        labelNombre = new QLineEdit(editar_perfil);
+        labelNombre->setObjectName("labelNombre");
+        labelNombre->setGeometry(QRect(100, 170, 113, 26));
+        labelEmail = new QLineEdit(editar_perfil);
+        labelEmail->setObjectName("labelEmail");
+        labelEmail->setGeometry(QRect(100, 250, 221, 26));
+        labelContrasenia = new QLineEdit(editar_perfil);
+        labelContrasenia->setObjectName("labelContrasenia");
+        labelContrasenia->setGeometry(QRect(100, 330, 171, 26));
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
@@ -694,7 +689,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 21));
+        menubar->setGeometry(QRect(0, 0, 989, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -702,7 +697,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(2);
         stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
@@ -724,6 +719,7 @@ public:
 "<html><head/><body><p><br/></p></body></html>", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
+        modificarperfil_2->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
 
@@ -754,13 +750,13 @@ public:
         Btransportador->setText(QString());
         Bregla->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
-        modificarperfil->setText(QCoreApplication::translate("MainWindow", "Modicicar Perfil", nullptr));
+        modificarperfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
         label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
-        Boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
-        label->setText(QString());
+        boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
+        avatar->setText(QString());
         et_registro->setText(QCoreApplication::translate("MainWindow", "      Reg\303\255strate", nullptr));
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         et_correo->setText(QCoreApplication::translate("MainWindow", "Correo", nullptr));

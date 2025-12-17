@@ -103,7 +103,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -222,7 +222,7 @@
              <rect>
               <x>70</x>
               <y>160</y>
-              <width>421</width>
+              <width>281</width>
               <height>28</height>
              </rect>
             </property>
@@ -259,21 +259,6 @@
        </layout>
       </widget>
       <widget class="QWidget" name="historial">
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>781</width>
-          <height>461</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QTableView" name="tableViewHistorial"/>
-         </item>
-        </layout>
-       </widget>
        <widget class="QLabel" name="label_filtro">
         <property name="geometry">
          <rect>
@@ -295,6 +280,34 @@
           <width>110</width>
           <height>26</height>
          </rect>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableViewHistorial">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>140</y>
+          <width>541</width>
+          <height>459</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="modificarperfil_2">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>30</y>
+          <width>321</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Historial</string>
         </property>
        </widget>
       </widget>
@@ -944,14 +957,19 @@
        <widget class="QLabel" name="modificarperfil">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>60</y>
-          <width>121</width>
-          <height>20</height>
+          <x>10</x>
+          <y>10</y>
+          <width>321</width>
+          <height>31</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
         <property name="text">
-         <string>Modicicar Perfil</string>
+         <string>Modificar Perfil</string>
         </property>
        </widget>
        <widget class="QLabel" name="nombre">
@@ -1006,36 +1024,6 @@
          <string>Cumpleaños</string>
         </property>
        </widget>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>170</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>250</y>
-          <width>211</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit_3">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>340</y>
-          <width>151</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QDateEdit" name="dateEdit">
         <property name="geometry">
          <rect>
@@ -1046,7 +1034,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QPushButton" name="Boton_guardar">
+       <widget class="QPushButton" name="boton_guardar">
         <property name="geometry">
          <rect>
           <x>340</x>
@@ -1059,7 +1047,7 @@
          <string>Guardar</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="avatar">
         <property name="geometry">
          <rect>
           <x>500</x>
@@ -1078,7 +1066,7 @@
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QPushButton" name="boton_editar">
+       <widget class="QPushButton" name="boton_editar_avatar">
         <property name="geometry">
          <rect>
           <x>550</x>
@@ -1090,6 +1078,36 @@
         <property name="icon">
          <iconset resource="../resources/imagenes.qrc">
           <normaloff>:/img/icons/I_lapiz.png</normaloff>:/img/icons/I_lapiz.png</iconset>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="labelNombre">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>170</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="labelEmail">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>250</y>
+          <width>221</width>
+          <height>26</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="labelContrasenia">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>330</y>
+          <width>171</width>
+          <height>26</height>
+         </rect>
         </property>
        </widget>
       </widget>
@@ -1319,7 +1337,7 @@
      <x>0</x>
      <y>0</y>
      <width>989</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
