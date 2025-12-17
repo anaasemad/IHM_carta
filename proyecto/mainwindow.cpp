@@ -248,7 +248,7 @@ void MainWindow::on_boton_historial_clicked()
 }
 void MainWindow::on_Boton_volver_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
+    ui->stackedWidget->setCurrentWidget(ui->mapa);
 }
 
 //################################### Modificar perfil ###############################################
@@ -273,7 +273,7 @@ void MainWindow::setupPerfil()
 
 void MainWindow::on_Boton_volver_2_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(m_previousWidgetIndex);
+    ui->stackedWidget->setCurrentWidget(ui->mapa);
 }
 
 void MainWindow::on_boton_editar_avatar_clicked()
