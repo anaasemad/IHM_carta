@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QColorDialog>
 #include "tool.h"
+#include <QFile>
 
 #include <QStandardItemModel>
 
@@ -31,6 +32,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
+    QFile file(":/qss/estilos/estilos.qss"); //ruta al css
+    if (file.open(QFile::ReadOnly)){
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this -> setStyleSheet(styleSheet);
+        file.close();
+    }
+
     //*****************************************************SPLITTER
     if (ui->horizontalWidget->layout()) {
         delete ui->horizontalWidget->layout();//si no borramos el layout el splitter se pone mal
@@ -46,11 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     layout->setSpacing(0);
     layout->addWidget(splitter);
     //*************************************************************BARRA HERRAMIENTAS
-
-    ui->widget_2->setAttribute(Qt::WA_StyledBackground, true);
-    ui->widget_2->setStyleSheet(
-        "QWidget#widget_2 { background-color:  #D5D5D5;}"//barra herramientas gris claro
-        );
 
 
     view = ui->graphicsView;
@@ -93,32 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
         // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
         ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
     });
-
-    //colores barra:
-    ui->MenuSup->setAttribute(Qt::WA_StyledBackground, true);
-    ui->MenuSup->setStyleSheet(
-        "QWidget#MenuSup { background-color:  #CED9E4;}"
-        );
     //boton usuario
     ui->B_MenuUsuario->setFixedSize(60, 60);
-
-    ui->B_MenuUsuario->setStyleSheet(
-        "QPushButton {"
-        "  background-color: #4E7592;"
-        "  border-radius: 30px;"//radio
-        "  border: 2px solid white;"
-        "}"
-        "QPushButton::menu-indicator { image: none; }" // Quita la flechita del menú
-        );
-
-//#################################################################################BOTONES PROBLEMAS
-    ui->boton_alet->setAttribute(Qt::WA_StyledBackground, true);
-    ui->boton_alet->setStyleSheet(
-        "QWidget#boton_alet { background-color:  #404064;}");
-
-    ui->boton_lista->setAttribute(Qt::WA_StyledBackground, true);
-    ui->boton_lista->setStyleSheet(
-        "QWidget#boton_lista { background-color:  #404064;}");
 
 
 
