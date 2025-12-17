@@ -364,6 +364,8 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsItemGroup \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsSceneMouseEvent \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/QtMath \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qsqldatabase.h \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qtsqlglobal.h \
@@ -415,8 +417,8 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 release/compass.o: ../../compass.cpp ../../compass.h \
-		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsItemGroup \
-		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qgraphicsitem.h \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsSceneWheelEvent \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qtguiglobal.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qglobal.h \
@@ -469,6 +471,9 @@ release/compass.o: ../../compass.cpp ../../compass.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qtguiexports.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qobject.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qnamespace.h \
@@ -512,15 +517,9 @@ release/compass.o: ../../compass.cpp ../../compass.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qeventloop.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qdatastream.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qfloat16.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qmath.h \
@@ -532,6 +531,21 @@ release/compass.o: ../../compass.cpp ../../compass.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qeventloop.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qpoint.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/q23utility.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/q20utility.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qrect.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qmargins.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qsize.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qpolygon.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qset.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qhash.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/QSizeF \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsItemGroup \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qvariant.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qdebug.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qtextstream.h \
@@ -541,18 +555,9 @@ release/compass.o: ../../compass.cpp ../../compass.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qmap.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qset.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qhash.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/q23utility.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/q20utility.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qrect.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qmargins.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qsize.h \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/qpoint.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qpainterpath.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qtransform.h \
-		C:/Qt/6.9.2/mingw_64/include/QtGui/qpolygon.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qregion.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qwindowdefs.h \
 		C:/Qt/6.9.2/mingw_64/include/QtGui/qwindowdefs_win.h \
@@ -573,9 +578,49 @@ release/compass.o: ../../compass.cpp ../../compass.h \
 		C:/Qt/6.9.2/mingw_64/include/QtSvg/qtsvgglobal.h \
 		C:/Qt/6.9.2/mingw_64/include/QtSvg/qtsvgexports.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsSceneMouseEvent \
-		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/QtMath \
-		C:/Qt/6.9.2/mingw_64/include/QtCore/QDebug
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QPainter \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qpainter.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qtextoption.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qbrush.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qfontinfo.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qfont.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qendian.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qfontvariableaxis.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qfontmetrics.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QTransform \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/QDebug \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QCursor \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qcursor.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qbitmap.h \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qcoreapplication.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qnativeinterface.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qfuture.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qfutureinterface.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qmutex.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qtsan_impl.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qresultstore.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qfuture_impl.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qthreadpool.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qthread.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qrunnable.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qexception.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qpromise.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/qguiapplication_platform.h \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/qgraphicsscene.h \
+		C:/Qt/6.9.2/mingw_64/include/QtSvg/QSvgRenderer \
+		C:/Qt/6.9.2/mingw_64/include/QtSvg/qsvgrenderer.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qxmlstream.h \
+		C:/Qt/6.9.2/mingw_64/include/QtCore/qiodevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\compass.o ..\..\compass.cpp
 
 release/main.o: ../../main.cpp ../../mainwindow.h \
@@ -804,6 +849,8 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsItemGroup \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsSceneMouseEvent \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/QtMath \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qsqldatabase.h \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qtsqlglobal.h \
@@ -1057,6 +1104,8 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsItemGroup \
 		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsSceneMouseEvent \
 		C:/Qt/6.9.2/mingw_64/include/QtCore/QtMath \
+		C:/Qt/6.9.2/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.9.2/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qsqldatabase.h \
 		C:/Qt/6.9.2/mingw_64/include/QtSql/qtsqlglobal.h \

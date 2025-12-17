@@ -42,6 +42,12 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_2;
+    QWidget *MenuSup;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *Boton_volver_2;
+    QSpacerItem *horizontalSpacer_3;
+    QPushButton *boton_historial;
+    QPushButton *B_MenuUsuario;
     QStackedWidget *stackedWidget;
     QWidget *ini_sesion;
     QVBoxLayout *verticalLayout_4;
@@ -61,12 +67,8 @@ public:
     QTableView *tableViewHistorial;
     QLabel *label_filtro;
     QDateEdit *dateEditFiltro;
-    QPushButton *Boton_volver;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
-    QLabel *barra_arriba;
-    QPushButton *Modificar_perfil;
-    QPushButton *boton_historial;
     QWidget *horizontalWidget;
     QHBoxLayout *horizontalLayout_2;
     QStackedWidget *stackedWidget_2;
@@ -86,19 +88,22 @@ public:
     QVBoxLayout *verticalLayout_3;
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer_3;
     QWidget *barra_herramienta;
-    QPushButton *punto;
-    QPushButton *Bcompas;
-    QPushButton *Bregla;
-    QPushButton *Btransportador;
-    QPushButton *texto;
-    QPushButton *linea;
-    QPushButton *color;
-    QPushButton *goma;
+    QHBoxLayout *horizontalLayout_3;
+    QSlider *horizontalSlider;
+    QLabel *label_4;
     QPushButton *limpiar;
     QSpinBox *grosor;
-    QSlider *horizontalSlider;
+    QPushButton *color;
+    QLabel *label_3;
+    QPushButton *texto;
+    QPushButton *linea;
+    QPushButton *punto;
+    QPushButton *goma;
+    QLabel *label_2;
+    QPushButton *Bcompas;
+    QPushButton *Btransportador;
+    QPushButton *Bregla;
     QGraphicsView *graphicsView;
     QLabel *labelStatus;
     QWidget *editar_perfil;
@@ -112,7 +117,6 @@ public:
     QTextEdit *textEdit_3;
     QDateEdit *dateEdit;
     QPushButton *Boton_guardar;
-    QPushButton *Boton_volver_2;
     QLabel *label;
     QPushButton *boton_editar;
     QWidget *registro;
@@ -140,7 +144,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(855, 689);
+        MainWindow->resize(989, 774);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
@@ -150,10 +154,45 @@ public:
         centralwidget->setSizePolicy(sizePolicy);
         centralwidget->setMaximumSize(QSize(78241, 16777215));
         verticalLayout_2 = new QVBoxLayout(centralwidget);
-        verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        verticalLayout_2->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        MenuSup = new QWidget(centralwidget);
+        MenuSup->setObjectName("MenuSup");
+        horizontalLayout_4 = new QHBoxLayout(MenuSup);
+        horizontalLayout_4->setObjectName("horizontalLayout_4");
+        Boton_volver_2 = new QPushButton(MenuSup);
+        Boton_volver_2->setObjectName("Boton_volver_2");
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(Boton_volver_2->sizePolicy().hasHeightForWidth());
+        Boton_volver_2->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_4->addWidget(Boton_volver_2);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_3);
+
+        boton_historial = new QPushButton(MenuSup);
+        boton_historial->setObjectName("boton_historial");
+        sizePolicy1.setHeightForWidth(boton_historial->sizePolicy().hasHeightForWidth());
+        boton_historial->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_4->addWidget(boton_historial);
+
+        B_MenuUsuario = new QPushButton(MenuSup);
+        B_MenuUsuario->setObjectName("B_MenuUsuario");
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Ignored);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(B_MenuUsuario->sizePolicy().hasHeightForWidth());
+        B_MenuUsuario->setSizePolicy(sizePolicy2);
+
+        horizontalLayout_4->addWidget(B_MenuUsuario);
+
+
+        verticalLayout_2->addWidget(MenuSup);
+
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         sizePolicy.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
@@ -229,9 +268,6 @@ public:
         dateEditFiltro = new QDateEdit(historial);
         dateEditFiltro->setObjectName("dateEditFiltro");
         dateEditFiltro->setGeometry(QRect(620, 100, 110, 26));
-        Boton_volver = new QPushButton(historial);
-        Boton_volver->setObjectName("Boton_volver");
-        Boton_volver->setGeometry(QRect(40, 20, 93, 29));
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -243,111 +279,6 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setSizeConstraint(QLayout::SizeConstraint::SetMaximumSize);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        barra_arriba = new QLabel(mapa);
-        barra_arriba->setObjectName("barra_arriba");
-        sizePolicy.setHeightForWidth(barra_arriba->sizePolicy().hasHeightForWidth());
-        barra_arriba->setSizePolicy(sizePolicy);
-        QPalette palette;
-        QBrush brush(QColor(0, 0, 0, 255));
-        brush.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::WindowText, brush);
-        QBrush brush1(QColor(176, 210, 240, 255));
-        brush1.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Button, brush1);
-        QBrush brush2(QColor(255, 255, 255, 255));
-        brush2.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Light, brush2);
-        QBrush brush3(QColor(215, 232, 247, 255));
-        brush3.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Midlight, brush3);
-        QBrush brush4(QColor(88, 105, 120, 255));
-        brush4.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Dark, brush4);
-        QBrush brush5(QColor(117, 140, 160, 255));
-        brush5.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Mid, brush5);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Text, brush);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::BrightText, brush2);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::ButtonText, brush);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Base, brush2);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Window, brush1);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Shadow, brush);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::AlternateBase, brush3);
-        QBrush brush6(QColor(255, 255, 220, 255));
-        brush6.setStyle(Qt::BrushStyle::SolidPattern);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::ToolTipBase, brush6);
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::ToolTipText, brush);
-        QBrush brush7(QColor(0, 0, 0, 127));
-        brush7.setStyle(Qt::BrushStyle::SolidPattern);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::PlaceholderText, brush7);
-#endif
-#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(QPalette::ColorGroup::Active, QPalette::ColorRole::Accent, brush2);
-#endif
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::WindowText, brush);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Button, brush1);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Light, brush2);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Midlight, brush3);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Dark, brush4);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Mid, brush5);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Text, brush);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::BrightText, brush2);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::ButtonText, brush);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Base, brush2);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Window, brush1);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Shadow, brush);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::AlternateBase, brush3);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::ToolTipBase, brush6);
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::ToolTipText, brush);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::PlaceholderText, brush7);
-#endif
-#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Accent, brush2);
-#endif
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::WindowText, brush4);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Button, brush1);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Light, brush2);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Midlight, brush3);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Dark, brush4);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Mid, brush5);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Text, brush4);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::BrightText, brush2);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::ButtonText, brush4);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Base, brush1);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Window, brush1);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Shadow, brush);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::AlternateBase, brush1);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::ToolTipBase, brush6);
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::ToolTipText, brush);
-        QBrush brush8(QColor(88, 105, 120, 127));
-        brush8.setStyle(Qt::BrushStyle::SolidPattern);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::PlaceholderText, brush8);
-#endif
-        QBrush brush9(QColor(244, 250, 255, 255));
-        brush9.setStyle(Qt::BrushStyle::SolidPattern);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(QPalette::ColorGroup::Disabled, QPalette::ColorRole::Accent, brush9);
-#endif
-        barra_arriba->setPalette(palette);
-        barra_arriba->setAutoFillBackground(true);
-        barra_arriba->setFrameShape(QFrame::Shape::NoFrame);
-        barra_arriba->setFrameShadow(QFrame::Shadow::Plain);
-
-        verticalLayout->addWidget(barra_arriba);
-
-        Modificar_perfil = new QPushButton(mapa);
-        Modificar_perfil->setObjectName("Modificar_perfil");
-
-        verticalLayout->addWidget(Modificar_perfil);
-
-        boton_historial = new QPushButton(mapa);
-        boton_historial->setObjectName("boton_historial");
-
-        verticalLayout->addWidget(boton_historial);
-
         horizontalWidget = new QWidget(mapa);
         horizontalWidget->setObjectName("horizontalWidget");
         sizePolicy.setHeightForWidth(horizontalWidget->sizePolicy().hasHeightForWidth());
@@ -371,11 +302,11 @@ public:
 
         boton_alet = new QPushButton(menu_principal);
         boton_alet->setObjectName("boton_alet");
-        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(boton_alet->sizePolicy().hasHeightForWidth());
-        boton_alet->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy3(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(boton_alet->sizePolicy().hasHeightForWidth());
+        boton_alet->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(boton_alet, 1, 1, 1, 1);
 
@@ -393,11 +324,11 @@ public:
 
         boton_lista = new QPushButton(menu_principal);
         boton_lista->setObjectName("boton_lista");
-        QSizePolicy sizePolicy2(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
-        boton_lista->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
+        boton_lista->setSizePolicy(sizePolicy4);
 
         gridLayout->addWidget(boton_lista, 3, 1, 1, 1);
 
@@ -448,138 +379,193 @@ public:
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalSpacer_3 = new QSpacerItem(97, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_3);
-
         barra_herramienta = new QWidget(widget_2);
         barra_herramienta->setObjectName("barra_herramienta");
-        QSizePolicy sizePolicy3(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
-        barra_herramienta->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy5(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
+        barra_herramienta->setSizePolicy(sizePolicy5);
         barra_herramienta->setContextMenuPolicy(Qt::ContextMenuPolicy::DefaultContextMenu);
         barra_herramienta->setLayoutDirection(Qt::LayoutDirection::RightToLeft);
         barra_herramienta->setAutoFillBackground(false);
+        horizontalLayout_3 = new QHBoxLayout(barra_herramienta);
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        horizontalLayout_3->setContentsMargins(20, -1, 20, -1);
+        horizontalSlider = new QSlider(barra_herramienta);
+        horizontalSlider->setObjectName("horizontalSlider");
+        QSizePolicy sizePolicy6(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
+        horizontalSlider->setSizePolicy(sizePolicy6);
+        horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
+
+        horizontalLayout_3->addWidget(horizontalSlider);
+
+        label_4 = new QLabel(barra_herramienta);
+        label_4->setObjectName("label_4");
+
+        horizontalLayout_3->addWidget(label_4);
+
+        limpiar = new QPushButton(barra_herramienta);
+        limpiar->setObjectName("limpiar");
+        sizePolicy3.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
+        limpiar->setSizePolicy(sizePolicy3);
+        limpiar->setMaximumSize(QSize(167, 167));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/img/icons/I_eliminar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        limpiar->setIcon(icon);
+        limpiar->setIconSize(QSize(10, 16));
+
+        horizontalLayout_3->addWidget(limpiar);
+
+        grosor = new QSpinBox(barra_herramienta);
+        grosor->setObjectName("grosor");
+        sizePolicy6.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
+        grosor->setSizePolicy(sizePolicy6);
+        grosor->setMinimum(1);
+        grosor->setMaximum(20);
+        grosor->setValue(6);
+
+        horizontalLayout_3->addWidget(grosor);
+
+        color = new QPushButton(barra_herramienta);
+        color->setObjectName("color");
+        sizePolicy3.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
+        color->setSizePolicy(sizePolicy3);
+        color->setMaximumSize(QSize(167, 167));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/img/icons/I_paleta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        color->setIcon(icon1);
+        color->setIconSize(QSize(10, 16));
+        color->setAutoDefault(false);
+        color->setFlat(false);
+
+        horizontalLayout_3->addWidget(color);
+
+        label_3 = new QLabel(barra_herramienta);
+        label_3->setObjectName("label_3");
+
+        horizontalLayout_3->addWidget(label_3);
+
+        texto = new QPushButton(barra_herramienta);
+        texto->setObjectName("texto");
+        sizePolicy6.setHeightForWidth(texto->sizePolicy().hasHeightForWidth());
+        texto->setSizePolicy(sizePolicy6);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/img/icons/I_texto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        texto->setIcon(icon2);
+        texto->setIconSize(QSize(10, 16));
+
+        horizontalLayout_3->addWidget(texto);
+
+        linea = new QPushButton(barra_herramienta);
+        linea->setObjectName("linea");
+        sizePolicy3.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
+        linea->setSizePolicy(sizePolicy3);
+        linea->setMaximumSize(QSize(167, 167));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/img/icons/I_lapiz.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        linea->setIcon(icon3);
+        linea->setIconSize(QSize(10, 16));
+        linea->setCheckable(true);
+
+        horizontalLayout_3->addWidget(linea);
+
         punto = new QPushButton(barra_herramienta);
         punto->setObjectName("punto");
-        punto->setGeometry(QRect(90, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
-        punto->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
+        punto->setSizePolicy(sizePolicy3);
         punto->setMinimumSize(QSize(0, 0));
         punto->setMaximumSize(QSize(167, 167));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/img/icons/punto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        punto->setIcon(icon);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/img/icons/punto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        punto->setIcon(icon4);
         punto->setIconSize(QSize(8, 16));
         punto->setCheckable(true);
+
+        horizontalLayout_3->addWidget(punto);
+
+        goma = new QPushButton(barra_herramienta);
+        goma->setObjectName("goma");
+        sizePolicy3.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
+        goma->setSizePolicy(sizePolicy3);
+        goma->setMaximumSize(QSize(167, 167));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/img/icons/I_goma.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        goma->setIcon(icon5);
+        goma->setIconSize(QSize(10, 16));
+
+        horizontalLayout_3->addWidget(goma);
+
+        label_2 = new QLabel(barra_herramienta);
+        label_2->setObjectName("label_2");
+
+        horizontalLayout_3->addWidget(label_2);
+
         Bcompas = new QPushButton(barra_herramienta);
         Bcompas->setObjectName("Bcompas");
         Bcompas->setEnabled(true);
-        Bcompas->setGeometry(QRect(60, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
-        Bcompas->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
+        Bcompas->setSizePolicy(sizePolicy3);
         Bcompas->setMaximumSize(QSize(167, 167));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/img/icons/I_compas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        Bcompas->setIcon(icon1);
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/img/icons/I_compas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Bcompas->setIcon(icon6);
         Bcompas->setIconSize(QSize(10, 16));
         Bcompas->setCheckable(true);
-        Bregla = new QPushButton(barra_herramienta);
-        Bregla->setObjectName("Bregla");
-        Bregla->setGeometry(QRect(0, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
-        Bregla->setSizePolicy(sizePolicy2);
-        Bregla->setMaximumSize(QSize(167, 167));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/img/icons/I_regla.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        Bregla->setIcon(icon2);
-        Bregla->setIconSize(QSize(10, 16));
-        Bregla->setCheckable(true);
+
+        horizontalLayout_3->addWidget(Bcompas);
+
         Btransportador = new QPushButton(barra_herramienta);
         Btransportador->setObjectName("Btransportador");
-        Btransportador->setGeometry(QRect(30, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
-        Btransportador->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
+        Btransportador->setSizePolicy(sizePolicy3);
         Btransportador->setMaximumSize(QSize(167, 167));
         QFont font2;
         font2.setBold(false);
         font2.setKerning(true);
         Btransportador->setFont(font2);
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        Btransportador->setIcon(icon3);
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Btransportador->setIcon(icon7);
         Btransportador->setIconSize(QSize(10, 16));
         Btransportador->setCheckable(true);
-        texto = new QPushButton(barra_herramienta);
-        texto->setObjectName("texto");
-        texto->setGeometry(QRect(150, 0, 30, 23));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/img/icons/I_texto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        texto->setIcon(icon4);
-        texto->setIconSize(QSize(10, 16));
-        linea = new QPushButton(barra_herramienta);
-        linea->setObjectName("linea");
-        linea->setGeometry(QRect(120, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
-        linea->setSizePolicy(sizePolicy2);
-        linea->setMaximumSize(QSize(167, 167));
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/img/icons/I_linea.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        linea->setIcon(icon5);
-        linea->setIconSize(QSize(10, 16));
-        linea->setCheckable(true);
-        color = new QPushButton(barra_herramienta);
-        color->setObjectName("color");
-        color->setGeometry(QRect(180, 0, 30, 23));
-        QSizePolicy sizePolicy4(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
-        color->setSizePolicy(sizePolicy4);
-        color->setMaximumSize(QSize(167, 167));
-        QIcon icon6;
-        icon6.addFile(QString::fromUtf8(":/img/icons/I_paleta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        color->setIcon(icon6);
-        color->setIconSize(QSize(10, 16));
-        color->setAutoDefault(false);
-        color->setFlat(false);
-        goma = new QPushButton(barra_herramienta);
-        goma->setObjectName("goma");
-        goma->setGeometry(QRect(250, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
-        goma->setSizePolicy(sizePolicy2);
-        goma->setMaximumSize(QSize(167, 167));
-        QIcon icon7;
-        icon7.addFile(QString::fromUtf8(":/img/icons/I_goma.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        goma->setIcon(icon7);
-        goma->setIconSize(QSize(10, 16));
-        limpiar = new QPushButton(barra_herramienta);
-        limpiar->setObjectName("limpiar");
-        limpiar->setGeometry(QRect(280, 0, 30, 23));
-        sizePolicy2.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
-        limpiar->setSizePolicy(sizePolicy2);
-        limpiar->setMaximumSize(QSize(167, 167));
+
+        horizontalLayout_3->addWidget(Btransportador);
+
+        Bregla = new QPushButton(barra_herramienta);
+        Bregla->setObjectName("Bregla");
+        sizePolicy3.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
+        Bregla->setSizePolicy(sizePolicy3);
+        Bregla->setMaximumSize(QSize(167, 167));
         QIcon icon8;
-        icon8.addFile(QString::fromUtf8(":/img/icons/I_eliminar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        limpiar->setIcon(icon8);
-        limpiar->setIconSize(QSize(10, 16));
-        grosor = new QSpinBox(barra_herramienta);
-        grosor->setObjectName("grosor");
-        grosor->setGeometry(QRect(209, 0, 41, 23));
-        grosor->setMinimum(1);
-        grosor->setMaximum(20);
-        grosor->setValue(6);
-        horizontalSlider = new QSlider(barra_herramienta);
-        horizontalSlider->setObjectName("horizontalSlider");
-        horizontalSlider->setGeometry(QRect(313, 0, 41, 23));
-        horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
+        icon8.addFile(QString::fromUtf8(":/img/icons/I_regla.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        Bregla->setIcon(icon8);
+        Bregla->setIconSize(QSize(10, 16));
+        Bregla->setCheckable(true);
+
+        horizontalLayout_3->addWidget(Bregla);
+
+        horizontalLayout_3->setStretch(0, 1);
+        horizontalLayout_3->setStretch(1, 1);
+        horizontalLayout_3->setStretch(2, 1);
+        horizontalLayout_3->setStretch(3, 1);
+        horizontalLayout_3->setStretch(4, 1);
+        horizontalLayout_3->setStretch(5, 1);
+        horizontalLayout_3->setStretch(6, 1);
+        horizontalLayout_3->setStretch(7, 1);
+        horizontalLayout_3->setStretch(8, 1);
+        horizontalLayout_3->setStretch(9, 1);
+        horizontalLayout_3->setStretch(10, 1);
+        horizontalLayout_3->setStretch(11, 1);
+        horizontalLayout_3->setStretch(12, 1);
+        horizontalLayout_3->setStretch(13, 1);
 
         horizontalLayout->addWidget(barra_herramienta);
 
-        horizontalLayout->setStretch(0, 1);
-        horizontalLayout->setStretch(1, 3);
+        horizontalLayout->setStretch(0, 3);
 
         verticalLayout_3->addWidget(widget_2);
 
@@ -600,8 +586,7 @@ public:
 
         verticalLayout->addWidget(horizontalWidget);
 
-        verticalLayout->setStretch(0, 1);
-        verticalLayout->setStretch(3, 15);
+        verticalLayout->setStretch(0, 15);
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
@@ -635,9 +620,6 @@ public:
         Boton_guardar = new QPushButton(editar_perfil);
         Boton_guardar->setObjectName("Boton_guardar");
         Boton_guardar->setGeometry(QRect(340, 470, 111, 71));
-        Boton_volver_2 = new QPushButton(editar_perfil);
-        Boton_volver_2->setObjectName("Boton_volver_2");
-        Boton_volver_2->setGeometry(QRect(20, 10, 93, 29));
         label = new QLabel(editar_perfil);
         label->setObjectName("label");
         label->setGeometry(QRect(500, 160, 181, 171));
@@ -646,9 +628,7 @@ public:
         boton_editar = new QPushButton(editar_perfil);
         boton_editar->setObjectName("boton_editar");
         boton_editar->setGeometry(QRect(550, 340, 93, 29));
-        QIcon icon9;
-        icon9.addFile(QString::fromUtf8(":/img/icons/I_lapiz.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        boton_editar->setIcon(icon9);
+        boton_editar->setIcon(icon3);
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
@@ -714,7 +694,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 855, 21));
+        menubar->setGeometry(QRect(0, 0, 989, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -722,7 +702,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(4);
         stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
@@ -733,6 +713,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        Boton_volver_2->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
+        boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
+        B_MenuUsuario->setText(QCoreApplication::translate("MainWindow", "us", nullptr));
         et_ini->setText(QCoreApplication::translate("MainWindow", "INICIAR SESI\303\223N", nullptr));
         et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         et_pass->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
@@ -741,10 +724,6 @@ public:
 "<html><head/><body><p><br/></p></body></html>", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
-        Boton_volver->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
-        barra_arriba->setText(QString());
-        Modificar_perfil->setText(QCoreApplication::translate("MainWindow", "Modificar perfil", nullptr));
-        boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
 
@@ -762,15 +741,18 @@ public:
         ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Problema 5", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
-        punto->setText(QString());
-        Bcompas->setText(QString());
-        Bregla->setText(QString());
-        Btransportador->setText(QString());
+        label_4->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
+        limpiar->setText(QString());
+        color->setText(QString());
+        label_3->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
         texto->setText(QString());
         linea->setText(QString());
-        color->setText(QString());
+        punto->setText(QString());
         goma->setText(QString());
-        limpiar->setText(QString());
+        label_2->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
+        Bcompas->setText(QString());
+        Btransportador->setText(QString());
+        Bregla->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
         modificarperfil->setText(QCoreApplication::translate("MainWindow", "Modicicar Perfil", nullptr));
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
@@ -778,7 +760,6 @@ public:
         label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
         Boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
-        Boton_volver_2->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         label->setText(QString());
         et_registro->setText(QCoreApplication::translate("MainWindow", "      Reg\303\255strate", nullptr));
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
