@@ -361,6 +361,75 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 
     // Aquí podrías cargar los datos de nav.m_problems[fila]
 }
+void MainWindow::corregirRespuesta(int indiceSeleccionado)
+{
+    Navigation &nav = Navigation::instance();
+    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+    const Problem &p = listaProblemas.at(0);//#######Averiguar en que problema estamos#######
+    // 1. Obtener la lista de respuestas del problema actual
+    QVector<Answer> respuestas = p.answers();
+
+    // 2. Verificar si el índice es válido y comprobar la validez
+    if (indiceSeleccionado >= 0 && indiceSeleccionado < respuestas.size())
+    {
+        if (respuestas[indiceSeleccionado].validity()) {
+            m_aciertosActuales++;
+            qDebug() << "¡Correcto! Aciertos:" << m_aciertosActuales;
+            // Aquí podrías mostrar un label en verde o un icono
+        } else {
+            m_fallosActuales++;
+            qDebug() << "Incorrecto... Fallos:" << m_fallosActuales;
+            // Aquí podrías mostrar un label en rojo
+        }
+    }
+}
+
+void MainWindow::on_corregir_clicked()
+{
+    // 1. Averiguar cuál está marcado
+    int indiceSeleccionado = -1;
+
+    if (ui->answer1->isChecked())      indiceSeleccionado = 0;
+    else if (ui->answer2->isChecked()) indiceSeleccionado = 1;
+    else if (ui->answer3->isChecked()) indiceSeleccionado = 2;
+    else if (ui->answer4->isChecked()) indiceSeleccionado = 3;
+
+    // 2. Validar que haya seleccionado algo
+    if (indiceSeleccionado == -1) {
+        qDebug() << "Debes elegir una respuesta.";
+        QMessageBox::information(this, "Error", "Debes elegir una respuesta");
+
+        return;
+    }
+
+    // 3. Comparar con la respuesta correcta del problema actual
+    Navigation &nav = Navigation::instance();
+    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+    const Problem &p = listaProblemas.at(0); // /////Averiguar en que problema estamos#######
+    auto respuestas = p.answers();
+
+    if (indiceSeleccionado < respuestas.size())
+    {
+        if (respuestas.at(indiceSeleccionado).validity()) {
+            m_aciertosActuales++;
+            qDebug() << "¡Respuesta Correcta!";
+            // Opcional: podrías pintar el radio button de verde con StyleSheets
+        } else {
+            m_fallosActuales++;
+            qDebug() << "Respuesta Incorrecta.";
+        }
+    }
+
+    // 4. Bloquear los radio buttons para que no pueda cambiar la respuesta ya corregida
+    ui->answer1->setEnabled(false);
+    ui->answer2->setEnabled(false);
+    ui->answer3->setEnabled(false);
+    ui->answer4->setEnabled(false);
+
+    // Y desactivamos el propio botón de corregir
+    ui->corregir->setEnabled(false);
+
+}
 //############################################################################################
 
 void MainWindow::on_boton_volver_clicked()

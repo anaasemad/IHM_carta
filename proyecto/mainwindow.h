@@ -57,6 +57,7 @@ private slots:
     void on_boton_editar_avatar_clicked();
     void on_boton_guardar_clicked();
     void on_listWidget_doubleClicked(const QModelIndex &index);
+    void on_corregir_clicked();
 //#################################################################################################################
 
 
@@ -81,6 +82,8 @@ private:
     QSqlDatabase m_db; // Objeto de conexión a la BBDD
     int m_previousWidgetIndex = 0; //para guardar widget anterior para volver
     QSqlQueryModel *m_historialModel = nullptr; // Modelo para vincular datos a tableView
+    int m_aciertosActuales = 0;
+    int m_fallosActuales = 0;
     //const Problem *problemaActual = nullptr;
 
     // --- Funciones de BBDD ---
@@ -88,6 +91,7 @@ private:
     void setupHistorialTable(); // Configura la tabla y el modelo
     void setupPerfil();
     void cargarListaProblemas();
+    void corregirRespuesta(int indiceSeleccionado);
     //#########################################################################################################
 
 
