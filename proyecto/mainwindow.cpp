@@ -152,6 +152,9 @@ MainWindow::MainWindow(QWidget *parent)
     });
     //boton usuario
     ui->B_MenuUsuario->setFixedSize(60, 60);
+    ui->boton_historial->setFixedSize(100, 40);
+    ui->boton_volver->setFixedSize(60, 40);
+
 
    // view->setScene(sceneMenu);
    // view->setScene(sceneMapa);
@@ -386,7 +389,7 @@ void MainWindow::on_boton_aleat_clicked()
     if (m_problema_actual < totalProblemas) {
         const Problem &p = listaProblemas.at(m_problema_actual); // Cambia '*' por '&' y añade 'const'
         auto respuestas = p.answers();
-
+        ui->num_problema->setText(QString("Problema %1").arg(m_problema_actual + 1));
         ui->enunciado->setText(p.text());
         if (respuestas.size() >= 4) {
             ui->answer1->setText(respuestas.at(0).text());
@@ -415,7 +418,7 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
     if (fila < (int)listaProblemas.size()) {
         const Problem &p = listaProblemas.at(fila); // Cambia '*' por '&' y añade 'const'
         auto respuestas = p.answers();
-
+        ui->num_problema->setText(QString("Problema %1").arg(m_problema_actual + 1));
         ui->enunciado->setText(p.text());
         if (respuestas.size() >= 4) {
             ui->answer1->setText(respuestas.at(0).text());
@@ -667,7 +670,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                         QGraphicsTextItem* texto = new QGraphicsTextItem("Nuevo texto");
                         texto->setTextInteractionFlags(Qt::TextEditorInteraction);
                         texto->setFont(QFont("Arial", gros));
-                        texto->setDefaultTextColor(Qt::black);
+                        texto->setDefaultTextColor(m_currentColor);
                         texto->setFlag(QGraphicsItem::ItemIsMovable);
                         texto->setFlag(QGraphicsItem::ItemIsSelectable);
 
