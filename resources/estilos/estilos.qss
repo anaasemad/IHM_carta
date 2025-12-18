@@ -1,0 +1,67 @@
+/* Configuración Global */
+QWidget {
+    font-family: "Segoe UI", Arial, sans-serif; /* Cambia aquí la tipografía */
+    font-size: 10pt;
+}
+
+/* ------ESTILOS GENERALES----- */
+QPushButton {
+    background-color: #E6E3E3;
+    color: #4E7592;
+    border-radius: 10px; /* Bordes redondeados generales */
+    padding: 5px 15px;
+    border: none;
+}
+
+QPushButton:hover {
+    background-color: #4E7592; /* Azul al pasar el mouse */
+}
+
+/* --- ESTILOS ESPECIALES --- */
+
+/* Barra Superior */
+QWidget#MenuSup {
+    background-color: #CED9E4;
+}
+
+/* Barra Herramientas */
+QWidget#barra_herramienta {
+    background-color: #E6E3E3;
+}
+
+/* Botón de Usuario (Círculo perfecto) */
+/* Usamos el nombre del objeto para que solo afecte a este */
+QPushButton#B_MenuUsuario {
+    background-color: #4E7592;
+    border-radius: 30px; /* Mitad de 60px para que sea circular */
+    border: 2px solid white;
+}
+
+QPushButton#B_MenuUsuario::menu-indicator {
+    image: none; /* Quita la flechita */
+}
+
+/* Botones de Problemas */
+QWidget#boton_alet, QWidget#boton_lista {
+    background-color: #404064;
+    color: white;
+    border-radius: 20px;
+}
+
+/* Botones de Guardado y Aceptar */
+QWidget#boton_entrar, QWidget#boton_registro,QWidget#boton_guardar {
+    background-color: #4E7592;
+    color: white;
+    border-radius: 10px;
+}
+
+
+/* Titulos */
+QLabel#et_ini, QLabel#et_registro, QLabel#Historial, QLabel#perfil {
+font-weight: bold;
+font-size: 18px;
+}
+
+
+
+

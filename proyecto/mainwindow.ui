@@ -31,7 +31,7 @@
      <widget class="QWidget" name="MenuSup" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0">
        <item>
-        <widget class="QPushButton" name="Boton_volver_2">
+        <widget class="QPushButton" name="boton_volver">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -81,7 +81,10 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>us</string>
+          <string>perfil</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -472,9 +475,9 @@
               <widget class="QListWidget" name="listWidget">
                <property name="geometry">
                 <rect>
-                 <x>30</x>
+                 <x>20</x>
                  <y>30</y>
-                 <width>331</width>
+                 <width>281</width>
                  <height>371</height>
                 </rect>
                </property>

@@ -84,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->B_MenuUsuario->setMenu(menuUsuario);
 
-
     //Conectar acciones a los cambios de página
     connect(actionPerfil, &QAction::triggered, this, [=]() {
         setupPerfil();
@@ -300,8 +299,7 @@ void MainWindow::on_boton_guardar_clicked()
         // 2. Lo convertimos a QImage y se lo pasamos al usuario
         u->setAvatar(pix.toImage());
     }
-    //ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
-    //cambiar nickname??
+    ui->B_MenuUsuario->setIcon(QPixmap::fromImage(u->avatar()));
 
     nav.updateUser(*u);
 
@@ -333,9 +331,20 @@ void MainWindow::on_boton_lista_clicked()
     cargarListaProblemas();
     ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
 }
+
+/*void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
+{
+    // index.row() te dará el número (0 para Problema 1, 1 para Problema 2...)
+    int fila = index.row();
+
+    // Cambiamos a la página del mapa/problema
+    ui->stackedWidget->setCurrentWidget(ui->pagina_mapa);
+
+    // Aquí podrías cargar los datos de nav.m_problems[fila]
+}*/
 //############################################################################################
 
-void MainWindow::on_Boton_volver_clicked()
+void MainWindow::on_boton_volver_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->mapa);
 }

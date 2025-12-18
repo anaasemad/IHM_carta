@@ -43,7 +43,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QWidget *MenuSup;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *Boton_volver_2;
+    QPushButton *boton_volver;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *boton_historial;
     QPushButton *B_MenuUsuario;
@@ -64,7 +64,7 @@ public:
     QLabel *label_filtro;
     QDateEdit *dateEditFiltro;
     QTableView *tableViewHistorial;
-    QLabel *modificarperfil_2;
+    QLabel *Historial;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
     QWidget *horizontalWidget;
@@ -105,7 +105,7 @@ public:
     QGraphicsView *graphicsView;
     QLabel *labelStatus;
     QWidget *editar_perfil;
-    QLabel *modificarperfil;
+    QLabel *perfil;
     QLabel *nombre;
     QLabel *label_email;
     QLabel *label_contrasenia;
@@ -157,15 +157,15 @@ public:
         MenuSup->setObjectName("MenuSup");
         horizontalLayout_4 = new QHBoxLayout(MenuSup);
         horizontalLayout_4->setObjectName("horizontalLayout_4");
-        Boton_volver_2 = new QPushButton(MenuSup);
-        Boton_volver_2->setObjectName("Boton_volver_2");
+        boton_volver = new QPushButton(MenuSup);
+        boton_volver->setObjectName("boton_volver");
         QSizePolicy sizePolicy1(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(Boton_volver_2->sizePolicy().hasHeightForWidth());
-        Boton_volver_2->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(boton_volver->sizePolicy().hasHeightForWidth());
+        boton_volver->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_4->addWidget(Boton_volver_2);
+        horizontalLayout_4->addWidget(boton_volver);
 
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
@@ -185,6 +185,7 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(B_MenuUsuario->sizePolicy().hasHeightForWidth());
         B_MenuUsuario->setSizePolicy(sizePolicy2);
+        B_MenuUsuario->setAutoDefault(false);
 
         horizontalLayout_4->addWidget(B_MenuUsuario);
 
@@ -258,10 +259,10 @@ public:
         tableViewHistorial = new QTableView(historial);
         tableViewHistorial->setObjectName("tableViewHistorial");
         tableViewHistorial->setGeometry(QRect(190, 140, 541, 459));
-        modificarperfil_2 = new QLabel(historial);
-        modificarperfil_2->setObjectName("modificarperfil_2");
-        modificarperfil_2->setGeometry(QRect(60, 30, 321, 31));
-        modificarperfil_2->setFont(font);
+        Historial = new QLabel(historial);
+        Historial->setObjectName("Historial");
+        Historial->setGeometry(QRect(60, 30, 321, 31));
+        Historial->setFont(font);
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -351,7 +352,7 @@ public:
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         listWidget->setObjectName("listWidget");
-        listWidget->setGeometry(QRect(30, 30, 331, 371));
+        listWidget->setGeometry(QRect(20, 30, 281, 371));
         stackedWidget_2->addWidget(lista_problemas);
 
         horizontalLayout_2->addWidget(stackedWidget_2);
@@ -584,10 +585,10 @@ public:
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
-        modificarperfil = new QLabel(editar_perfil);
-        modificarperfil->setObjectName("modificarperfil");
-        modificarperfil->setGeometry(QRect(10, 10, 321, 31));
-        modificarperfil->setFont(font);
+        perfil = new QLabel(editar_perfil);
+        perfil->setObjectName("perfil");
+        perfil->setGeometry(QRect(10, 10, 321, 31));
+        perfil->setFont(font);
         nombre = new QLabel(editar_perfil);
         nombre->setObjectName("nombre");
         nombre->setGeometry(QRect(100, 140, 63, 20));
@@ -697,7 +698,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
         stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
@@ -708,9 +709,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        Boton_volver_2->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
+        boton_volver->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
-        B_MenuUsuario->setText(QCoreApplication::translate("MainWindow", "us", nullptr));
+        B_MenuUsuario->setText(QCoreApplication::translate("MainWindow", "perfil", nullptr));
         et_ini->setText(QCoreApplication::translate("MainWindow", "INICIAR SESI\303\223N", nullptr));
         et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         et_pass->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
@@ -719,7 +720,7 @@ public:
 "<html><head/><body><p><br/></p></body></html>", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
-        modificarperfil_2->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
+        Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
 
@@ -750,7 +751,7 @@ public:
         Btransportador->setText(QString());
         Bregla->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
-        modificarperfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
+        perfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
         label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));

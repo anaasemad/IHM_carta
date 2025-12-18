@@ -59,7 +59,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "on_label_registro_linkActivated",
         "link",
         "on_boton_historial_clicked",
-        "on_Boton_volver_clicked",
+        "on_boton_volver_clicked",
         "on_boton_editar_avatar_clicked",
         "on_boton_guardar_clicked",
         "on_Bcompas_clicked"
@@ -110,7 +110,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         }}),
         // Slot 'on_boton_historial_clicked'
         QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_Boton_volver_clicked'
+        // Slot 'on_boton_volver_clicked'
         QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'on_boton_editar_avatar_clicked'
         QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
@@ -156,7 +156,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->on_calendario_clicked((*reinterpret_cast< std::add_pointer_t<QDate>>(_a[1]))); break;
         case 13: _t->on_label_registro_linkActivated((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 14: _t->on_boton_historial_clicked(); break;
-        case 15: _t->on_Boton_volver_clicked(); break;
+        case 15: _t->on_boton_volver_clicked(); break;
         case 16: _t->on_boton_editar_avatar_clicked(); break;
         case 17: _t->on_boton_guardar_clicked(); break;
         case 18: _t->on_Bcompas_clicked(); break;

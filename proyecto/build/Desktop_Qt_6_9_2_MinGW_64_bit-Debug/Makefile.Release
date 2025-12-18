@@ -126,7 +126,8 @@ release/qrc_imagenes.cpp: ../../../resources/imagenes.qrc \
 		../../../resources/icons/I_transportador.png \
 		../../../resources/icons/I_lapiz.png \
 		../../../resources/icons/I_eliminar.png \
-		../../../resources/icons/punto.png
+		../../../resources/icons/punto.png \
+		../../../resources/estilos/estilos.qss
 	C:\Qt\6.9.2\mingw_64\bin\rcc.exe -name imagenes --no-zstd ..\..\..\resources\imagenes.qrc -o release\qrc_imagenes.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h
