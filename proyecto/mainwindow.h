@@ -51,13 +51,13 @@ private slots:
 
 
 //#################################################################################################################
-    //void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_boton_historial_clicked();
     void on_boton_volver_clicked();
     void on_boton_editar_avatar_clicked();
     void on_boton_guardar_clicked();
     void on_listWidget_doubleClicked(const QModelIndex &index);
     void on_corregir_clicked();
+    void on_boton_aleat_clicked();
 //#################################################################################################################
 
 

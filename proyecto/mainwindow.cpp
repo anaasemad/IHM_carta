@@ -21,6 +21,7 @@
 #include "navigation.h"
 #include "navdaoexception.h"
 #include <QFileDialog>
+#include <QRandomGenerator>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -325,6 +326,30 @@ void MainWindow::cargarListaProblemas() {
         ui->listWidget->addItem(nombre);
     }
 }
+void MainWindow::on_boton_aleat_clicked()
+{
+    Navigation &nav = Navigation::instance();
+    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+    int totalProblemas = listaProblemas.size();
+    int numeroRandom = QRandomGenerator::global()->bounded(1, totalProblemas + 1);
+
+    m_problema_actual = numeroRandom;     //en vez de index.row -> random
+
+    if (m_problema_actual < totalProblemas) {
+        const Problem &p = listaProblemas.at(m_problema_actual); // Cambia '*' por '&' y añade 'const'
+        auto respuestas = p.answers();
+
+        ui->enunciado->setText(p.text());
+        if (respuestas.size() >= 4) {
+            ui->answer1->setText(respuestas.at(0).text());
+            ui->answer2->setText(respuestas.at(1).text());
+            ui->answer3->setText(respuestas.at(2).text());
+            ui->answer4->setText(respuestas.at(3).text());
+        }
+    }
+    // Cambiamos a la página del mapa/problema
+    ui->stackedWidget_2->setCurrentWidget(ui->problema);
+}
 
 void MainWindow::on_boton_lista_clicked()
 {
@@ -352,15 +377,9 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
             ui->answer3->setText(respuestas.at(2).text());
             ui->answer4->setText(respuestas.at(3).text());
         }
-
-        // Guardamos cuál es la correcta para usarla luego
-        // (Esto dependerá de cómo esté definida tu clase Problem)
     }
-
     // Cambiamos a la página del mapa/problema
     ui->stackedWidget_2->setCurrentWidget(ui->problema);
-
-    // Aquí podrías cargar los datos de nav.m_problems[fila]
 }
 void MainWindow::corregirRespuesta(int indiceSeleccionado)
 {
@@ -403,7 +422,6 @@ void MainWindow::on_corregir_clicked()
 
         return;
     }
-
     // 3. Comparar con la respuesta correcta del problema actual
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo

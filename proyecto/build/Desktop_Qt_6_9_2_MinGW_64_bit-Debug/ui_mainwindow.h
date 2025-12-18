@@ -74,7 +74,7 @@ public:
     QWidget *menu_principal;
     QGridLayout *gridLayout;
     QSpacerItem *horizontalSpacer_2;
-    QPushButton *boton_alet;
+    QPushButton *boton_aleat;
     QSpacerItem *verticalSpacer;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *horizontalSpacer;
@@ -302,15 +302,15 @@ public:
 
         gridLayout->addItem(horizontalSpacer_2, 1, 2, 1, 1);
 
-        boton_alet = new QPushButton(menu_principal);
-        boton_alet->setObjectName("boton_alet");
+        boton_aleat = new QPushButton(menu_principal);
+        boton_aleat->setObjectName("boton_aleat");
         QSizePolicy sizePolicy3(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(boton_alet->sizePolicy().hasHeightForWidth());
-        boton_alet->setSizePolicy(sizePolicy3);
+        sizePolicy3.setHeightForWidth(boton_aleat->sizePolicy().hasHeightForWidth());
+        boton_aleat->setSizePolicy(sizePolicy3);
 
-        gridLayout->addWidget(boton_alet, 1, 1, 1, 1);
+        gridLayout->addWidget(boton_aleat, 1, 1, 1, 1);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
@@ -748,7 +748,7 @@ public:
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
         Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
-        boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
+        boton_aleat->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
         enunciado->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         answer1->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
