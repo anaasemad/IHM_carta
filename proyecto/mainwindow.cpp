@@ -365,7 +365,9 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 
 void MainWindow::on_boton_volver_clicked()
 {
+    //if(ui->stackedWidget->currentWidget()==ui->stackedWidget-)
     ui->stackedWidget->setCurrentWidget(ui->mapa);
+    ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 }
 //############################################################################################
 
