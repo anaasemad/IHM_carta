@@ -22,16 +22,14 @@
 #include "navdaoexception.h"
 #include <QFileDialog>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
     sceneMapa(new QGraphicsScene(this))
   // ,sceneCompas(new QGraphicsScene(this))
-
-
 {
     ui->setupUi(this);
-
 
     QFile file(":/qss/estilos/estilos.qss"); //ruta al css
     if (file.open(QFile::ReadOnly)){
@@ -158,13 +156,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_boton_lista_clicked()
-{
-     ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
-}
-
-
 //#############################################################################################
 //################### historial ####################
 void MainWindow::setupHistorialTable()
@@ -246,10 +237,6 @@ void MainWindow::on_boton_historial_clicked()
 
     ui->stackedWidget->setCurrentWidget(ui->historial);
 }
-void MainWindow::on_Boton_volver_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(ui->mapa);
-}
 
 //################################### Modificar perfil ###############################################
 void MainWindow::setupPerfil()
@@ -269,11 +256,6 @@ void MainWindow::setupPerfil()
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());
     }
-}
-
-void MainWindow::on_Boton_volver_2_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(ui->mapa);
 }
 
 void MainWindow::on_boton_editar_avatar_clicked()
@@ -327,7 +309,38 @@ void MainWindow::on_boton_guardar_clicked()
 
 }
 
-//#############################################################################################
+//################################## lista problemas #####################################################
+
+void MainWindow::cargarListaProblemas() {
+    Navigation &nav = Navigation::instance();
+
+    // 1. Obtenemos la lista real de la base de datos
+    //const std::vector<Problem*>& problemas = nav.problems();
+    auto problemas = nav.problems();
+
+    // 2. Limpiamos el QListWidget para no duplicar
+    ui->listWidget->clear();
+
+    // 3. El bucle for sigue funcionando igual
+    for (int i = 0; i < (int)problemas.size(); ++i) {
+        QString nombre = "Problema " + QString::number(i + 1);
+        ui->listWidget->addItem(nombre);
+    }
+}
+
+void MainWindow::on_boton_lista_clicked()
+{
+    cargarListaProblemas();
+    ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
+}
+//############################################################################################
+
+void MainWindow::on_Boton_volver_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->mapa);
+}
+//############################################################################################
+
 
 /*void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {

@@ -50,13 +50,11 @@ private slots:
     void on_label_registro_linkActivated(const QString &link);
 
 
-
-
 //#################################################################################################################
     //void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_boton_historial_clicked();
     void on_Boton_volver_clicked();
-    void on_Boton_volver_2_clicked();
+    //void on_Boton_volver_2_clicked();
     //void on_B_MenuUsuario_clicked();
     void on_boton_editar_avatar_clicked();
     void on_boton_guardar_clicked();
@@ -89,6 +87,7 @@ private:
     bool initDatabase(); // Inicializa la conexión y el modelo
     void setupHistorialTable(); // Configura la tabla y el modelo
     void setupPerfil();
+    void cargarListaProblemas();
     //#########################################################################################################
 
 
