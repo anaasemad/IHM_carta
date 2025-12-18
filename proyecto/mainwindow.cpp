@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(splitter);
     //*************************************************************BARRA HERRAMIENTAS
 
-
     view = ui->graphicsView;
     ui->graphicsView->viewport()->installEventFilter(this);
     ui->graphicsView->viewport()->setMouseTracking(true);
@@ -98,18 +97,13 @@ MainWindow::MainWindow(QWidget *parent)
     //boton usuario
     ui->B_MenuUsuario->setFixedSize(60, 60);
 
-
-
    // view->setScene(sceneMenu);
    // view->setScene(sceneMapa);
 
-
     QPixmap mapa(":/img/carta_nautica");
-
 
     QGraphicsPixmapItem *itemMapa = sceneMapa->addPixmap(mapa);
     itemMapa->setZValue(0);
-
 
     ui->graphicsView->setScene(sceneMapa);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
