@@ -103,7 +103,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -292,7 +292,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLabel" name="modificarperfil_2">
+       <widget class="QLabel" name="Historial">
         <property name="geometry">
          <rect>
           <x>60</x>
@@ -954,7 +954,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="editar_perfil">
-       <widget class="QLabel" name="modificarperfil">
+       <widget class="QLabel" name="perfil">
         <property name="geometry">
          <rect>
           <x>10</x>
