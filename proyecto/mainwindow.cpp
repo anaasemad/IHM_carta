@@ -336,6 +336,7 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 {
     // index.row() te dará el número (0 para Problema 1, 1 para Problema 2...)
     int fila = index.row();
+    m_problema_actual= fila;
 
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
@@ -365,7 +366,7 @@ void MainWindow::corregirRespuesta(int indiceSeleccionado)
 {
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
-    const Problem &p = listaProblemas.at(0);//#######Averiguar en que problema estamos#######
+    const Problem &p = listaProblemas.at(m_problema_actual);//#######Averiguar en que problema estamos#######
     // 1. Obtener la lista de respuestas del problema actual
     QVector<Answer> respuestas = p.answers();
 
@@ -388,6 +389,7 @@ void MainWindow::on_corregir_clicked()
 {
     // 1. Averiguar cuál está marcado
     int indiceSeleccionado = -1;
+    int indiceCorrecto = -1;
 
     if (ui->answer1->isChecked())      indiceSeleccionado = 0;
     else if (ui->answer2->isChecked()) indiceSeleccionado = 1;
@@ -405,20 +407,65 @@ void MainWindow::on_corregir_clicked()
     // 3. Comparar con la respuesta correcta del problema actual
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
-    const Problem &p = listaProblemas.at(0); // /////Averiguar en que problema estamos#######
+    const Problem &p = listaProblemas.at(m_problema_actual); // /////Averiguar en que problema estamos#######
     auto respuestas = p.answers();
+    int aux = -1;
+
+    for(int i=0; i<4; i++){
+        aux = i;
+        if(respuestas.at(aux).validity()){
+            indiceCorrecto=i;
+        }
+    }
 
     if (indiceSeleccionado < respuestas.size())
     {
-        if (respuestas.at(indiceSeleccionado).validity()) {
+        if (indiceSeleccionado==indiceCorrecto) {
             m_aciertosActuales++;
+            //indiceCorrecto = indiceSeleccionado;
             qDebug() << "¡Respuesta Correcta!";
-            // Opcional: podrías pintar el radio button de verde con StyleSheets
+
         } else {
             m_fallosActuales++;
             qDebug() << "Respuesta Incorrecta.";
         }
     }
+
+    switch (indiceSeleccionado){
+    case 0:
+        ui->answer1->setStyleSheet("color: red; font-weight: bold;");
+        break;
+    case 1:
+        ui->answer2->setStyleSheet("color: red; font-weight: bold;");
+        break;
+    case 2:
+        ui->answer3->setStyleSheet("color: red; font-weight: bold;");
+        break;
+    case 3:
+        ui->answer4->setStyleSheet("color: red; font-weight: bold;");
+        break;
+    default:
+        break;
+    }
+
+    switch (indiceCorrecto){
+    case 0:
+        ui->answer1->setStyleSheet("color: green; font-weight: bold;");
+        break;
+    case 1:
+        ui->answer2->setStyleSheet("color: green; font-weight: bold;");
+        break;
+    case 2:
+        ui->answer3->setStyleSheet("color: green; font-weight: bold;");
+        break;
+    case 3:
+        ui->answer4->setStyleSheet("color: green; font-weight: bold;");
+        break;
+    default:
+        break;
+    }
+
+    qDebug() << "Indice Seleccionado: "<<indiceSeleccionado<<" Indice correcto: "<<indiceCorrecto;
 
     // 4. Bloquear los radio buttons para que no pueda cambiar la respuesta ya corregida
     ui->answer1->setEnabled(false);
@@ -437,6 +484,20 @@ void MainWindow::on_boton_volver_clicked()
     //if(ui->stackedWidget->currentWidget()==ui->stackedWidget-)
     ui->stackedWidget->setCurrentWidget(ui->mapa);
     ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
+    ui->answer1->setEnabled(true);
+    ui->answer2->setEnabled(true);
+    ui->answer3->setEnabled(true);
+    ui->answer4->setEnabled(true);
+    ui->corregir->setEnabled(true);
+    ui->answer1->setChecked(false);                                 //NO VA
+    ui->answer2->setChecked(false);
+    ui->answer3->setChecked(false);
+    ui->answer4->setChecked(false);
+    ui->answer1->setStyleSheet("color: black; font-weight: none;");
+    ui->answer2->setStyleSheet("color: black; font-weight: none;");
+    ui->answer3->setStyleSheet("color: black; font-weight: none;");
+    ui->answer4->setStyleSheet("color: black; font-weight: none;");
+
 }
 //############################################################################################
 

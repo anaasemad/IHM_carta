@@ -84,6 +84,7 @@ private:
     QSqlQueryModel *m_historialModel = nullptr; // Modelo para vincular datos a tableView
     int m_aciertosActuales = 0;
     int m_fallosActuales = 0;
+    int m_problema_actual = -1;
     //const Problem *problemaActual = nullptr;
 
     // --- Funciones de BBDD ---

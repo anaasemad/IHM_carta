@@ -356,6 +356,7 @@ public:
         answer1 = new QRadioButton(problema);
         answer1->setObjectName("answer1");
         answer1->setGeometry(QRect(10, 370, 291, 24));
+        answer1->setStyleSheet(QString::fromUtf8("color: black; font-weight: none;"));
         answer2 = new QRadioButton(problema);
         answer2->setObjectName("answer2");
         answer2->setGeometry(QRect(10, 410, 291, 24));
