@@ -16,8 +16,6 @@ Compass::Compass(const QString &svgPath, QGraphicsItem *parent)
 
     setAcceptHoverEvents(true); // Necesario para el cambio de cursor
 
-
-
     //Pata Movil
     compas2 = new QGraphicsSvgItem(svgPath, this);
     compas2->setScale(SCALE_FACTOR);
@@ -35,9 +33,7 @@ Compass::Compass(const QString &svgPath, QGraphicsItem *parent)
     //altura escalada (longitud de la pata)
     //m_pataHeight = compas2->boundingRect().height() * SCALE_FACTOR;
 
-
     qreal tipSize = 20.0; // Un cuadrado de 20x20 píxeles para la detección
-
 
     // Definimos el área en la punta de la pata móvil (centrada en X)
     m_detectionTip = new QGraphicsRectItem(
@@ -47,15 +43,12 @@ Compass::Compass(const QString &svgPath, QGraphicsItem *parent)
         tipSize,              // Alto
         compas2           // PATA MÓVIL
         );
-
     // --- IMPORTANTE PARA LA DEPURACIÓN ---
     // Para hacer visible temporalmente y ver dónde está el cuadrado de detección
     m_detectionTip->setPen(Qt::NoPen); //visible cambiar setPen(QtPen(Qt::red))
     m_detectionTip->setBrush(QBrush(Qt::transparent));
     m_detectionTip->setZValue(10);
 }
-
-
 
 //#########################_RotarCompás_##############################################
 void Compass::wheelEvent(QGraphicsSceneWheelEvent *event)
@@ -76,7 +69,6 @@ void Compass::wheelEvent(QGraphicsSceneWheelEvent *event)
     event->accept();
 }
 
-
 //#########################_RatónEnZonaDetección_##############################################
 
 bool Compass::isCursorInRotationZone(const QPointF& scenePos)
@@ -96,7 +88,6 @@ bool Compass::isCursorInRotationZone(const QPointF& scenePos)
 
     return false;
 }
-
 
 //##############################_RotacionAbrirCompas_###################################################
 void Compass::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -144,8 +135,6 @@ void Compass::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     QGraphicsItemGroup::hoverMoveEvent(event);
 }
 
-
-
 void Compass::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
@@ -159,7 +148,6 @@ void Compass::mousePressEvent(QGraphicsSceneMouseEvent *event)
             qreal angleRad = qAtan2(-mousePos.x(), mousePos.y());
             m_mouseClickAngle = qRadiansToDegrees(angleRad);
 
-
             event->accept();
             return;
         } else {
@@ -168,7 +156,6 @@ void Compass::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 }
-
 
 void Compass::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {

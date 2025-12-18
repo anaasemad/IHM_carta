@@ -92,6 +92,62 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(actionCerrarSesion, &QAction::triggered, this, [=]() {
         // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
+        // 1. GUARDAR EN LA BASE DE DATOS
+        // Solo guardamos si ha habido actividad (opcional)
+        /*if (m_aciertosActuales > 0 || m_fallosActuales > 0) {
+            QSqlDatabase db = QSqlDatabase::database("historial_db");
+            if (db.isOpen()) {
+                QSqlQuery query(db);
+                // datetime('now', 'localtime') guarda la fecha y hora exacta de tu PC
+                query.prepare("INSERT INTO session (timeStamp, hits, faults) "
+                              "VALUES (datetime('now', 'localtime'), :hits, :faults)");
+                query.bindValue(":hits", m_aciertosActuales);
+                query.bindValue(":faults", m_fallosActuales);
+
+                if (!query.exec()) {
+                    qDebug() << "Error al guardar sesión:" << query.lastError().text();
+                } else {
+                    qDebug() << "Sesión guardada y cerrada con éxito.";
+                }
+            }
+        }*/
+// 1. Obtener al usuario actual desde el Singleton
+    Navigation &nav = Navigation::instance();
+    User *u = nav.findUser("user1");                // Aquí usa el nombre del usuario logueado!!
+
+    if (u) {
+        // 2. Crear un objeto Session con los datos actuales
+        // (Asumiendo que Session tiene un constructor o setters para hits/faults)
+        //Session nuevaSesion;
+        Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
+
+        // 3. USAR LA FUNCIÓN DE TU IMAGEN: addSession
+        // Esto añade la sesión a la lista interna del objeto User
+        u->addSession(nuevaSesion);
+
+        qDebug() << "Sesión añadida al objeto User en memoria.";
+    }
+
+    // 4. Guardar en la Base de Datos (SQL)
+    // Es importante mantener el INSERT que hicimos antes para que los datos
+    // no se pierdan al cerrar el programa.
+    //guardarEnBaseDeDatos();
+
+        // 2. RESETEAR VARIABLES LÓGICAS
+        m_aciertosActuales = 0;
+        m_fallosActuales = 0;
+        //m_indiceSeleccionado = -1;
+        //m_problemaActual = Problem(); // Limpiamos el objeto problema
+
+        // Desmarcar y limpiar estilos de los radio buttons
+        QVector<QRadioButton*> rbs = {ui->answer1, ui->answer2, ui->answer3, ui->answer4};
+        for(auto* rb : rbs) {
+            rb->setAutoExclusive(false); // Truco para poder desmarcarlo
+            rb->setChecked(false);
+            rb->setAutoExclusive(true);
+            rb->setStyleSheet("");       // Quitar rojos/verdes
+            rb->setEnabled(true);
+        }
         ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
     });
     //boton usuario
@@ -143,7 +199,6 @@ MainWindow::MainWindow(QWidget *parent)
     compas->setVisible(false);
 
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -299,7 +354,6 @@ void MainWindow::on_boton_guardar_clicked()
     nav.updateUser(*u);
 
     QMessageBox::information(this, "Éxito", "Perfil actualizado");
-
 }
 
 //################################## lista problemas #####################################################
@@ -344,13 +398,11 @@ void MainWindow::on_boton_aleat_clicked()
     // Cambiamos a la página del mapa/problema
     ui->stackedWidget_2->setCurrentWidget(ui->problema);
 }
-
 void MainWindow::on_boton_lista_clicked()
 {
     cargarListaProblemas();
     ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
 }
-
 void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 {
     // index.row() te dará el número (0 para Problema 1, 1 para Problema 2...)
@@ -397,7 +449,6 @@ void MainWindow::corregirRespuesta(int indiceSeleccionado)
         }
     }
 }
-
 void MainWindow::on_corregir_clicked()
 {
     // 1. Averiguar cuál está marcado
@@ -487,7 +538,6 @@ void MainWindow::on_corregir_clicked()
 
     // Y desactivamos el propio botón de corregir
     ui->corregir->setEnabled(false);
-
 }
 //############################################################################################
 
@@ -608,7 +658,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 }
                 return false;
             }
-
             if (m_textMode)
             {
                 if (event->type() == QEvent::MouseButtonPress)
@@ -654,10 +703,8 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 }
                 return false;
             }
-
             if (!m_drawLineMode)
                 return QMainWindow::eventFilter(obj, event);
-
             // Dibujar línea
             if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::RightButton) {
                 m_lineStart = scenePos;
@@ -680,7 +727,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             }
         }
     }
-
     return QMainWindow::eventFilter(obj, event);
 }
 
@@ -732,8 +778,6 @@ void MainWindow::limpiarTodo()
     }
 }
 
-
-
 void MainWindow::borrarGoma(bool enabled)
 {
     m_eraserMode = enabled;
@@ -747,7 +791,6 @@ void MainWindow::borrarGoma(bool enabled)
             m_drawLineMode = false;
             ui->linea->setChecked(false);
             ui->graphicsView->unsetCursor();
-
             //ui->graphicsView->setDragMode(QGraphicsView::NoDrag); // opcional según diseño
         }
         if(m_pointMode){
@@ -760,7 +803,6 @@ void MainWindow::borrarGoma(bool enabled)
     }
 }
 
-
 void MainWindow::on_color_clicked()
 {
     // Diálogo de color-> QColorDialog::getColor()
@@ -769,7 +811,6 @@ void MainWindow::on_color_clicked()
         this,
         tr("Seleccionar color de dibujo") // Título del diálogo
         );
-
     //Verificar
     if (newColor.isValid())
     {
@@ -780,7 +821,6 @@ void MainWindow::on_color_clicked()
         qDebug() << "Nuevo color seleccionado:" << m_currentColor.name();
     }
 }
-
 
 //################################################_TEXTO_###########################################################################
 void MainWindow::ponerTexto(bool enabled)
@@ -816,7 +856,6 @@ void MainWindow::ponerPunto(bool enabled)
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
     }
 }
-
 
 //#####################################_REGLAS_#######################################################################################
 //funcion para saber las coordenadas actuales del centro de la carta
@@ -942,7 +981,6 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
         applyZoom(factor);
         updateToolPositions();
     }
-
 }
 
 //#################################_BARRA INFERIOR COORD/ACTIV_###################################################
@@ -968,7 +1006,6 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
 // Registrarse
 void MainWindow::on_boton_registro_clicked()
 {
-
     // Ocultar errores
     ui->error_user->hide();
     ui->error_correo->hide();
@@ -1065,8 +1102,6 @@ void MainWindow::on_calendario_clicked(const QDate &date)
     // Pasar la fecha del calendario al QDateEdit
     ui->campo_cumple->setDate(date);
 }
-
-
 
 // Inicio sesion
 void MainWindow::on_boton_entrar_clicked()
