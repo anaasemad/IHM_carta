@@ -42,8 +42,6 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
-    QSpacerItem *verticalSpacer_10;
-    QSpacerItem *horizontalSpacer_6;
     QStackedWidget *stackedWidget;
     QWidget *ini_sesion;
     QVBoxLayout *verticalLayout_4;
@@ -95,6 +93,7 @@ public:
     QPushButton *corregir;
     QLabel *num_problema;
     QWidget *lista_problemas;
+    QGridLayout *gridLayout_8;
     QListWidget *listWidget;
     QWidget *verticalWidget;
     QVBoxLayout *verticalLayout_3;
@@ -119,19 +118,26 @@ public:
     QGraphicsView *graphicsView;
     QLabel *labelStatus;
     QWidget *editar_perfil;
+    QGridLayout *gridLayout_7;
+    QSpacerItem *verticalSpacer_9;
+    QLabel *label_email;
+    QLineEdit *labelEmail;
+    QLineEdit *labelNombre;
+    QLabel *label_compleanios;
     QLabel *perfil;
     QLabel *nombre;
-    QLabel *label_email;
-    QLabel *label_contrasenia;
-    QLabel *label_compleanios;
-    QDateEdit *dateEdit;
-    QPushButton *boton_guardar;
-    QLabel *avatar;
     QPushButton *boton_editar_avatar;
-    QLineEdit *labelNombre;
-    QLineEdit *labelEmail;
+    QLabel *label_contrasenia;
+    QSpacerItem *horizontalSpacer_6;
+    QLabel *avatar;
+    QSpacerItem *verticalSpacer_10;
+    QPushButton *boton_guardar;
+    QDateEdit *dateEdit;
     QLineEdit *labelContrasenia;
+    QSpacerItem *horizontalSpacer_7;
+    QSpacerItem *verticalSpacer_11;
     QWidget *registro;
+    QWidget *fondo_2;
     QGridLayout *gridLayout_5;
     QFrame *recuadro_reg;
     QGridLayout *gridLayout_6;
@@ -150,14 +156,12 @@ public:
     QLabel *et_pass_2;
     QCalendarWidget *calendario;
     QDateEdit *campo_cumple;
-    QSpacerItem *verticalSpacer_9;
     QWidget *MenuSup;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *boton_volver;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *boton_historial;
     QPushButton *B_MenuUsuario;
-    QSpacerItem *horizontalSpacer_7;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -176,14 +180,6 @@ public:
         centralwidget->setMaximumSize(QSize(78241, 16777215));
         gridLayout_2 = new QGridLayout(centralwidget);
         gridLayout_2->setObjectName("gridLayout_2");
-        verticalSpacer_10 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
-
-        gridLayout_2->addItem(verticalSpacer_10, 2, 1, 1, 1);
-
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer_6, 2, 2, 1, 1);
-
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         sizePolicy.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
@@ -355,6 +351,9 @@ public:
 
         tableViewHistorial = new QTableView(historial);
         tableViewHistorial->setObjectName("tableViewHistorial");
+        QFont font3;
+        font3.setPointSize(35);
+        tableViewHistorial->setFont(font3);
 
         verticalLayout_6->addWidget(tableViewHistorial);
 
@@ -470,6 +469,8 @@ public:
         stackedWidget_2->addWidget(problema);
         lista_problemas = new QWidget();
         lista_problemas->setObjectName("lista_problemas");
+        gridLayout_8 = new QGridLayout(lista_problemas);
+        gridLayout_8->setObjectName("gridLayout_8");
         listWidget = new QListWidget(lista_problemas);
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
@@ -477,7 +478,10 @@ public:
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         listWidget->setObjectName("listWidget");
-        listWidget->setGeometry(QRect(70, 40, 211, 411));
+        listWidget->setFont(font2);
+
+        gridLayout_8->addWidget(listWidget, 0, 0, 1, 1);
+
         stackedWidget_2->addWidget(lista_problemas);
 
         horizontalLayout_2->addWidget(stackedWidget_2);
@@ -640,10 +644,10 @@ public:
         sizePolicy3.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
         Btransportador->setSizePolicy(sizePolicy3);
         Btransportador->setMaximumSize(QSize(167, 167));
-        QFont font3;
-        font3.setBold(false);
-        font3.setKerning(true);
-        Btransportador->setFont(font3);
+        QFont font4;
+        font4.setBold(false);
+        font4.setKerning(true);
+        Btransportador->setFont(font4);
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         Btransportador->setIcon(icon7);
@@ -706,53 +710,120 @@ public:
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
-        perfil = new QLabel(editar_perfil);
-        perfil->setObjectName("perfil");
-        perfil->setGeometry(QRect(10, 0, 441, 71));
-        perfil->setFont(font2);
-        nombre = new QLabel(editar_perfil);
-        nombre->setObjectName("nombre");
-        nombre->setGeometry(QRect(100, 140, 63, 20));
+        gridLayout_7 = new QGridLayout(editar_perfil);
+        gridLayout_7->setObjectName("gridLayout_7");
+        gridLayout_7->setHorizontalSpacing(0);
+        gridLayout_7->setVerticalSpacing(6);
+        gridLayout_7->setContentsMargins(0, 0, 0, 0);
+        verticalSpacer_9 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_9, 4, 1, 1, 1);
+
         label_email = new QLabel(editar_perfil);
         label_email->setObjectName("label_email");
-        label_email->setGeometry(QRect(100, 220, 63, 20));
-        label_contrasenia = new QLabel(editar_perfil);
-        label_contrasenia->setObjectName("label_contrasenia");
-        label_contrasenia->setGeometry(QRect(100, 300, 81, 20));
-        label_compleanios = new QLabel(editar_perfil);
-        label_compleanios->setObjectName("label_compleanios");
-        label_compleanios->setGeometry(QRect(100, 390, 91, 20));
-        dateEdit = new QDateEdit(editar_perfil);
-        dateEdit->setObjectName("dateEdit");
-        dateEdit->setGeometry(QRect(100, 420, 110, 26));
-        boton_guardar = new QPushButton(editar_perfil);
-        boton_guardar->setObjectName("boton_guardar");
-        boton_guardar->setGeometry(QRect(340, 470, 111, 71));
-        avatar = new QLabel(editar_perfil);
-        avatar->setObjectName("avatar");
-        avatar->setGeometry(QRect(500, 160, 181, 171));
-        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
-        avatar->setScaledContents(true);
-        boton_editar_avatar = new QPushButton(editar_perfil);
-        boton_editar_avatar->setObjectName("boton_editar_avatar");
-        boton_editar_avatar->setGeometry(QRect(550, 340, 93, 29));
-        boton_editar_avatar->setIcon(icon3);
-        labelNombre = new QLineEdit(editar_perfil);
-        labelNombre->setObjectName("labelNombre");
-        labelNombre->setGeometry(QRect(100, 170, 113, 26));
+
+        gridLayout_7->addWidget(label_email, 5, 1, 1, 1);
+
         labelEmail = new QLineEdit(editar_perfil);
         labelEmail->setObjectName("labelEmail");
-        labelEmail->setGeometry(QRect(100, 250, 221, 26));
+
+        gridLayout_7->addWidget(labelEmail, 6, 1, 1, 1);
+
+        labelNombre = new QLineEdit(editar_perfil);
+        labelNombre->setObjectName("labelNombre");
+
+        gridLayout_7->addWidget(labelNombre, 3, 1, 1, 1);
+
+        label_compleanios = new QLabel(editar_perfil);
+        label_compleanios->setObjectName("label_compleanios");
+
+        gridLayout_7->addWidget(label_compleanios, 11, 1, 1, 1);
+
+        perfil = new QLabel(editar_perfil);
+        perfil->setObjectName("perfil");
+        perfil->setFont(font2);
+
+        gridLayout_7->addWidget(perfil, 1, 1, 1, 2);
+
+        nombre = new QLabel(editar_perfil);
+        nombre->setObjectName("nombre");
+
+        gridLayout_7->addWidget(nombre, 2, 1, 1, 1);
+
+        boton_editar_avatar = new QPushButton(editar_perfil);
+        boton_editar_avatar->setObjectName("boton_editar_avatar");
+        boton_editar_avatar->setIcon(icon3);
+
+        gridLayout_7->addWidget(boton_editar_avatar, 9, 3, 1, 1);
+
+        label_contrasenia = new QLabel(editar_perfil);
+        label_contrasenia->setObjectName("label_contrasenia");
+
+        gridLayout_7->addWidget(label_contrasenia, 8, 1, 1, 1);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_6, 0, 0, 1, 1);
+
+        avatar = new QLabel(editar_perfil);
+        avatar->setObjectName("avatar");
+        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
+        avatar->setScaledContents(true);
+
+        gridLayout_7->addWidget(avatar, 3, 3, 6, 1);
+
+        verticalSpacer_10 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_10, 7, 1, 1, 1);
+
+        boton_guardar = new QPushButton(editar_perfil);
+        boton_guardar->setObjectName("boton_guardar");
+
+        gridLayout_7->addWidget(boton_guardar, 13, 2, 1, 1);
+
+        dateEdit = new QDateEdit(editar_perfil);
+        dateEdit->setObjectName("dateEdit");
+        dateEdit->setMaximumSize(QSize(100, 16777215));
+
+        gridLayout_7->addWidget(dateEdit, 12, 1, 1, 1);
+
         labelContrasenia = new QLineEdit(editar_perfil);
         labelContrasenia->setObjectName("labelContrasenia");
-        labelContrasenia->setGeometry(QRect(100, 330, 171, 26));
+
+        gridLayout_7->addWidget(labelContrasenia, 9, 1, 1, 1);
+
+        horizontalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_7, 9, 4, 1, 1);
+
+        verticalSpacer_11 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_11, 10, 1, 1, 1);
+
+        gridLayout_7->setRowStretch(0, 5);
+        gridLayout_7->setRowStretch(1, 5);
+        gridLayout_7->setRowStretch(2, 1);
+        gridLayout_7->setRowStretch(3, 1);
+        gridLayout_7->setRowStretch(5, 1);
+        gridLayout_7->setRowStretch(6, 1);
+        gridLayout_7->setRowStretch(8, 1);
+        gridLayout_7->setRowStretch(9, 1);
+        gridLayout_7->setRowStretch(10, 2);
+        gridLayout_7->setRowStretch(11, 1);
+        gridLayout_7->setRowStretch(12, 1);
+        gridLayout_7->setRowStretch(13, 1);
+        gridLayout_7->setRowStretch(14, 5);
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
-        gridLayout_5 = new QGridLayout(registro);
+        fondo_2 = new QWidget(registro);
+        fondo_2->setObjectName("fondo_2");
+        fondo_2->setGeometry(QRect(-1, -1, 467, 436));
+        gridLayout_5 = new QGridLayout(fondo_2);
         gridLayout_5->setObjectName("gridLayout_5");
         recuadro_reg = new QFrame(registro);
         recuadro_reg->setObjectName("recuadro_reg");
+        recuadro_reg->setGeometry(QRect(230, 0, 631, 561));
         recuadro_reg->setFrameShape(QFrame::Shape::StyledPanel);
         recuadro_reg->setFrameShadow(QFrame::Shadow::Raised);
         gridLayout_6 = new QGridLayout(recuadro_reg);
@@ -851,16 +922,9 @@ public:
 
         gridLayout_6->addWidget(campo_cumple, 11, 0, 1, 1);
 
-
-        gridLayout_5->addWidget(recuadro_reg, 1, 0, 1, 1);
-
-        verticalSpacer_9 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
-
-        gridLayout_5->addItem(verticalSpacer_9, 0, 0, 1, 1);
-
         stackedWidget->addWidget(registro);
 
-        gridLayout_2->addWidget(stackedWidget, 1, 1, 1, 1);
+        gridLayout_2->addWidget(stackedWidget, 1, 0, 1, 1);
 
         MenuSup = new QWidget(centralwidget);
         MenuSup->setObjectName("MenuSup");
@@ -896,11 +960,7 @@ public:
         horizontalLayout_4->addWidget(B_MenuUsuario);
 
 
-        gridLayout_2->addWidget(MenuSup, 0, 1, 1, 1);
-
-        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer_7, 2, 0, 1, 1);
+        gridLayout_2->addWidget(MenuSup, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -913,8 +973,8 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
-        stackedWidget_2->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(2);
+        stackedWidget_2->setCurrentIndex(2);
         color->setDefault(false);
 
 
@@ -970,13 +1030,13 @@ public:
         Btransportador->setText(QString());
         Bregla->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
+        label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
+        label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
         perfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
-        label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
         label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
-        label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
-        boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
         avatar->setText(QString());
+        boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
         error_user->setText(QString());
         boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
         error_correo->setText(QString());
