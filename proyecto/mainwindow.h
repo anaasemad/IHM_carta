@@ -54,11 +54,9 @@ private slots:
     //void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_boton_historial_clicked();
     void on_boton_volver_clicked();
-    //void on_Boton_volver_2_clicked();
-    //void on_B_MenuUsuario_clicked();
     void on_boton_editar_avatar_clicked();
     void on_boton_guardar_clicked();
-    //void on_listWidget_doubleClicked(const QModelIndex &index);
+    void on_listWidget_doubleClicked(const QModelIndex &index);
 //#################################################################################################################
 
 
@@ -83,6 +81,7 @@ private:
     QSqlDatabase m_db; // Objeto de conexión a la BBDD
     int m_previousWidgetIndex = 0; //para guardar widget anterior para volver
     QSqlQueryModel *m_historialModel = nullptr; // Modelo para vincular datos a tableView
+    //const Problem *problemaActual = nullptr;
 
     // --- Funciones de BBDD ---
     bool initDatabase(); // Inicializa la conexión y el modelo

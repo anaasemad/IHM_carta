@@ -332,16 +332,35 @@ void MainWindow::on_boton_lista_clicked()
     ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
 }
 
-/*void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
+void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 {
     // index.row() te dará el número (0 para Problema 1, 1 para Problema 2...)
     int fila = index.row();
 
+    Navigation &nav = Navigation::instance();
+    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+
+    if (fila < (int)listaProblemas.size()) {
+        const Problem &p = listaProblemas.at(fila); // Cambia '*' por '&' y añade 'const'
+        auto respuestas = p.answers();
+
+        ui->enunciado->setText(p.text());
+        if (respuestas.size() >= 4) {
+            ui->answer1->setText(respuestas.at(0).text());
+            ui->answer2->setText(respuestas.at(1).text());
+            ui->answer3->setText(respuestas.at(2).text());
+            ui->answer4->setText(respuestas.at(3).text());
+        }
+
+        // Guardamos cuál es la correcta para usarla luego
+        // (Esto dependerá de cómo esté definida tu clase Problem)
+    }
+
     // Cambiamos a la página del mapa/problema
-    ui->stackedWidget->setCurrentWidget(ui->pagina_mapa);
+    ui->stackedWidget_2->setCurrentWidget(ui->problema);
 
     // Aquí podrías cargar los datos de nav.m_problems[fila]
-}*/
+}
 //############################################################################################
 
 void MainWindow::on_boton_volver_clicked()

@@ -25,6 +25,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
@@ -80,6 +81,12 @@ public:
     QPushButton *boton_lista;
     QSpacerItem *verticalSpacer_3;
     QWidget *problema;
+    QLabel *enunciado;
+    QRadioButton *answer1;
+    QRadioButton *answer2;
+    QRadioButton *answer3;
+    QRadioButton *answer4;
+    QPushButton *corregir;
     QWidget *lista_problemas;
     QListWidget *listWidget;
     QWidget *verticalWidget;
@@ -342,6 +349,25 @@ public:
         stackedWidget_2->addWidget(menu_principal);
         problema = new QWidget();
         problema->setObjectName("problema");
+        enunciado = new QLabel(problema);
+        enunciado->setObjectName("enunciado");
+        enunciado->setGeometry(QRect(20, 20, 301, 321));
+        enunciado->setWordWrap(true);
+        answer1 = new QRadioButton(problema);
+        answer1->setObjectName("answer1");
+        answer1->setGeometry(QRect(10, 370, 291, 24));
+        answer2 = new QRadioButton(problema);
+        answer2->setObjectName("answer2");
+        answer2->setGeometry(QRect(10, 410, 291, 24));
+        answer3 = new QRadioButton(problema);
+        answer3->setObjectName("answer3");
+        answer3->setGeometry(QRect(10, 450, 281, 24));
+        answer4 = new QRadioButton(problema);
+        answer4->setObjectName("answer4");
+        answer4->setGeometry(QRect(10, 490, 291, 24));
+        corregir = new QPushButton(problema);
+        corregir->setObjectName("corregir");
+        corregir->setGeometry(QRect(100, 560, 111, 41));
         stackedWidget_2->addWidget(problema);
         lista_problemas = new QWidget();
         lista_problemas->setObjectName("lista_problemas");
@@ -698,7 +724,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(2);
         stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
@@ -723,6 +749,12 @@ public:
         Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         boton_alet->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
+        enunciado->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        answer1->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
+        answer2->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
+        answer3->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
+        answer4->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
+        corregir->setText(QCoreApplication::translate("MainWindow", "Corregir", nullptr));
 
         const bool __sortingEnabled = listWidget->isSortingEnabled();
         listWidget->setSortingEnabled(false);

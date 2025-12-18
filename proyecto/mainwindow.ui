@@ -106,7 +106,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -470,7 +470,89 @@
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="problema"/>
+             <widget class="QWidget" name="problema">
+              <widget class="QLabel" name="enunciado">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>20</y>
+                 <width>301</width>
+                 <height>321</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="answer1">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>370</y>
+                 <width>291</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>RadioButton</string>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="answer2">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>410</y>
+                 <width>291</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>RadioButton</string>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="answer3">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>450</y>
+                 <width>281</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>RadioButton</string>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="answer4">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>490</y>
+                 <width>291</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>RadioButton</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="corregir">
+               <property name="geometry">
+                <rect>
+                 <x>100</x>
+                 <y>560</y>
+                 <width>111</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Corregir</string>
+               </property>
+              </widget>
+             </widget>
              <widget class="QWidget" name="lista_problemas">
               <widget class="QListWidget" name="listWidget">
                <property name="geometry">
