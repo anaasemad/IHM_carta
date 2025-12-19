@@ -46,10 +46,8 @@ private slots:
     void on_color_clicked();
     void on_boton_entrar_clicked();
     void on_boton_registro_clicked();
-    void on_boton_entrar_clicked();
     void on_calendario_clicked(const QDate &date);
     void on_label_registro_linkActivated(const QString &link);
-    void setupPerfil();
 
 //#################################################################################################################
     void on_boton_historial_clicked();

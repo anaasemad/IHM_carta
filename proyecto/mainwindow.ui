@@ -42,7 +42,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -69,7 +69,7 @@
              <property name="frameShadow">
               <enum>QFrame::Shadow::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout_4" rowstretch="4,3,3,3,3,1,3,3,3,1,1,1" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0,0">
+             <layout class="QGridLayout" name="gridLayout_4" rowstretch="4,3,3,3,3,1,3,3,3,1,1" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0">
               <item row="1" column="0">
                <widget class="QLabel" name="et_ini">
                 <property name="sizePolicy">
@@ -84,7 +84,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>INICIAR SESIÓN</string>
+                 <string>Iniciar Sesión</string>
                 </property>
                </widget>
               </item>
@@ -615,7 +615,7 @@
              </widget>
              <widget class="QWidget" name="lista_problemas">
               <layout class="QGridLayout" name="gridLayout_8">
-               <item row="0" column="0">
+               <item row="1" column="0">
                 <widget class="QListWidget" name="listWidget">
                  <property name="font">
                   <font>
@@ -647,6 +647,13 @@
                    <string>Problema 5</string>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="et_lista">
+                 <property name="text">
+                  <string>Lista de Problemas:</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -1107,7 +1114,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="editar_perfil">
-       <layout class="QGridLayout" name="gridLayout_7" rowstretch="5,5,1,1,0,1,1,0,1,1,2,1,1,1,5">
+       <layout class="QGridLayout" name="gridLayout_7" rowstretch="5,5,1,1,0,1,1,0,1,1,2,1,1,1">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -1376,7 +1383,7 @@
             </font>
            </property>
            <property name="text">
-            <string>      Regístrate</string>
+            <string>      Registrarse</string>
            </property>
           </widget>
          </item>
@@ -1524,7 +1531,7 @@
      <x>0</x>
      <y>0</y>
      <width>989</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -8,13 +8,21 @@ QWidget {
 QPushButton {
     background-color: #E6E3E3;
     color: #4E7592;
-    border-radius: 10px; /* Bordes redondeados generales */
+    border-radius: 18px; /* Bordes redondeados generales */
     padding: 5px 15px;
     border: none;
+    font-weight: bold;
+    outline: none;
 }
 
-QPushButton:hover {
-    background-color: #4E7592; /* Azul al pasar el mouse */
+/*Para que el botón cambie de color al pasar el cursor o cuando se seleccione*/
+QPushButton:checked, QPushButton:hover {
+    background-color: #4E7592;
+    color: white;
+    border-radius: 18px; /* Repetir */
+    padding: 5px 15px;
+    border: 2px;
+    outline: none;
 }
 
 /* --- ESTILOS ESPECIALES --- */
@@ -29,7 +37,7 @@ QWidget#barra_herramienta {
     background-color: #E6E3E3;
 }
 
-/* Botón de Usuario (Círculo perfecto) */
+/* Botón de Usuario (Círculo) */
 /* Usamos el nombre del objeto para que solo afecte a este */
 QPushButton#B_MenuUsuario {
     background-color: #4E7592;
@@ -42,14 +50,15 @@ QPushButton#B_MenuUsuario::menu-indicator {
 }
 
 /* Botones de Problemas */
-QWidget#boton_alet, QWidget#boton_lista {
+QWidget#boton_aleat, QWidget#boton_lista {
     background-color: #404064;
     color: white;
-    border-radius: 20px;
+    font-size: 20px;
+    border-radius: 35px;
 }
 
 /* Botones de Guardado y Aceptar */
-QWidget#boton_entrar, QWidget#boton_registro,QWidget#boton_guardar {
+QWidget#boton_entrar, QWidget#boton_registro,QWidget#boton_guardar,QWidget#corregir {
     background-color: #4E7592;
     color: white;
     border-radius: 10px;
@@ -57,11 +66,95 @@ QWidget#boton_entrar, QWidget#boton_registro,QWidget#boton_guardar {
 
 
 /* Titulos */
-QLabel#et_ini, QLabel#et_registro, QLabel#Historial, QLabel#perfil {
-font-weight: bold;
-font-size: 18px;
+QLabel#et_ini, QLabel#et_registro, QLabel#Historial, QLabel#perfil, QLabel#num_problema, QLabel#et_lista {
+  color: #4E7592;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+/*Ventanas iniSesion y Registro*/
+.QFrame{
+    background-color: #CED9E4;
+    border: 2px solid #CED9E4;
+    border-radius: 20px;
+}
+
+/*Texto ventanas iniSesion y Registro*/
+QLabel#et_name, QLabel#et_cumple, QLabel#et_correo, QLabel#et_pass2,
+QLabel#et_pass,QLabel#et_user, QLabel#et__nocuenta {
+  font-size: 16px;
+  color: #4E7592;
+  font-weight: bold;
+
+
 }
 
 
 
 
+/*LISTA PROBLEMAS*/
+/* Contenedor principal de la lista */
+QListWidget#listWidget {
+    background-color: #F8F9FA; /* Blanco grisáceo muy suave */
+    border: 1px solid #CED4DA;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none; /* Quita el recuadro punteado al seleccionar */
+}
+
+/* Estilo de cada ítem de la lista */
+QListWidget#listWidget::item {
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 8px; /* Espacio entre problemas */
+    padding: 12px;
+    color: #495057;
+    border: 1px solid transparent;
+}
+
+/* Estilo cuando pasas el ratón por encima */
+QListWidget#listWidget::item:hover {
+    background-color: #E9ECEF;
+    border: 1px solid #CED9E4;
+}
+
+/* Estilo cuando un problema está seleccionado */
+QListWidget#listWidget::item:selected {
+    background-color: #4E7592; /* El azul de tu paleta */
+    color: white;
+    font-weight: bold;
+}
+
+
+
+/*HISTORIAL*/
+/* Estilo general de la tabla */
+QTableView#tableViewHistorial {
+    background-color: white;
+    alternate-background-color: #F8F9FA; /* Color gris muy suave para filas alternas */
+    selection-background-color: #CED9E4; /* Color azul claro al seleccionar */
+    selection-color: #4E7592;
+    border: none;
+}
+
+/* Estilo del encabezado para separar los títulos */
+QHeaderView::section {
+    background-color: white;
+    padding-left: 20px;   /* Mayor espacio a la izquierda */
+    padding-right: 20px;  /* Mayor espacio a la derecha */
+    border: none;
+    border-bottom: 2px solid #DCDCDC;
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
+    text-align: left;     /* Alinea el texto a la izquierda para mejor lectura */
+}
+
+/* Estilo de las celdas para separar los datos */
+QTableView#tableViewHistorial::item {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E0E0E0;
+}

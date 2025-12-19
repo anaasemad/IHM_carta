@@ -212,6 +212,16 @@ MainWindow::~MainWindow()
 //################### historial ####################
 void MainWindow::setupHistorialTable()
 {
+    //DECORACIÓN:
+    // --- Configuración visual de la tabla ---
+    ui->tableViewHistorial->setShowGrid(false); // Quita las líneas de cuadrícula
+    ui->tableViewHistorial->setAlternatingRowColors(true); // Habilita colores alternos
+    ui->tableViewHistorial->setSelectionBehavior(QAbstractItemView::SelectRows); // Selecciona filas completas
+    ui->tableViewHistorial->verticalHeader()->setVisible(false); // Quita los números de fila (1, 2, 3...)
+    ui->tableViewHistorial->horizontalHeader()->setStretchLastSection(true); // La última columna ocupa el resto
+    ui->tableViewHistorial->setFrameShape(QFrame::NoFrame); // Quita el borde exterior
+
+
     // --- 1. Gestión de Excepciones y Acceso al Singleton ---
     try {
         Navigation &nav = Navigation::instance();
@@ -268,6 +278,15 @@ void MainWindow::setupHistorialTable()
 
             // 4. INSERTAR LA FILA EN EL MODELO
             stdModel->appendRow(row);
+
+            //DECORACIÓN:
+            QStandardItem* itemAciertos = new QStandardItem(QString::number(s.hits()));
+            itemAciertos->setTextAlignment(Qt::AlignCenter); // Centrar texto
+            row.append(itemAciertos);
+
+            QStandardItem* itemFallos = new QStandardItem(QString::number(s.faults()));
+            itemFallos->setTextAlignment(Qt::AlignCenter); // Centrar texto
+            row.append(itemFallos);
         }
 
         // --- 5. Asignar el nuevo modelo a la tabla ---

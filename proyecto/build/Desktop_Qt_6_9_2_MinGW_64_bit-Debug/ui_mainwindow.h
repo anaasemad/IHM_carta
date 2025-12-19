@@ -95,6 +95,7 @@ public:
     QWidget *lista_problemas;
     QGridLayout *gridLayout_8;
     QListWidget *listWidget;
+    QLabel *et_lista;
     QWidget *verticalWidget;
     QVBoxLayout *verticalLayout_3;
     QWidget *widget_2;
@@ -295,7 +296,6 @@ public:
         gridLayout_4->setRowStretch(8, 3);
         gridLayout_4->setRowStretch(9, 1);
         gridLayout_4->setRowStretch(10, 1);
-        gridLayout_4->setRowStretch(11, 1);
 
         gridLayout_3->addWidget(recuadro_ini, 1, 1, 1, 1);
 
@@ -480,7 +480,12 @@ public:
         listWidget->setObjectName("listWidget");
         listWidget->setFont(font2);
 
-        gridLayout_8->addWidget(listWidget, 0, 0, 1, 1);
+        gridLayout_8->addWidget(listWidget, 1, 0, 1, 1);
+
+        et_lista = new QLabel(lista_problemas);
+        et_lista->setObjectName("et_lista");
+
+        gridLayout_8->addWidget(et_lista, 0, 0, 1, 1);
 
         stackedWidget_2->addWidget(lista_problemas);
 
@@ -812,7 +817,6 @@ public:
         gridLayout_7->setRowStretch(11, 1);
         gridLayout_7->setRowStretch(12, 1);
         gridLayout_7->setRowStretch(13, 1);
-        gridLayout_7->setRowStretch(14, 5);
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
@@ -965,7 +969,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 21));
+        menubar->setGeometry(QRect(0, 0, 989, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -973,7 +977,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(1);
         stackedWidget_2->setCurrentIndex(2);
         color->setDefault(false);
 
@@ -984,7 +988,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        et_ini->setText(QCoreApplication::translate("MainWindow", "INICIAR SESI\303\223N", nullptr));
+        et_ini->setText(QCoreApplication::translate("MainWindow", "Iniciar Sesi\303\263n", nullptr));
         et__nocuenta->setText(QCoreApplication::translate("MainWindow", "No tienes cuenta?", nullptr));
         et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
@@ -1017,6 +1021,7 @@ public:
         ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Problema 5", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
+        et_lista->setText(QCoreApplication::translate("MainWindow", "Lista de Problemas:", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
         limpiar->setText(QString());
         color->setText(QString());
@@ -1041,7 +1046,7 @@ public:
         boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
         error_correo->setText(QString());
         error_pass->setText(QString());
-        et_registro->setText(QCoreApplication::translate("MainWindow", "      Reg\303\255strate", nullptr));
+        et_registro->setText(QCoreApplication::translate("MainWindow", "      Registrarse", nullptr));
         et_cumple->setText(QCoreApplication::translate("MainWindow", "Cumple", nullptr));
         error_edad->setText(QString());
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
