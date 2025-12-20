@@ -688,7 +688,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                     {
                         QGraphicsTextItem* texto = new QGraphicsTextItem("Nuevo texto");
                         texto->setTextInteractionFlags(Qt::TextEditorInteraction);
-                        texto->setFont(QFont("Arial", gros));
+                        texto->setFont(QFont("Arial", gros+30));
                         texto->setDefaultTextColor(m_currentColor);
                         texto->setFlag(QGraphicsItem::ItemIsMovable);
                         texto->setFlag(QGraphicsItem::ItemIsSelectable);

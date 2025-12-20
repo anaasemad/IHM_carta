@@ -42,7 +42,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -796,7 +796,7 @@
                        <number>1</number>
                       </property>
                       <property name="maximum">
-                       <number>20</number>
+                       <number>100</number>
                       </property>
                       <property name="value">
                        <number>6</number>
@@ -1531,7 +1531,7 @@
      <x>0</x>
      <y>0</y>
      <width>989</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

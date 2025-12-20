@@ -551,7 +551,7 @@ public:
         sizePolicy5.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
         grosor->setSizePolicy(sizePolicy5);
         grosor->setMinimum(1);
-        grosor->setMaximum(20);
+        grosor->setMaximum(100);
         grosor->setValue(6);
 
         horizontalLayout_3->addWidget(grosor);
@@ -969,7 +969,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 22));
+        menubar->setGeometry(QRect(0, 0, 989, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -977,7 +977,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(2);
         stackedWidget_2->setCurrentIndex(2);
         color->setDefault(false);
 
