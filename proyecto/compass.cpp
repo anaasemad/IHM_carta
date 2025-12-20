@@ -1,5 +1,5 @@
 #include "compass.h"
-
+//#include "mainwindow.h"
 #include <QtMath>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -90,23 +90,23 @@ void Compass::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if (event->button() == Qt::LeftButton && (event->modifiers() & Qt::ShiftModifier))
     {
-        // Solo si pinchamos en el cuerpo del compás
         if (clickedItem == compas1 || clickedItem == compas2 || isAncestorOf(clickedItem))
         {
+            // 1. ANCLAR EL CENTRO: Usamos la posición global de la punta fija
             m_fixedPointScene = mapToScene(transformOriginPoint());
+
+            // 2. CALCULAR RADIO Y ÁNGULO INICIAL
             QPointF movingTipScene = compas2->mapToScene(tipOfLeg(compas2));
+            QLineF radiusLine(m_fixedPointScene, movingTipScene);
 
-            m_circleRadius = QLineF(m_fixedPointScene, movingTipScene).length();
+            m_circleRadius = radiusLine.length();
+            m_lastAngle = radiusLine.angle(); // Sistema Qt: 0-360 antihorario
 
-            // Guardamos el ángulo inicial
-            m_lastAngle = QLineF(m_fixedPointScene, movingTipScene).angle();
-
-            // Iniciamos un Path vacío
+            // 3. INICIAR EL TRAZO
             m_currentPath = QPainterPath();
             m_currentPath.moveTo(movingTipScene);
-
             m_arcItem = new QGraphicsPathItem();
-            m_arcItem->setPen(QPen(Qt::blue, 2, Qt::SolidLine, Qt::RoundCap));
+            m_arcItem->setPen(QPen(m_drawingColor, m_grosor, Qt::SolidLine, Qt::RoundCap));
             m_arcItem->setZValue(5);
             scene()->addItem(m_arcItem);
 
@@ -137,40 +137,42 @@ void Compass::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (m_isDrawingCircle)
     {
-        QPointF mouse = event->scenePos();
+        // 1. OBTENER POSICIÓN DEL RATÓN RESPECTO AL CENTRO FIJO
+        QPointF mouseInScene = event->scenePos();
+        QLineF currentLine(m_fixedPointScene, mouseInScene);
 
-        // 1. Rotar el compás para que siga al ratón
-        qreal angleRad = qAtan2(mouse.y() - m_fixedPointScene.y(),
-                                mouse.x() - m_fixedPointScene.x());
-        setRotation(qRadiansToDegrees(angleRad));
+        // 2. ROTAR EL COMPÁS (Sincronizado)
+        // Usamos el ángulo de la línea directamente.
+        // Como setRotation es horario y QLineF::angle es antihorario, compensamos:
+        qreal newAngle = currentLine.angle();
+        setRotation(-newAngle -180); // El +90 depende de la orientación de tu SVG original
 
-        // 2. Calcular el nuevo arco a añadir
-        QPointF currentMovingTip = compas2->mapToScene(tipOfLeg(compas2));
-        QLineF currentLine(m_fixedPointScene, currentMovingTip);
-        qreal currentAngle = currentLine.angle();
+        // 3. CALCULAR EL MOVIMIENTO DE LA PATA MÓVIL
+        // No usamos la posición del ratón para el dibujo, sino la posición real de la "punta"
+        QPointF tipScene = compas2->mapToScene(tipOfLeg(compas2));
+        QLineF tipLine(m_fixedPointScene, tipScene);
+        qreal currentTipAngle = tipLine.angle();
 
-        // Diferencia entre el ángulo anterior y el actual
-        qreal sweep = currentAngle - m_lastAngle;
+        // 4. CALCULAR EL DIFERENCIAL (Sweep)
+        qreal sweep = currentTipAngle - m_lastAngle;
 
-        // Corrección para el cruce de 0/360 grados
-        if (sweep > 180) sweep -= 360;
+        // Corrección de cruce 0/360
+        if (sweep > 180)  sweep -= 360;
         if (sweep < -180) sweep += 360;
 
-        // Rectángulo para el arco
+        // 5. DIBUJAR
         QRectF rect(m_fixedPointScene.x() - m_circleRadius,
                     m_fixedPointScene.y() - m_circleRadius,
                     m_circleRadius * 2,
                     m_circleRadius * 2);
 
-        // AÑADIR el segmento al path existente (permite > 360 grados)
         m_currentPath.arcTo(rect, m_lastAngle, sweep);
         m_arcItem->setPath(m_currentPath);
 
-        m_lastAngle = currentAngle; // Actualizamos para el siguiente movimiento
+        m_lastAngle = currentTipAngle;
         event->accept();
         return;
     }
-
     if (m_isRotating)
     {
         QPointF mousePos = event->pos();

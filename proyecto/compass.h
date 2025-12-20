@@ -16,6 +16,8 @@ public:
 
     // Detección de la zona activa (coordenadas de ESCENA)
     bool isCursorInRotationZone(const QPointF& scenePos);
+    void setDrawingColor(const QColor &color) { m_drawingColor = color; }
+    void setDrawingWidth(int width) { m_grosor = width; }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -58,6 +60,8 @@ private:
     QPainterPath m_arcPath;
     qreal m_startAngle; // Para saber dónde empezó el trazo
     qreal m_lastAngle;
+    QColor m_drawingColor = Qt::blue;
+    int m_grosor = 2;
 
 };
 

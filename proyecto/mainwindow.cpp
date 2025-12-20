@@ -749,6 +749,11 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                         delete text;
                         return true;
                     }
+                    else if (auto path = qgraphicsitem_cast<QGraphicsPathItem*>(item)) {
+                        sceneMapa->removeItem(path);
+                        delete path;
+                        return true;
+                    }
                     else if (auto pix = qgraphicsitem_cast<QGraphicsPixmapItem*>(item)) {
                         // Borrar solo los puntos creados por el usuario
                         if (pix->data(0).toString() == "userPoint") {
@@ -867,6 +872,12 @@ void MainWindow::limpiarTodo()
             sceneMapa->removeItem(text);
             delete text;
         }
+        // --- NUEVA CONDICIÓN PARA EL ARCO DEL COMPÁS ---
+        else if (auto path = qgraphicsitem_cast<QGraphicsPathItem*>(item))
+        {
+            sceneMapa->removeItem(path);
+            delete path;
+        }
         else if (auto pix = qgraphicsitem_cast<QGraphicsPixmapItem*>(item))
         {
             // Borrar solo los puntos creados por el usuario
@@ -916,7 +927,11 @@ void MainWindow::on_color_clicked()
     {
         //Actualizar
         m_currentColor = newColor;
-
+        for (QGraphicsItem* item : sceneMapa->items()) {
+            if (Compass* compas = dynamic_cast<Compass*>(item)) {
+                compas->setDrawingColor(m_currentColor);
+            }
+        }
         //pista visual de que el color cambió
         qDebug() << "Nuevo color seleccionado:" << m_currentColor.name();
     }
