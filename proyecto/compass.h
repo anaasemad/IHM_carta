@@ -1,53 +1,64 @@
 #ifndef COMPAS_H
 #define COMPAS_H
 
-#include <QGraphicsSceneWheelEvent>
-#include <QSizeF>
 #include <QGraphicsItemGroup>
 #include <QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
-#include <QtMath>
+#include <QGraphicsSceneWheelEvent>
 #include <QGraphicsRectItem>
-#include <QPainter>
-#include <QTransform>
-
+#include <QGraphicsEllipseItem>
+#include <QtMath>
 
 class Compass : public QGraphicsItemGroup
 {
 public:
-
     Compass(const QString &svgPath, QGraphicsItem *parent = nullptr);
-    // Detección de la zona activa (parte inferior para rotar)
-    bool isCursorInRotationZone(const QPointF& localPos);
-    QGraphicsRectItem *m_detectionTip;
+
+    // Detección de la zona activa (coordenadas de ESCENA)
+    bool isCursorInRotationZone(const QPointF& scenePos);
 
 protected:
-    // Redefinición de eventos de ratón para controlar la rotación/apertura
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
-    void wheelEvent(QGraphicsSceneWheelEvent *event); //rotar
+    void wheelEvent(QGraphicsSceneWheelEvent *event) override;
+    void updateTransformOrigin();
+    // Punta de una pata
+    QPointF tipOfLeg(QGraphicsSvgItem *leg) const;
 
 private:
-    QGraphicsSvgItem *compas2;  // Pata fija
-    QGraphicsSvgItem *compas1; // Pata móvil
+    // Patas del compás
+    QGraphicsSvgItem *compas1; // Pata FIJA
+    QGraphicsSvgItem *compas2; // Pata MÓVIL
+
+    // Zona de detección para abrir/cerrar
+    QGraphicsRectItem *m_detectionTip = nullptr;
+
+    // Apertura
     qreal m_initialAngle = 0.0;
     qreal m_mouseClickAngle = 0.0;
-
     bool m_isRotating = false;
-    const qreal SCALE_FACTOR =4.0; // Ajustar el tamaño del SVG
-    qreal m_pataHeight;           // Altura de la pata escalada
+
+    // Rotación general
     double m_angleDeg = 0.0;
 
-    //bool m_isDrawingArc = false; // Bandera para saber si estamos en modo arco
-    //QGraphicsPathItem *m_currentArcItem = nullptr; // El ítem que dibuja el arco
-    //QPainterPath m_currentArcPath; // La trayectoria del arco
+    // Escala
+    const qreal SCALE_FACTOR = 4.0;
 
-    // Almacenamos el radio (la apertura) del arco
-    //qreal m_arcRadius = 0.0;
+    // Dibujo de círculo
+    bool m_isDrawingCircle = false;
+    QGraphicsEllipseItem* m_circleItem = nullptr;
+    QPointF m_fixedPointScene;
+    qreal m_circleRadius = 0.0;
+    QGraphicsPathItem* m_currentPathItem = nullptr; // ítem del camino que dibuja la punta
+    QPainterPath m_currentPath;                     // camino actual
+    // En la sección private de tu clase:
+    QGraphicsPathItem *m_arcItem = nullptr;
+    QPainterPath m_arcPath;
+    qreal m_startAngle; // Para saber dónde empezó el trazo
+    qreal m_lastAngle;
+
 };
 
-
 #endif // COMPAS_H
-

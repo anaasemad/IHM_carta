@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
     sceneMapa(new QGraphicsScene(this))
-  // ,sceneCompas(new QGraphicsScene(this))
+// ,sceneCompas(new QGraphicsScene(this))
 {
     ui->setupUi(this);
 
@@ -63,11 +63,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->goma->setCheckable(true);
     ui->texto->setCheckable(true);
     connect(ui->linea, &QPushButton::toggled,
-        this, &MainWindow::setDrawLineMode);
+            this, &MainWindow::setDrawLineMode);
     connect(ui->limpiar, &QPushButton::clicked,
-        this, &MainWindow::limpiarTodo);
+            this, &MainWindow::limpiarTodo);
     connect(ui->goma, &QPushButton::toggled,
-        this, &MainWindow::borrarGoma);
+            this, &MainWindow::borrarGoma);
     connect(ui->texto, &QPushButton::toggled, this, &MainWindow::ponerTexto);
     connect(ui->punto, &QPushButton::toggled, this, &MainWindow::ponerPunto);
 
@@ -171,8 +171,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->boton_volver->setFixedSize(60, 40);
 
 
-   // view->setScene(sceneMenu);
-   // view->setScene(sceneMapa);
+    // view->setScene(sceneMenu);
+    // view->setScene(sceneMapa);
 
     QPixmap mapa(":/img/carta_nautica");
 
@@ -338,38 +338,38 @@ void MainWindow::setupHistorialTable()
             // Comprobamos la fecha de la sesión contra el filtro
             //if (s.timeStamp().date() >= fechaFiltro) {
 
-                int fila = ui->tableViewHistorial->rowCount();
-                ui->tableViewHistorial->insertRow(fila);
+            int fila = ui->tableViewHistorial->rowCount();
+            ui->tableViewHistorial->insertRow(fila);
 
-                // --- COLUMNA 0: FECHA ---
-                // Convertimos el QDateTime a texto para el item de la tabla
-                QTableWidgetItem *itemFecha = new QTableWidgetItem(s.timeStamp().toString("dd/MM/yyyy HH:mm"));
-                itemFecha->setTextAlignment(Qt::AlignCenter);
-                ui->tableViewHistorial->setItem(fila, 0, itemFecha);
+            // --- COLUMNA 0: FECHA ---
+            // Convertimos el QDateTime a texto para el item de la tabla
+            QTableWidgetItem *itemFecha = new QTableWidgetItem(s.timeStamp().toString("dd/MM/yyyy HH:mm"));
+            itemFecha->setTextAlignment(Qt::AlignCenter);
+            ui->tableViewHistorial->setItem(fila, 0, itemFecha);
 
-                // --- COLUMNA 1: ACIERTOS ---
-                QTableWidgetItem *itemHits = new QTableWidgetItem(QString::number(s.hits()));
-                itemHits->setTextAlignment(Qt::AlignCenter);
-                itemHits->setForeground(Qt::darkGreen);
+            // --- COLUMNA 1: ACIERTOS ---
+            QTableWidgetItem *itemHits = new QTableWidgetItem(QString::number(s.hits()));
+            itemHits->setTextAlignment(Qt::AlignCenter);
+            itemHits->setForeground(Qt::darkGreen);
 
-                QFont negrita = itemHits->font();
-                negrita.setBold(true);
-                itemHits->setFont(negrita);
-                ui->tableViewHistorial->setItem(fila, 1, itemHits);
+            QFont negrita = itemHits->font();
+            negrita.setBold(true);
+            itemHits->setFont(negrita);
+            ui->tableViewHistorial->setItem(fila, 1, itemHits);
 
-                // --- COLUMNA 2: FALLOS ---
-                QTableWidgetItem *itemFaults = new QTableWidgetItem(QString::number(s.faults()));
-                itemFaults->setTextAlignment(Qt::AlignCenter);
-                if (s.faults() > 0) {
-                    itemFaults->setForeground(Qt::red);
-                    itemFaults->setFont(negrita);
-                }
-                ui->tableViewHistorial->setItem(fila, 2, itemFaults);
+            // --- COLUMNA 2: FALLOS ---
+            QTableWidgetItem *itemFaults = new QTableWidgetItem(QString::number(s.faults()));
+            itemFaults->setTextAlignment(Qt::AlignCenter);
+            if (s.faults() > 0) {
+                itemFaults->setForeground(Qt::red);
+                itemFaults->setFont(negrita);
+            }
+            ui->tableViewHistorial->setItem(fila, 2, itemFaults);
 
-                // Sumamos para el resumen
-                totalAciertos += s.hits();
-                totalFallos += s.faults();
-           // }
+            // Sumamos para el resumen
+            totalAciertos += s.hits();
+            totalFallos += s.faults();
+            // }
         }
     }
 
@@ -873,7 +873,7 @@ void MainWindow::limpiarTodo()
             if (pix->data(0).toString() == "userPoint") {
                 sceneMapa->removeItem(pix);
                 delete pix;
-        }
+            }
         }
     }
 }
