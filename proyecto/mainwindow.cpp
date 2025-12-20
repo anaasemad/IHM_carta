@@ -92,46 +92,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(actionCerrarSesion, &QAction::triggered, this, [=]() {
         // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
-        // 1. GUARDAR EN LA BASE DE DATOS
-        // Solo guardamos si ha habido actividad (opcional)
-        /*if (m_aciertosActuales > 0 || m_fallosActuales > 0) {
-            QSqlDatabase db = QSqlDatabase::database("historial_db");
-            if (db.isOpen()) {
-                QSqlQuery query(db);
-                // datetime('now', 'localtime') guarda la fecha y hora exacta de tu PC
-                query.prepare("INSERT INTO session (timeStamp, hits, faults) "
-                              "VALUES (datetime('now', 'localtime'), :hits, :faults)");
-                query.bindValue(":hits", m_aciertosActuales);
-                query.bindValue(":faults", m_fallosActuales);
 
-                if (!query.exec()) {
-                    qDebug() << "Error al guardar sesión:" << query.lastError().text();
-                } else {
-                    qDebug() << "Sesión guardada y cerrada con éxito.";
-                }
-            }
-        }*/
-// 1. Obtener al usuario actual desde el Singleton
-    Navigation &nav = Navigation::instance();
-    User *u = nav.findUser("user1");                // Aquí usa el nombre del usuario logueado!!
+        // 1. Obtener al usuario actual desde el Singleton
+        /*Navigation &nav = Navigation::instance();
+        User *u = nav.findUser("user1");                            // Aquí usa el nombre del usuario logueado!!
 
-    if (u) {
-        // 2. Crear un objeto Session con los datos actuales
-        // (Asumiendo que Session tiene un constructor o setters para hits/faults)
-        //Session nuevaSesion;
-        Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
+        if (u) {
+            // 2. Crear un objeto Session con los datos actuales
+            Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
 
-        // 3. USAR LA FUNCIÓN DE TU IMAGEN: addSession
-        // Esto añade la sesión a la lista interna del objeto User
-        u->addSession(nuevaSesion);
+            // 3. USAR LA FUNCIÓN: addSession
+            u->addSession(nuevaSesion);
 
-        qDebug() << "Sesión añadida al objeto User en memoria.";
-    }
+            qDebug() << "Sesión añadida al objeto User en memoria.";
+        }
 
     // 4. Guardar en la Base de Datos (SQL)
-    // Es importante mantener el INSERT que hicimos antes para que los datos
-    // no se pierdan al cerrar el programa.
-    //guardarEnBaseDeDatos();
 
         // 2. RESETEAR VARIABLES LÓGICAS
         m_aciertosActuales = 0;
@@ -148,8 +124,47 @@ MainWindow::MainWindow(QWidget *parent)
             rb->setStyleSheet("");       // Quitar rojos/verdes
             rb->setEnabled(true);
         }
+        ui->stackedWidget->setCurrentWidget(ui->ini_sesion);*/
+        // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
+        // 1. GUARDAR EN LA BASE DE DATOS
+        Navigation &nav = Navigation::instance();
+        User *u = nav.findUser("user1");                // CAMBIAR POR USUARIO LOGEADO!!!!
+
+        // 2. Crear un objeto Session con los datos actuales
+        // (Asumiendo que Session tiene un constructor o setters para hits/faults)
+        //Session nuevaSesion;
+        Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
+        qDebug() << "Aciertos totales: "<<m_aciertosActuales << "Fallos" << m_fallosActuales;
+        // 3. USAR LA FUNCIÓN DE TU IMAGEN: addSession
+        // Esto añade la sesión a la lista interna del objeto User
+        u->addSession(nuevaSesion);
+
+        qDebug() << "Sesión añadida al objeto User en memoria.";
+
+        // 4. Guardar en la Base de Datos (SQL)
+        // Es importante mantener el INSERT que hicimos antes para que los datos
+        // no se pierdan al cerrar el programa.
+        if(u->insertedInDb()){
+            qDebug() << "Base de datos actualizada (creo)";
+        } else {
+            u->setInsertedInDb(true);
+        }
+        // 2. RESETEAR VARIABLES LÓGICAS
+        m_aciertosActuales = 0;
+        m_fallosActuales = 0;
+
+        // Desmarcar y limpiar estilos de los radio buttons
+        QVector<QRadioButton*> rbs = {ui->answer1, ui->answer2, ui->answer3, ui->answer4};
+        for(auto* rb : rbs) {
+            rb->setAutoExclusive(false); // Truco para poder desmarcarlo
+            rb->setChecked(false);
+            rb->setAutoExclusive(true);
+            rb->setStyleSheet("");       // Quitar rojos/verdes
+            rb->setEnabled(true);
+        }
         ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
     });
+
     //boton usuario
     ui->B_MenuUsuario->setFixedSize(60, 60);
     ui->boton_historial->setFixedSize(100, 40);
@@ -210,7 +225,7 @@ MainWindow::~MainWindow()
 
 //#############################################################################################
 //################### historial ####################
-void MainWindow::setupHistorialTable()
+/*void MainWindow::setupHistorialTable()
 {
     //DECORACIÓN:
     // --- Configuración visual de la tabla ---
@@ -227,11 +242,7 @@ void MainWindow::setupHistorialTable()
         Navigation &nav = Navigation::instance();
 
         // --- 2. Obtener el Usuario y Sesiones ---
-        //const auto &users = nav.users();
-        //const User *currentUser = nav.findUser("user1");
-        //QString usuario = ui->campo_user->text();
-        const User *u = nav.findUser("user1"); //CAMBIAR POR USUARIO CONCRETO
-
+        const User *u = nav.findUser("user1");                                          //CAMBIAR POR USUARIO CONCRETO!!!!!
         const QList<Session> &sessions = u->sessions();
 
         // --- 3. Crear el QStandardItemModel (Modelo de Datos C++) ---
@@ -250,9 +261,8 @@ void MainWindow::setupHistorialTable()
 
             // 1. OBTENER EL DATETIME (Fecha y Hora)
             // Usamos QDateTime porque el historial necesita saber la hora exacta de la sesión
-            //QDateTime sesion = s.timeStamp();
-            QDateTime sesion = s.timeStamp();
-            qDebug() << "Dato de la sesión:" << s.timeStamp() << "Aciertos:" << s.hits();
+            //QDateTime sesion = s.timeStamp().toString("dd/MM/yyyy HH:mm");
+            QString sesion = s.timeStamp().toString("dd/MM/yyyy HH:mm");
 
             // 2. CREAR EL OBJETO (¡Paso vital: el 'new'!)
             // Sin el 'new', el programa intenta escribir en una memoria que no existe y se cierra.
@@ -260,9 +270,9 @@ void MainWindow::setupHistorialTable()
 
             // Guardamos el dato real (objeto QDateTime)
             itemFecha->setData(sesion, Qt::EditRole);
-            qDebug() << "ItemFecha:" << itemFecha;
+            qDebug() << "ItemFecha:" << sesion;
             // Ponemos el texto que verá el usuario (Día/Mes/Año Hora:Min:Seg)
-            itemFecha->setText(sesion.toString("dd/MM/yyyy HH:mm:ss"));
+            itemFecha->setText(sesion);
             qDebug() << "ItemFecha_final:" << itemFecha;
 
             // 3. AÑADIR LAS COLUMNAS A LA FILA
@@ -298,6 +308,74 @@ void MainWindow::setupHistorialTable()
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());
     }
+}
+*/
+
+void MainWindow::setupHistorialTable()
+{
+    // Limpiamos la tabla (importante para que no se dupliquen datos al recargar)
+    ui->tableViewHistorial->setRowCount(0);
+
+    int totalAciertos = 0;
+    int totalFallos = 0;
+
+    // Obtenemos la fecha del filtro (asegúrate de que el nombre coincida)
+    QDate fechaFiltro = ui->dateEditFiltro->date();
+
+    Navigation &nav = Navigation::instance();
+    const User *u = nav.findUser("user1"); // TODO: Cambiar por el usuario real logueado
+
+    if (u) {
+        // Usamos el QVector de sesiones que tienes en tu .h
+        const QVector<Session> &sesiones = u->sessions();
+
+        qDebug() << "Filtrando desde:" << fechaFiltro << "Total Sesiones:" << sesiones.size();
+
+        // Bucle inverso para ver lo más reciente primero
+        for(int i = sesiones.size() - 1; i >= 0; --i) {
+            const Session &s = sesiones[i];
+
+            // Comprobamos la fecha de la sesión contra el filtro
+            //if (s.timeStamp().date() >= fechaFiltro) {
+
+                int fila = ui->tableViewHistorial->rowCount();
+                ui->tableViewHistorial->insertRow(fila);
+
+                // --- COLUMNA 0: FECHA ---
+                // Convertimos el QDateTime a texto para el item de la tabla
+                QTableWidgetItem *itemFecha = new QTableWidgetItem(s.timeStamp().toString("dd/MM/yyyy HH:mm"));
+                itemFecha->setTextAlignment(Qt::AlignCenter);
+                ui->tableViewHistorial->setItem(fila, 0, itemFecha);
+
+                // --- COLUMNA 1: ACIERTOS ---
+                QTableWidgetItem *itemHits = new QTableWidgetItem(QString::number(s.hits()));
+                itemHits->setTextAlignment(Qt::AlignCenter);
+                itemHits->setForeground(Qt::darkGreen);
+
+                QFont negrita = itemHits->font();
+                negrita.setBold(true);
+                itemHits->setFont(negrita);
+                ui->tableViewHistorial->setItem(fila, 1, itemHits);
+
+                // --- COLUMNA 2: FALLOS ---
+                QTableWidgetItem *itemFaults = new QTableWidgetItem(QString::number(s.faults()));
+                itemFaults->setTextAlignment(Qt::AlignCenter);
+                if (s.faults() > 0) {
+                    itemFaults->setForeground(Qt::red);
+                    itemFaults->setFont(negrita);
+                }
+                ui->tableViewHistorial->setItem(fila, 2, itemFaults);
+
+                // Sumamos para el resumen
+                totalAciertos += s.hits();
+                totalFallos += s.faults();
+           // }
+        }
+    }
+
+    // Actualizamos el label de resumen final
+    /*ui->lblSummary->setText(QString("Resumen del periodo: %1 Aciertos | %2 Fallos")
+                                .arg(totalAciertos).arg(totalFallos));*/
 }
 
 void MainWindow::on_boton_historial_clicked()

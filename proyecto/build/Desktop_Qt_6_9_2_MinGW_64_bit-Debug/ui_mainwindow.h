@@ -31,7 +31,7 @@
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -69,7 +69,7 @@ public:
     QLabel *Historial;
     QLabel *label_filtro;
     QDateEdit *dateEditFiltro;
-    QTableView *tableViewHistorial;
+    QTableWidget *tableViewHistorial;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
     QWidget *horizontalWidget;
@@ -349,11 +349,16 @@ public:
 
         verticalLayout_6->addWidget(dateEditFiltro);
 
-        tableViewHistorial = new QTableView(historial);
+        tableViewHistorial = new QTableWidget(historial);
+        if (tableViewHistorial->columnCount() < 3)
+            tableViewHistorial->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tableViewHistorial->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tableViewHistorial->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tableViewHistorial->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         tableViewHistorial->setObjectName("tableViewHistorial");
-        QFont font3;
-        font3.setPointSize(35);
-        tableViewHistorial->setFont(font3);
 
         verticalLayout_6->addWidget(tableViewHistorial);
 
@@ -649,10 +654,10 @@ public:
         sizePolicy3.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
         Btransportador->setSizePolicy(sizePolicy3);
         Btransportador->setMaximumSize(QSize(167, 167));
-        QFont font4;
-        font4.setBold(false);
-        font4.setKerning(true);
-        Btransportador->setFont(font4);
+        QFont font3;
+        font3.setBold(false);
+        font3.setKerning(true);
+        Btransportador->setFont(font3);
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         Btransportador->setIcon(icon7);
@@ -969,7 +974,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 21));
+        menubar->setGeometry(QRect(0, 0, 989, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -978,7 +983,7 @@ public:
         retranslateUi(MainWindow);
 
         stackedWidget->setCurrentIndex(2);
-        stackedWidget_2->setCurrentIndex(2);
+        stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
 
@@ -997,6 +1002,12 @@ public:
 "<html><head/><body><p><br/></p></body></html>", nullptr));
         Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tableViewHistorial->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Sesi\303\263n", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tableViewHistorial->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Aciertos", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tableViewHistorial->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Fallos", nullptr));
         boton_aleat->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
         enunciado->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
