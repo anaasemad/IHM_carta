@@ -390,17 +390,27 @@ void MainWindow::on_boton_historial_clicked()
 //################################### Modificar perfil ###############################################
 void MainWindow::setupPerfil()
 {
-    try{
-        //QString usuario = ui->campo_user->text();
+    try {
         Navigation &nav = Navigation::instance();
-        const User *u = nav.findUser("user1");                  //CAMBIAR POR USUARIO ACTUAL!!!!!
+
+        // USUARIO QUE HA INICIADO SESIÓN
+        const User *u = nav.findUser(m_usuarioActual);
+
+        if (!u) return;
 
         ui->labelNombre->setText(u->nickName());
         ui->labelEmail->setText(u->email());
         ui->labelContrasenia->setText(u->password());
-        //ui->avatar->setPixmap(u->avatar());
-        ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
         ui->dateEdit->setDate(u->birthdate());
+
+        // Avatar
+        if (!u->avatar().isNull()) {
+            ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
+            ui->avatar->setScaledContents(true);
+        }
+
+
+        ui->labelNombre->setEnabled(false);
 
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());
@@ -1203,65 +1213,47 @@ void MainWindow::on_calendario_clicked(const QDate &date)
     ui->campo_cumple->setDate(date);
 }
 
-// Inicio sesion
+// Inicio sesión
 void MainWindow::on_boton_entrar_clicked()
 {
     QString usuario = ui->campo_user->text();
     QString password = ui->campo_pass->text();
 
     if (usuario.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(
-            this,
-            "Error",
-            "Introduce usuario y contraseña"
-            );
+        QMessageBox::warning(this,
+                             "Error",
+                             "Introduce usuario y contraseña");
         return;
     }
 
     try {
         Navigation &nav = Navigation::instance();
-
         const User *u = nav.findUser(usuario);
 
-        // Usuario no existe
-        if (!u) {
-            QMessageBox::critical(
-                this,
-                "Error de autenticación",
-                "Usuario o contraseña incorrectos"
-                );
+        // Usuario o contraseña incorrectos
+        if (!u || u->password() != password) {
+            QMessageBox::critical(this,
+                                  "Error de autenticación",
+                                  "Usuario o contraseña incorrectos");
             return;
         }
 
-        // Contraseña incorrecta  (Cambiar a text label oculto si no gusta q salga así)
-        if (u->password() != password) {
-            QMessageBox::critical(
-                this,
-                "Error de autenticación",
-                "Usuario o contraseña incorrectos"
-                );
-            return;
-        }
+        // ===== LOGIN CORRECTO =====
 
-        // Login correcto → acceso al sistema
+        // Guardar usuario actual
+        m_usuarioActual = usuario;
+
+        // Limpiar campos
         ui->campo_user->clear();
         ui->campo_pass->clear();
 
-        // No se porque no me va a lista de problemas
+        // Cambiar a la ventana principal (mapa)
+        ui->stackedWidget->setCurrentWidget(ui->mapa);
 
-        ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
+        // Mostrar problema aleatorio directamente
+        on_boton_aleat_clicked();
 
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());
     }
 }
-
-void MainWindow::on_label_registro_linkActivated(const QString &)
-{
-    // No me cambia de pagina mirarlo
-    ui->stackedWidget->setCurrentWidget(ui->registro);
-}
-
-// realmente creo q lo unico q falla es el cambio de ventana, el resto creo q esta bien
-
-
