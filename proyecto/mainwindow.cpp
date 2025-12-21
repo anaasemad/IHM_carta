@@ -24,6 +24,9 @@
 #include <QRandomGenerator>
 
 
+//#define QString CurrentUser = "";
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
@@ -33,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     QFile file(":/qss/estilos/estilos.qss"); //ruta al css
+
     if (file.open(QFile::ReadOnly)){
         QString styleSheet = QString::fromUtf8(file.readAll());
         this -> setStyleSheet(styleSheet);
@@ -43,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (ui->horizontalWidget->layout()) {
         delete ui->horizontalWidget->layout();//si no borramos el layout el splitter se pone mal
     }
+
     QSplitter *splitter = new QSplitter(Qt::Horizontal, ui->horizontalWidget);
     splitter->addWidget(ui->stackedWidget_2);//mete lo q teniamos en al ui en cada lado del splitter
     splitter->addWidget(ui->verticalWidget);
@@ -89,64 +94,29 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Conectar acciones a los cambios de página
     connect(actionPerfil, &QAction::triggered, this, [=]() {
+        m_origenProblema = -1;
         setupPerfil();
         ui->stackedWidget->setCurrentWidget(ui->editar_perfil);
     });
 
     connect(actionCerrarSesion, &QAction::triggered, this, [=]() {
         // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
-
-        // 1. Obtener al usuario actual desde el Singleton
-        /*Navigation &nav = Navigation::instance();
-        User *u = nav.findUser("user1");                            // Aquí usa el nombre del usuario logueado!!
-
-        if (u) {
-            // 2. Crear un objeto Session con los datos actuales
-            Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
-
-            // 3. USAR LA FUNCIÓN: addSession
-            u->addSession(nuevaSesion);
-
-            qDebug() << "Sesión añadida al objeto User en memoria.";
-        }
-
-    // 4. Guardar en la Base de Datos (SQL)
-
-        // 2. RESETEAR VARIABLES LÓGICAS
-        m_aciertosActuales = 0;
-        m_fallosActuales = 0;
-        //m_indiceSeleccionado = -1;
-        //m_problemaActual = Problem(); // Limpiamos el objeto problema
-
-        // Desmarcar y limpiar estilos de los radio buttons
-        QVector<QRadioButton*> rbs = {ui->answer1, ui->answer2, ui->answer3, ui->answer4};
-        for(auto* rb : rbs) {
-            rb->setAutoExclusive(false); // Truco para poder desmarcarlo
-            rb->setChecked(false);
-            rb->setAutoExclusive(true);
-            rb->setStyleSheet("");       // Quitar rojos/verdes
-            rb->setEnabled(true);
-        }
-        ui->stackedWidget->setCurrentWidget(ui->ini_sesion);*/
-        // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
         // 1. GUARDAR EN LA BASE DE DATOS
         Navigation &nav = Navigation::instance();
-        User *u = nav.findUser("user1");                // CAMBIAR POR USUARIO LOGEADO!!!!
+        User *u = nav.findUser(m_usuarioActual);                // CAMBIAR POR USUARIO LOGEADO!!!!
 
         // 2. Crear un objeto Session con los datos actuales
         // (Asumiendo que Session tiene un constructor o setters para hits/faults)
         //Session nuevaSesion;
         Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
         qDebug() << "Aciertos totales: "<<m_aciertosActuales << "Fallos" << m_fallosActuales;
-        // 3. USAR LA FUNCIÓN DE TU IMAGEN: addSession
+        // 3. USAR LA FUNCIÓN: addSession
         // Esto añade la sesión a la lista interna del objeto User
         u->addSession(nuevaSesion);
 
         qDebug() << "Sesión añadida al objeto User en memoria.";
 
         // 4. Guardar en la Base de Datos (SQL)
-        // Es importante mantener el INSERT que hicimos antes para que los datos
-        // no se pierdan al cerrar el programa.
         if(u->insertedInDb()){
             qDebug() << "Base de datos actualizada (creo)";
         } else {
@@ -319,7 +289,7 @@ void MainWindow::setupHistorialTable()
     QDate fechaFiltro = ui->dateEditFiltro->date();
 
     Navigation &nav = Navigation::instance();
-    const User *u = nav.findUser("user1"); // TODO: Cambiar por el usuario real logueado
+    const User *u = nav.findUser(m_usuarioActual);
 
     if (u) {
         // Usamos el QVector de sesiones que tienes en tu .h
@@ -376,7 +346,7 @@ void MainWindow::setupHistorialTable()
 
 void MainWindow::on_boton_historial_clicked()
 {
-    m_previousWidgetIndex = ui->stackedWidget->currentIndex();
+    m_origenProblema = -1;
 
     setupHistorialTable();
 
@@ -443,23 +413,59 @@ void MainWindow::on_boton_editar_avatar_clicked()
 void MainWindow::on_boton_guardar_clicked()
 {
     Navigation &nav = Navigation::instance();
-    User *u = nav.findUser("user1");
-    u->setEmail(ui->labelEmail->text());
-    u->setPassword(ui->labelContrasenia->text());
-    u->setBirthdate(ui->dateEdit->date());
-    // Verificamos si el label 'avatar' tiene algún contenido
-    if (!ui->avatar->pixmap().isNull()) {
+    User *u = nav.findUser(m_usuarioActual);
+    bool valido = true;
+
+    QRegularExpression reUser("^[A-Za-z0-9_-]{5,15}$");
+    if (!reUser.match(ui->labelNombre->text()).hasMatch()) {
+        ui->error_user->setText(
+            "Usuario entre 6 y 15 caracteres (letras, números, - o _)"
+            );
+        ui->error_user->setStyleSheet("color:red;");
+        ui->error_user->show();
+        QMessageBox::information(this, "Error", "Usuario entre 6 y 15 caracteres (letras, números, - o _)");
+        valido = false;
+    }
+
+    // Correo
+    QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    if (!reMail.match(ui->labelEmail->text()).hasMatch()) {
+        ui->error_correo->setText("Correo electrónico no válido");
+        ui->error_correo->setStyleSheet("color:red;");
+        ui->error_correo->show();
+        QMessageBox::information(this, "Error", "Correo electrónico no válido");
+        valido = false;
+    }
+
+    // Contraseña
+    QRegularExpression rePass(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
+        );
+
+    if (!rePass.match(ui->labelContrasenia->text()).hasMatch()) {
+        ui->error_pass->setText(
+            "8-20 caracteres, mayúscula, minúscula, número y carácter especial"
+            );
+        ui->error_pass->setStyleSheet("color:red;");
+        ui->error_pass->show();
+        QMessageBox::information(this, "Error", "Contraseña: 8-20 caracteres, mayúscula, minúscula, número y carácter especial");
+        valido = false;
+    }
+
+    if(valido){
+        u->setEmail(ui->labelEmail->text());
+        u->setPassword(ui->labelContrasenia->text());
+        u->setBirthdate(ui->dateEdit->date());
         // 1. Obtenemos el QPixmap actual del label
         QPixmap pix = ui->avatar->pixmap();
-
         // 2. Lo convertimos a QImage y se lo pasamos al usuario
         u->setAvatar(pix.toImage());
+        //ui->B_MenuUsuario->setIcon(QPixmap::fromImage(u->avatar()));
+
+        nav.updateUser(*u);
+
+        QMessageBox::information(this, "Éxito", "Perfil actualizado");
     }
-    ui->B_MenuUsuario->setIcon(QPixmap::fromImage(u->avatar()));
-
-    nav.updateUser(*u);
-
-    QMessageBox::information(this, "Éxito", "Perfil actualizado");
 }
 
 //################################## lista problemas #####################################################
@@ -482,6 +488,7 @@ void MainWindow::cargarListaProblemas() {
 }
 void MainWindow::on_boton_aleat_clicked()
 {
+    m_origenProblema = 0;
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
     int totalProblemas = listaProblemas.size();
@@ -492,6 +499,10 @@ void MainWindow::on_boton_aleat_clicked()
     if (m_problema_actual < totalProblemas) {
         const Problem &p = listaProblemas.at(m_problema_actual); // Cambia '*' por '&' y añade 'const'
         auto respuestas = p.answers();
+
+        std::shuffle(respuestas.begin(), respuestas.end(),
+                     std::default_random_engine(QRandomGenerator::global()->generate()));
+
         ui->num_problema->setText(QString("Problema %1").arg(m_problema_actual + 1));
         ui->enunciado->setText(p.text());
         if (respuestas.size() >= 4) {
@@ -506,6 +517,7 @@ void MainWindow::on_boton_aleat_clicked()
 }
 void MainWindow::on_boton_lista_clicked()
 {
+    m_origenProblema = 1;
     cargarListaProblemas();
     ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
 }
@@ -649,22 +661,31 @@ void MainWindow::on_corregir_clicked()
 
 void MainWindow::on_boton_volver_clicked()
 {
-    //if(ui->stackedWidget->currentWidget()==ui->stackedWidget-)
-    ui->stackedWidget->setCurrentWidget(ui->mapa);
-    ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
-    ui->answer1->setEnabled(true);
-    ui->answer2->setEnabled(true);
-    ui->answer3->setEnabled(true);
-    ui->answer4->setEnabled(true);
+    if(m_origenProblema==0){
+
+        ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
+
+    } else if (m_origenProblema==1){
+
+        ui->stackedWidget_2->setCurrentWidget(ui->lista_problemas);
+
+    } else{
+        ui->stackedWidget->setCurrentWidget(ui->mapa);
+        ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
+    }
+
     ui->corregir->setEnabled(true);
-    ui->answer1->setChecked(false);                                 //NO VA
-    ui->answer2->setChecked(false);
-    ui->answer3->setChecked(false);
-    ui->answer4->setChecked(false);
-    ui->answer1->setStyleSheet("color: black; font-weight: none;");
-    ui->answer2->setStyleSheet("color: black; font-weight: none;");
-    ui->answer3->setStyleSheet("color: black; font-weight: none;");
-    ui->answer4->setStyleSheet("color: black; font-weight: none;");
+
+    QVector<QRadioButton*> rbs = {ui->answer1, ui->answer2, ui->answer3, ui->answer4};
+    for(auto* rb : rbs) {
+        rb->setAutoExclusive(false); // Truco para poder desmarcarlo
+        rb->setChecked(false);
+        //rb->setAutoExclusive(true);
+        rb->setStyleSheet("color: black; font-weight: none;");       // Quitar rojos/verdes
+        rb->setEnabled(true);
+    }
+
+    m_origenProblema = -1;
 
 }
 //############################################################################################
@@ -1149,23 +1170,27 @@ void MainWindow::on_boton_registro_clicked()
 
     bool valido = true;
 
+    //He puesto QMessageBox para ver bien el error, si te gusta quita los ui->error_user
+
     // Usuario
-    QRegularExpression reUser("^[A-Za-z0-9_-]{6,15}$");
-    if (!reUser.match(usuario).hasMatch()) {
+    QRegularExpression reUser("^[A-Za-z0-9_-]{5,15}$");
+    if (!reUser.match(ui->labelNombre->text()).hasMatch()) {
         ui->error_user->setText(
             "Usuario entre 6 y 15 caracteres (letras, números, - o _)"
             );
         ui->error_user->setStyleSheet("color:red;");
         ui->error_user->show();
+        QMessageBox::information(this, "Error", "Usuario entre 6 y 15 caracteres (letras, números, - o _)");
         valido = false;
     }
 
     // Correo
     QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
-    if (!reMail.match(correo).hasMatch()) {
+    if (!reMail.match(ui->labelEmail->text()).hasMatch()) {
         ui->error_correo->setText("Correo electrónico no válido");
         ui->error_correo->setStyleSheet("color:red;");
         ui->error_correo->show();
+        QMessageBox::information(this, "Error", "Correo electrónico no válido");
         valido = false;
     }
 
@@ -1174,12 +1199,13 @@ void MainWindow::on_boton_registro_clicked()
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
         );
 
-    if (!rePass.match(password).hasMatch()) {
+    if (!rePass.match(ui->labelContrasenia->text()).hasMatch()) {
         ui->error_pass->setText(
             "8-20 caracteres, mayúscula, minúscula, número y carácter especial"
             );
         ui->error_pass->setStyleSheet("color:red;");
         ui->error_pass->show();
+        QMessageBox::information(this, "Error", "Contraseña: 8-20 caracteres, mayúscula, minúscula, número y carácter especial");
         valido = false;
     }
 
@@ -1188,6 +1214,8 @@ void MainWindow::on_boton_registro_clicked()
         ui->error_edad->setText("Debes tener más de 16 años");
         ui->error_edad->setStyleSheet("color:red;");
         ui->error_edad->show();
+        QMessageBox::information(this, "Error", "Debes tener más de 16 años");
+
         valido = false;
     }
 
@@ -1249,6 +1277,7 @@ void MainWindow::on_boton_entrar_clicked()
     try {
         Navigation &nav = Navigation::instance();
         const User *u = nav.findUser(usuario);
+        ui->B_MenuUsuario->setIcon(QPixmap::fromImage(u->avatar()));
 
         // Usuario o contraseña incorrectos
         if (!u || u->password() != password) {
@@ -1267,11 +1296,14 @@ void MainWindow::on_boton_entrar_clicked()
         ui->campo_user->clear();
         ui->campo_pass->clear();
 
+        //EDITADO- Ya va
+
         // Cambiar a la ventana principal (mapa)
         ui->stackedWidget->setCurrentWidget(ui->mapa);
+        ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 
         // Mostrar problema aleatorio directamente
-        on_boton_aleat_clicked();
+        //on_boton_aleat_clicked();
 
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());

@@ -84,6 +84,8 @@ private:
     int m_aciertosActuales = 0;
     int m_fallosActuales = 0;
     int m_problema_actual = -1;
+    int m_origenProblema = -1;
+
     //const Problem *problemaActual = nullptr;
 
     // --- Funciones de BBDD ---
