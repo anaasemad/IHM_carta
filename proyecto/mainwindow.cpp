@@ -737,14 +737,14 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 }
             } else if (compas && compas->isVisible()) {
 
-            if (compas->isCursorInRotationZone(scenePos)) {
-                // El cursor está sobre la zona de apertura de la punta
-                ui->graphicsView->viewport()->setCursor(QCursor(Qt::SizeFDiagCursor));
-                currentStatus = "Compás: Abrir/Cerrar";
-            } else {
-                currentStatus = "Compás visible";
+                if (compas->isCursorInRotationZone(scenePos)) {
+                    // El cursor está sobre la zona de apertura de la punta
+                    ui->graphicsView->viewport()->setCursor(QCursor(Qt::SizeFDiagCursor));
+                    currentStatus = "Compás: Abrir/Cerrar";
+                } else {
+                    currentStatus = "Compás visible";
+                }
             }
-        }
             // Si ningún modo especial está activo y el compás está oculto, usamos el cursor por defecto (ArrowCursor).
             else if (!m_eraserMode && !m_drawLineMode && !m_textMode) {
                 ui->graphicsView->viewport()->setCursor(Qt::ArrowCursor);

@@ -73,3 +73,7 @@ void Tool::wheelEvent(QGraphicsSceneWheelEvent *event)
 
     event->accept();
 }
+qreal Tool::angleRadians() const
+{
+    return rotation() * M_PI / 180.0;
+}

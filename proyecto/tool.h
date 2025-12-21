@@ -17,6 +17,7 @@ public:
 protected:
     void wheelEvent(QGraphicsSceneWheelEvent *event) override;
 
+
 private:
     void applyInitialScale();
     void updateOrigin();
@@ -24,6 +25,7 @@ private:
     QSizeF m_targetSizePx;
     double m_uniformScale = 1.0;
     double m_angleDeg     = 0.0;
+    qreal angleRadians() const;
 };
 
 #endif // TOOL_H
