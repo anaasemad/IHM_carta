@@ -65,6 +65,11 @@ QWidget#boton_entrar, QWidget#boton_registro,QWidget#boton_guardar,QWidget#corre
 }
 
 
+/* Botón de editar avatar (Círculo) */
+QPushButton#boton_editar_avatar {
+    border-radius: 21px;
+}
+
 /* Titulos */
 QLabel#et_ini, QLabel#et_registro, QLabel#Historial, QLabel#perfil, QLabel#num_problema, QLabel#et_lista {
   color: #4E7592;
@@ -79,9 +84,10 @@ QLabel#et_ini, QLabel#et_registro, QLabel#Historial, QLabel#perfil, QLabel#num_p
     border-radius: 20px;
 }
 
-/*Texto ventanas iniSesion y Registro*/
-QLabel#et_name, QLabel#et_cumple, QLabel#et_correo, QLabel#et_pass2,
-QLabel#et_pass,QLabel#et_user, QLabel#et__nocuenta {
+/*Texto ventanas iniSesion, Registro y editar perfil*/
+QLabel#et_name, QLabel#et_cumple, QLabel#et_correo, QLabel#et_pass_2,
+QLabel#et_pass,QLabel#et_user, QLabel#et__nocuenta,QLabel#label_compleanios,
+QLabel#label_contrasenia,QLabel#label_email,QLabel#nombre {
   font-size: 16px;
   color: #4E7592;
   font-weight: bold;
@@ -126,35 +132,30 @@ QListWidget#listWidget::item:selected {
 }
 
 
-
 /*HISTORIAL*/
-/* Estilo general de la tabla */
-QTableView#tableViewHistorial {
+/* Contenedor principal de la tabla */
+QTableWidget#tableViewHistorial {
     background-color: white;
-    alternate-background-color: #F8F9FA; /* Color gris muy suave para filas alternas */
-    selection-background-color: #CED9E4; /* Color azul claro al seleccionar */
-    selection-color: #4E7592;
+    alternate-background-color: #F8F9FA;
     border: none;
+    gridline-color: transparent;
+    outline: none;
 }
 
-/* Estilo del encabezado para separar los títulos */
+/* Estilo de los encabezados - Se mantiene igual */
 QHeaderView::section {
     background-color: white;
-    padding-left: 20px;   /* Mayor espacio a la izquierda */
-    padding-right: 20px;  /* Mayor espacio a la derecha */
+    padding: 12px;
     border: none;
     border-bottom: 2px solid #DCDCDC;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     color: black;
-    text-align: left;     /* Alinea el texto a la izquierda para mejor lectura */
 }
 
-/* Estilo de las celdas para separar los datos */
-QTableView#tableViewHistorial::item {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+/* Estilo de las celdas - ELIMINADO EL COLOR PARA NO SOBREESCRIBIR */
+QTableWidget#tableViewHistorial::item {
+    padding: 15px;
     border-bottom: 1px solid #E0E0E0;
+    /* No definimos 'color' aquí para que respete el del código C++ */
 }

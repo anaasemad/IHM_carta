@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCalendarWidget>
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
@@ -85,13 +84,18 @@ public:
     QPushButton *boton_lista;
     QSpacerItem *verticalSpacer_3;
     QWidget *problema;
-    QLabel *enunciado;
-    QRadioButton *answer1;
-    QRadioButton *answer2;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout_9;
     QRadioButton *answer3;
+    QSpacerItem *verticalSpacer_14;
+    QSpacerItem *verticalSpacer_12;
     QRadioButton *answer4;
-    QPushButton *corregir;
+    QRadioButton *answer1;
+    QLabel *enunciado;
+    QRadioButton *answer2;
     QLabel *num_problema;
+    QPushButton *corregir;
+    QSpacerItem *horizontalSpacer_8;
     QWidget *lista_problemas;
     QGridLayout *gridLayout_8;
     QListWidget *listWidget;
@@ -120,43 +124,54 @@ public:
     QLabel *labelStatus;
     QWidget *editar_perfil;
     QGridLayout *gridLayout_7;
-    QSpacerItem *verticalSpacer_9;
-    QLabel *label_email;
-    QLineEdit *labelEmail;
-    QLineEdit *labelNombre;
-    QLabel *label_compleanios;
-    QLabel *perfil;
-    QLabel *nombre;
-    QPushButton *boton_editar_avatar;
-    QLabel *label_contrasenia;
-    QSpacerItem *horizontalSpacer_6;
-    QLabel *avatar;
-    QSpacerItem *verticalSpacer_10;
-    QPushButton *boton_guardar;
-    QDateEdit *dateEdit;
-    QLineEdit *labelContrasenia;
-    QSpacerItem *horizontalSpacer_7;
+    QSpacerItem *horizontalSpacer_11;
     QSpacerItem *verticalSpacer_11;
+    QSpacerItem *verticalSpacer_17;
+    QLabel *avatar;
+    QSpacerItem *verticalSpacer_9;
+    QLabel *nombre;
+    QSpacerItem *horizontalSpacer_12;
+    QLabel *label_compleanios;
+    QLineEdit *labelNombre;
+    QLineEdit *labelEmail;
+    QSpacerItem *horizontalSpacer_13;
+    QPushButton *boton_guardar;
+    QSpacerItem *verticalSpacer_10;
+    QLabel *label_email;
+    QSpacerItem *horizontalSpacer_6;
+    QHBoxLayout *horizontalLayout_5;
+    QPushButton *boton_editar_avatar;
+    QDateEdit *dateEdit;
+    QLabel *perfil;
+    QSpacerItem *verticalSpacer_18;
+    QSpacerItem *horizontalSpacer_7;
+    QLineEdit *labelContrasenia;
+    QLabel *label_contrasenia;
+    QSpacerItem *verticalSpacer_13;
     QWidget *registro;
     QWidget *fondo_2;
     QGridLayout *gridLayout_5;
+    QGridLayout *gridLayout_10;
+    QSpacerItem *verticalSpacer_16;
+    QSpacerItem *horizontalSpacer_10;
+    QSpacerItem *horizontalSpacer_9;
+    QSpacerItem *verticalSpacer_15;
     QFrame *recuadro_reg;
     QGridLayout *gridLayout_6;
-    QLabel *error_user;
-    QLineEdit *campo_correo;
+    QDateEdit *campo_cumple;
+    QLabel *et_cumple;
     QLineEdit *campo_name;
     QPushButton *boton_registro;
-    QLabel *error_correo;
-    QLabel *error_pass;
-    QLabel *et_registro;
-    QLabel *et_cumple;
+    QLabel *et_pass_2;
     QLineEdit *campo_pass_2;
+    QLineEdit *campo_correo;
     QLabel *error_edad;
+    QLabel *error_user;
+    QLabel *et_registro;
+    QLabel *error_pass;
+    QLabel *error_correo;
     QLabel *et_name;
     QLabel *et_correo;
-    QLabel *et_pass_2;
-    QCalendarWidget *calendario;
-    QDateEdit *campo_cumple;
     QWidget *MenuSup;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *boton_volver;
@@ -198,19 +213,22 @@ public:
         gridLayout_3->setObjectName("gridLayout_3");
         recuadro_ini = new QFrame(fondo);
         recuadro_ini->setObjectName("recuadro_ini");
-        sizePolicy.setHeightForWidth(recuadro_ini->sizePolicy().hasHeightForWidth());
-        recuadro_ini->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(recuadro_ini->sizePolicy().hasHeightForWidth());
+        recuadro_ini->setSizePolicy(sizePolicy1);
         recuadro_ini->setFrameShape(QFrame::Shape::StyledPanel);
         recuadro_ini->setFrameShadow(QFrame::Shadow::Raised);
         gridLayout_4 = new QGridLayout(recuadro_ini);
         gridLayout_4->setObjectName("gridLayout_4");
         et_ini = new QLabel(recuadro_ini);
         et_ini->setObjectName("et_ini");
-        QSizePolicy sizePolicy1(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(et_ini->sizePolicy().hasHeightForWidth());
-        et_ini->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(et_ini->sizePolicy().hasHeightForWidth());
+        et_ini->setSizePolicy(sizePolicy2);
         QFont font;
         font.setPointSize(25);
         et_ini->setFont(font);
@@ -219,15 +237,15 @@ public:
 
         et__nocuenta = new QLabel(recuadro_ini);
         et__nocuenta->setObjectName("et__nocuenta");
-        sizePolicy1.setHeightForWidth(et__nocuenta->sizePolicy().hasHeightForWidth());
-        et__nocuenta->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(et__nocuenta->sizePolicy().hasHeightForWidth());
+        et__nocuenta->setSizePolicy(sizePolicy2);
         QFont font1;
         font1.setPointSize(7);
         et__nocuenta->setFont(font1);
 
         gridLayout_4->addWidget(et__nocuenta, 9, 0, 1, 1);
 
-        verticalSpacer_6 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        verticalSpacer_6 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
 
         gridLayout_4->addItem(verticalSpacer_6, 7, 0, 1, 1);
 
@@ -237,44 +255,44 @@ public:
 
         et_user = new QLabel(recuadro_ini);
         et_user->setObjectName("et_user");
-        sizePolicy1.setHeightForWidth(et_user->sizePolicy().hasHeightForWidth());
-        et_user->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(et_user->sizePolicy().hasHeightForWidth());
+        et_user->setSizePolicy(sizePolicy2);
 
         gridLayout_4->addWidget(et_user, 3, 0, 1, 1);
 
         boton_entrar = new QPushButton(recuadro_ini);
         boton_entrar->setObjectName("boton_entrar");
-        sizePolicy1.setHeightForWidth(boton_entrar->sizePolicy().hasHeightForWidth());
-        boton_entrar->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(boton_entrar->sizePolicy().hasHeightForWidth());
+        boton_entrar->setSizePolicy(sizePolicy2);
 
         gridLayout_4->addWidget(boton_entrar, 8, 0, 1, 1);
 
         et_pass = new QLabel(recuadro_ini);
         et_pass->setObjectName("et_pass");
-        sizePolicy1.setHeightForWidth(et_pass->sizePolicy().hasHeightForWidth());
-        et_pass->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(et_pass->sizePolicy().hasHeightForWidth());
+        et_pass->setSizePolicy(sizePolicy2);
 
         gridLayout_4->addWidget(et_pass, 5, 0, 1, 1);
 
         campo_user = new QLineEdit(recuadro_ini);
         campo_user->setObjectName("campo_user");
-        sizePolicy1.setHeightForWidth(campo_user->sizePolicy().hasHeightForWidth());
-        campo_user->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(campo_user->sizePolicy().hasHeightForWidth());
+        campo_user->setSizePolicy(sizePolicy2);
 
         gridLayout_4->addWidget(campo_user, 4, 0, 1, 1);
 
         campo_pass = new QLineEdit(recuadro_ini);
         campo_pass->setObjectName("campo_pass");
-        sizePolicy1.setHeightForWidth(campo_pass->sizePolicy().hasHeightForWidth());
-        campo_pass->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(campo_pass->sizePolicy().hasHeightForWidth());
+        campo_pass->setSizePolicy(sizePolicy2);
         campo_pass->setEchoMode(QLineEdit::EchoMode::Password);
 
         gridLayout_4->addWidget(campo_pass, 6, 0, 1, 1);
 
         link_registro = new QLabel(recuadro_ini);
         link_registro->setObjectName("link_registro");
-        sizePolicy1.setHeightForWidth(link_registro->sizePolicy().hasHeightForWidth());
-        link_registro->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(link_registro->sizePolicy().hasHeightForWidth());
+        link_registro->setSizePolicy(sizePolicy2);
         link_registro->setFont(font1);
         link_registro->setTextFormat(Qt::TextFormat::RichText);
         link_registro->setOpenExternalLinks(false);
@@ -344,8 +362,8 @@ public:
 
         dateEditFiltro = new QDateEdit(historial);
         dateEditFiltro->setObjectName("dateEditFiltro");
-        sizePolicy1.setHeightForWidth(dateEditFiltro->sizePolicy().hasHeightForWidth());
-        dateEditFiltro->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(dateEditFiltro->sizePolicy().hasHeightForWidth());
+        dateEditFiltro->setSizePolicy(sizePolicy2);
 
         verticalLayout_6->addWidget(dateEditFiltro);
 
@@ -384,11 +402,11 @@ public:
         horizontalLayout_2->setContentsMargins(1, -1, -1, -1);
         stackedWidget_2 = new QStackedWidget(horizontalWidget);
         stackedWidget_2->setObjectName("stackedWidget_2");
-        QSizePolicy sizePolicy2(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(stackedWidget_2->sizePolicy().hasHeightForWidth());
-        stackedWidget_2->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(stackedWidget_2->sizePolicy().hasHeightForWidth());
+        stackedWidget_2->setSizePolicy(sizePolicy3);
         menu_principal = new QWidget();
         menu_principal->setObjectName("menu_principal");
         sizePolicy.setHeightForWidth(menu_principal->sizePolicy().hasHeightForWidth());
@@ -401,11 +419,11 @@ public:
 
         boton_aleat = new QPushButton(menu_principal);
         boton_aleat->setObjectName("boton_aleat");
-        QSizePolicy sizePolicy3(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(boton_aleat->sizePolicy().hasHeightForWidth());
-        boton_aleat->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(boton_aleat->sizePolicy().hasHeightForWidth());
+        boton_aleat->setSizePolicy(sizePolicy4);
 
         gridLayout->addWidget(boton_aleat, 1, 1, 1, 1);
 
@@ -423,11 +441,11 @@ public:
 
         boton_lista = new QPushButton(menu_principal);
         boton_lista->setObjectName("boton_lista");
-        QSizePolicy sizePolicy4(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
-        boton_lista->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
+        boton_lista->setSizePolicy(sizePolicy5);
 
         gridLayout->addWidget(boton_lista, 3, 1, 1, 1);
 
@@ -446,31 +464,74 @@ public:
         stackedWidget_2->addWidget(menu_principal);
         problema = new QWidget();
         problema->setObjectName("problema");
-        enunciado = new QLabel(problema);
-        enunciado->setObjectName("enunciado");
-        enunciado->setGeometry(QRect(10, 60, 331, 251));
-        sizePolicy.setHeightForWidth(enunciado->sizePolicy().hasHeightForWidth());
-        enunciado->setSizePolicy(sizePolicy);
-        enunciado->setWordWrap(true);
-        answer1 = new QRadioButton(problema);
-        answer1->setObjectName("answer1");
-        answer1->setGeometry(QRect(60, 320, 291, 24));
-        answer1->setStyleSheet(QString::fromUtf8("color: black; font-weight: none;"));
-        answer2 = new QRadioButton(problema);
-        answer2->setObjectName("answer2");
-        answer2->setGeometry(QRect(60, 350, 291, 24));
-        answer3 = new QRadioButton(problema);
+        sizePolicy3.setHeightForWidth(problema->sizePolicy().hasHeightForWidth());
+        problema->setSizePolicy(sizePolicy3);
+        gridLayoutWidget = new QWidget(problema);
+        gridLayoutWidget->setObjectName("gridLayoutWidget");
+        gridLayoutWidget->setGeometry(QRect(0, 0, 351, 601));
+        gridLayout_9 = new QGridLayout(gridLayoutWidget);
+        gridLayout_9->setObjectName("gridLayout_9");
+        gridLayout_9->setContentsMargins(0, 0, 0, 0);
+        answer3 = new QRadioButton(gridLayoutWidget);
         answer3->setObjectName("answer3");
-        answer3->setGeometry(QRect(60, 380, 281, 24));
-        answer4 = new QRadioButton(problema);
+        QSizePolicy sizePolicy6(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(answer3->sizePolicy().hasHeightForWidth());
+        answer3->setSizePolicy(sizePolicy6);
+
+        gridLayout_9->addWidget(answer3, 3, 1, 1, 1);
+
+        verticalSpacer_14 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_9->addItem(verticalSpacer_14, 2, 1, 1, 1);
+
+        verticalSpacer_12 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_9->addItem(verticalSpacer_12, 7, 1, 1, 1);
+
+        answer4 = new QRadioButton(gridLayoutWidget);
         answer4->setObjectName("answer4");
-        answer4->setGeometry(QRect(60, 410, 291, 24));
-        corregir = new QPushButton(problema);
-        corregir->setObjectName("corregir");
-        corregir->setGeometry(QRect(100, 500, 111, 41));
-        num_problema = new QLabel(problema);
+
+        gridLayout_9->addWidget(answer4, 6, 1, 1, 1);
+
+        answer1 = new QRadioButton(gridLayoutWidget);
+        answer1->setObjectName("answer1");
+        sizePolicy2.setHeightForWidth(answer1->sizePolicy().hasHeightForWidth());
+        answer1->setSizePolicy(sizePolicy2);
+        answer1->setStyleSheet(QString::fromUtf8("color: black; font-weight: none;"));
+
+        gridLayout_9->addWidget(answer1, 4, 1, 1, 1);
+
+        enunciado = new QLabel(gridLayoutWidget);
+        enunciado->setObjectName("enunciado");
+        sizePolicy6.setHeightForWidth(enunciado->sizePolicy().hasHeightForWidth());
+        enunciado->setSizePolicy(sizePolicy6);
+        enunciado->setWordWrap(true);
+
+        gridLayout_9->addWidget(enunciado, 1, 1, 1, 1);
+
+        answer2 = new QRadioButton(gridLayoutWidget);
+        answer2->setObjectName("answer2");
+
+        gridLayout_9->addWidget(answer2, 5, 1, 1, 1);
+
+        num_problema = new QLabel(gridLayoutWidget);
         num_problema->setObjectName("num_problema");
-        num_problema->setGeometry(QRect(0, 0, 361, 81));
+        sizePolicy.setHeightForWidth(num_problema->sizePolicy().hasHeightForWidth());
+        num_problema->setSizePolicy(sizePolicy);
+
+        gridLayout_9->addWidget(num_problema, 0, 1, 1, 1);
+
+        corregir = new QPushButton(gridLayoutWidget);
+        corregir->setObjectName("corregir");
+
+        gridLayout_9->addWidget(corregir, 8, 1, 1, 1);
+
+        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Minimum);
+
+        gridLayout_9->addItem(horizontalSpacer_8, 0, 0, 1, 1);
+
         stackedWidget_2->addWidget(problema);
         lista_problemas = new QWidget();
         lista_problemas->setObjectName("lista_problemas");
@@ -506,11 +567,8 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         widget_2 = new QWidget(verticalWidget);
         widget_2->setObjectName("widget_2");
-        QSizePolicy sizePolicy5(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
-        widget_2->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
+        widget_2->setSizePolicy(sizePolicy6);
         widget_2->setStyleSheet(QString::fromUtf8(""));
         horizontalLayout = new QHBoxLayout(widget_2);
         horizontalLayout->setSpacing(0);
@@ -518,8 +576,8 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         barra_herramienta = new QWidget(widget_2);
         barra_herramienta->setObjectName("barra_herramienta");
-        sizePolicy5.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
-        barra_herramienta->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
+        barra_herramienta->setSizePolicy(sizePolicy6);
         barra_herramienta->setContextMenuPolicy(Qt::ContextMenuPolicy::DefaultContextMenu);
         barra_herramienta->setLayoutDirection(Qt::LayoutDirection::RightToLeft);
         barra_herramienta->setAutoFillBackground(false);
@@ -528,8 +586,8 @@ public:
         horizontalLayout_3->setContentsMargins(20, -1, 20, -1);
         horizontalSlider = new QSlider(barra_herramienta);
         horizontalSlider->setObjectName("horizontalSlider");
-        sizePolicy5.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
-        horizontalSlider->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
+        horizontalSlider->setSizePolicy(sizePolicy6);
         horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
 
         horizontalLayout_3->addWidget(horizontalSlider);
@@ -541,8 +599,8 @@ public:
 
         limpiar = new QPushButton(barra_herramienta);
         limpiar->setObjectName("limpiar");
-        sizePolicy3.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
-        limpiar->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
+        limpiar->setSizePolicy(sizePolicy4);
         limpiar->setMaximumSize(QSize(167, 167));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/img/icons/I_eliminar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -553,8 +611,8 @@ public:
 
         grosor = new QSpinBox(barra_herramienta);
         grosor->setObjectName("grosor");
-        sizePolicy5.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
-        grosor->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
+        grosor->setSizePolicy(sizePolicy6);
         grosor->setMinimum(1);
         grosor->setMaximum(100);
         grosor->setValue(6);
@@ -563,8 +621,8 @@ public:
 
         color = new QPushButton(barra_herramienta);
         color->setObjectName("color");
-        sizePolicy3.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
-        color->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
+        color->setSizePolicy(sizePolicy4);
         color->setMaximumSize(QSize(167, 167));
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/img/icons/I_paleta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -582,8 +640,8 @@ public:
 
         texto = new QPushButton(barra_herramienta);
         texto->setObjectName("texto");
-        sizePolicy5.setHeightForWidth(texto->sizePolicy().hasHeightForWidth());
-        texto->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(texto->sizePolicy().hasHeightForWidth());
+        texto->setSizePolicy(sizePolicy6);
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/img/icons/I_texto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         texto->setIcon(icon2);
@@ -593,8 +651,8 @@ public:
 
         linea = new QPushButton(barra_herramienta);
         linea->setObjectName("linea");
-        sizePolicy3.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
-        linea->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
+        linea->setSizePolicy(sizePolicy4);
         linea->setMaximumSize(QSize(167, 167));
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/img/icons/I_lapiz.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -606,8 +664,8 @@ public:
 
         punto = new QPushButton(barra_herramienta);
         punto->setObjectName("punto");
-        sizePolicy3.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
-        punto->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
+        punto->setSizePolicy(sizePolicy4);
         punto->setMinimumSize(QSize(0, 0));
         punto->setMaximumSize(QSize(167, 167));
         QIcon icon4;
@@ -620,8 +678,8 @@ public:
 
         goma = new QPushButton(barra_herramienta);
         goma->setObjectName("goma");
-        sizePolicy3.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
-        goma->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
+        goma->setSizePolicy(sizePolicy4);
         goma->setMaximumSize(QSize(167, 167));
         QIcon icon5;
         icon5.addFile(QString::fromUtf8(":/img/icons/I_goma.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -638,8 +696,8 @@ public:
         Bcompas = new QPushButton(barra_herramienta);
         Bcompas->setObjectName("Bcompas");
         Bcompas->setEnabled(true);
-        sizePolicy3.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
-        Bcompas->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
+        Bcompas->setSizePolicy(sizePolicy4);
         Bcompas->setMaximumSize(QSize(167, 167));
         QIcon icon6;
         icon6.addFile(QString::fromUtf8(":/img/icons/I_compas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -651,8 +709,8 @@ public:
 
         Btransportador = new QPushButton(barra_herramienta);
         Btransportador->setObjectName("Btransportador");
-        sizePolicy3.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
-        Btransportador->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
+        Btransportador->setSizePolicy(sizePolicy4);
         Btransportador->setMaximumSize(QSize(167, 167));
         QFont font3;
         font3.setBold(false);
@@ -668,8 +726,8 @@ public:
 
         Bregla = new QPushButton(barra_herramienta);
         Bregla->setObjectName("Bregla");
-        sizePolicy3.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
-        Bregla->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
+        Bregla->setSizePolicy(sizePolicy4);
         Bregla->setMaximumSize(QSize(167, 167));
         QIcon icon8;
         icon8.addFile(QString::fromUtf8(":/img/icons/I_regla.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
@@ -720,34 +778,106 @@ public:
         stackedWidget->addWidget(mapa);
         editar_perfil = new QWidget();
         editar_perfil->setObjectName("editar_perfil");
+        editar_perfil->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
         gridLayout_7 = new QGridLayout(editar_perfil);
         gridLayout_7->setObjectName("gridLayout_7");
         gridLayout_7->setHorizontalSpacing(0);
         gridLayout_7->setVerticalSpacing(6);
         gridLayout_7->setContentsMargins(0, 0, 0, 0);
+        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_11, 15, 1, 1, 1);
+
+        verticalSpacer_11 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_11, 11, 1, 1, 1);
+
+        verticalSpacer_17 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_17, 0, 2, 1, 1);
+
+        avatar = new QLabel(editar_perfil);
+        avatar->setObjectName("avatar");
+        QSizePolicy sizePolicy7(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(avatar->sizePolicy().hasHeightForWidth());
+        avatar->setSizePolicy(sizePolicy7);
+        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
+        avatar->setScaledContents(true);
+
+        gridLayout_7->addWidget(avatar, 4, 3, 6, 1);
+
         verticalSpacer_9 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
-        gridLayout_7->addItem(verticalSpacer_9, 4, 1, 1, 1);
+        gridLayout_7->addItem(verticalSpacer_9, 5, 1, 1, 1);
 
-        label_email = new QLabel(editar_perfil);
-        label_email->setObjectName("label_email");
+        nombre = new QLabel(editar_perfil);
+        nombre->setObjectName("nombre");
 
-        gridLayout_7->addWidget(label_email, 5, 1, 1, 1);
+        gridLayout_7->addWidget(nombre, 3, 1, 1, 1);
 
-        labelEmail = new QLineEdit(editar_perfil);
-        labelEmail->setObjectName("labelEmail");
+        horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        gridLayout_7->addWidget(labelEmail, 6, 1, 1, 1);
-
-        labelNombre = new QLineEdit(editar_perfil);
-        labelNombre->setObjectName("labelNombre");
-
-        gridLayout_7->addWidget(labelNombre, 3, 1, 1, 1);
+        gridLayout_7->addItem(horizontalSpacer_12, 15, 3, 1, 1);
 
         label_compleanios = new QLabel(editar_perfil);
         label_compleanios->setObjectName("label_compleanios");
 
-        gridLayout_7->addWidget(label_compleanios, 11, 1, 1, 1);
+        gridLayout_7->addWidget(label_compleanios, 12, 1, 1, 1);
+
+        labelNombre = new QLineEdit(editar_perfil);
+        labelNombre->setObjectName("labelNombre");
+
+        gridLayout_7->addWidget(labelNombre, 4, 1, 1, 1);
+
+        labelEmail = new QLineEdit(editar_perfil);
+        labelEmail->setObjectName("labelEmail");
+
+        gridLayout_7->addWidget(labelEmail, 10, 1, 1, 1);
+
+        horizontalSpacer_13 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_13, 10, 2, 1, 1);
+
+        boton_guardar = new QPushButton(editar_perfil);
+        boton_guardar->setObjectName("boton_guardar");
+        sizePolicy2.setHeightForWidth(boton_guardar->sizePolicy().hasHeightForWidth());
+        boton_guardar->setSizePolicy(sizePolicy2);
+
+        gridLayout_7->addWidget(boton_guardar, 15, 2, 1, 1);
+
+        verticalSpacer_10 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer_10, 8, 1, 1, 1);
+
+        label_email = new QLabel(editar_perfil);
+        label_email->setObjectName("label_email");
+
+        gridLayout_7->addWidget(label_email, 9, 1, 1, 1);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_6, 0, 0, 1, 1);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName("horizontalLayout_5");
+        boton_editar_avatar = new QPushButton(editar_perfil);
+        boton_editar_avatar->setObjectName("boton_editar_avatar");
+        sizePolicy2.setHeightForWidth(boton_editar_avatar->sizePolicy().hasHeightForWidth());
+        boton_editar_avatar->setSizePolicy(sizePolicy2);
+        boton_editar_avatar->setIcon(icon3);
+
+        horizontalLayout_5->addWidget(boton_editar_avatar);
+
+
+        gridLayout_7->addLayout(horizontalLayout_5, 10, 3, 1, 1);
+
+        dateEdit = new QDateEdit(editar_perfil);
+        dateEdit->setObjectName("dateEdit");
+        dateEdit->setMaximumSize(QSize(100, 16777215));
+
+        gridLayout_7->addWidget(dateEdit, 13, 1, 1, 1);
 
         perfil = new QLabel(editar_perfil);
         perfil->setObjectName("perfil");
@@ -755,185 +885,166 @@ public:
 
         gridLayout_7->addWidget(perfil, 1, 1, 1, 2);
 
-        nombre = new QLabel(editar_perfil);
-        nombre->setObjectName("nombre");
+        verticalSpacer_18 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
-        gridLayout_7->addWidget(nombre, 2, 1, 1, 1);
+        gridLayout_7->addItem(verticalSpacer_18, 2, 1, 1, 1);
 
-        boton_editar_avatar = new QPushButton(editar_perfil);
-        boton_editar_avatar->setObjectName("boton_editar_avatar");
-        boton_editar_avatar->setIcon(icon3);
+        horizontalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        gridLayout_7->addWidget(boton_editar_avatar, 9, 3, 1, 1);
-
-        label_contrasenia = new QLabel(editar_perfil);
-        label_contrasenia->setObjectName("label_contrasenia");
-
-        gridLayout_7->addWidget(label_contrasenia, 8, 1, 1, 1);
-
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        gridLayout_7->addItem(horizontalSpacer_6, 0, 0, 1, 1);
-
-        avatar = new QLabel(editar_perfil);
-        avatar->setObjectName("avatar");
-        avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
-        avatar->setScaledContents(true);
-
-        gridLayout_7->addWidget(avatar, 3, 3, 6, 1);
-
-        verticalSpacer_10 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
-
-        gridLayout_7->addItem(verticalSpacer_10, 7, 1, 1, 1);
-
-        boton_guardar = new QPushButton(editar_perfil);
-        boton_guardar->setObjectName("boton_guardar");
-
-        gridLayout_7->addWidget(boton_guardar, 13, 2, 1, 1);
-
-        dateEdit = new QDateEdit(editar_perfil);
-        dateEdit->setObjectName("dateEdit");
-        dateEdit->setMaximumSize(QSize(100, 16777215));
-
-        gridLayout_7->addWidget(dateEdit, 12, 1, 1, 1);
+        gridLayout_7->addItem(horizontalSpacer_7, 10, 4, 1, 1);
 
         labelContrasenia = new QLineEdit(editar_perfil);
         labelContrasenia->setObjectName("labelContrasenia");
 
-        gridLayout_7->addWidget(labelContrasenia, 9, 1, 1, 1);
+        gridLayout_7->addWidget(labelContrasenia, 7, 1, 1, 1);
 
-        horizontalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+        label_contrasenia = new QLabel(editar_perfil);
+        label_contrasenia->setObjectName("label_contrasenia");
 
-        gridLayout_7->addItem(horizontalSpacer_7, 9, 4, 1, 1);
+        gridLayout_7->addWidget(label_contrasenia, 6, 1, 1, 1);
 
-        verticalSpacer_11 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        verticalSpacer_13 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
-        gridLayout_7->addItem(verticalSpacer_11, 10, 1, 1, 1);
+        gridLayout_7->addItem(verticalSpacer_13, 16, 2, 1, 1);
 
-        gridLayout_7->setRowStretch(0, 5);
-        gridLayout_7->setRowStretch(1, 5);
-        gridLayout_7->setRowStretch(2, 1);
-        gridLayout_7->setRowStretch(3, 1);
-        gridLayout_7->setRowStretch(5, 1);
-        gridLayout_7->setRowStretch(6, 1);
-        gridLayout_7->setRowStretch(8, 1);
-        gridLayout_7->setRowStretch(9, 1);
-        gridLayout_7->setRowStretch(10, 2);
-        gridLayout_7->setRowStretch(11, 1);
-        gridLayout_7->setRowStretch(12, 1);
-        gridLayout_7->setRowStretch(13, 1);
+        gridLayout_7->setRowStretch(0, 3);
+        gridLayout_7->setRowStretch(16, 5);
         stackedWidget->addWidget(editar_perfil);
         registro = new QWidget();
         registro->setObjectName("registro");
         fondo_2 = new QWidget(registro);
         fondo_2->setObjectName("fondo_2");
-        fondo_2->setGeometry(QRect(-1, -1, 467, 436));
+        fondo_2->setGeometry(QRect(-1, -1, 971, 601));
         gridLayout_5 = new QGridLayout(fondo_2);
         gridLayout_5->setObjectName("gridLayout_5");
-        recuadro_reg = new QFrame(registro);
+        gridLayout_10 = new QGridLayout();
+        gridLayout_10->setObjectName("gridLayout_10");
+        verticalSpacer_16 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
+
+        gridLayout_10->addItem(verticalSpacer_16, 2, 1, 1, 1);
+
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Policy::MinimumExpanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_10->addItem(horizontalSpacer_10, 1, 0, 1, 1);
+
+        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Policy::MinimumExpanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout_10->addItem(horizontalSpacer_9, 1, 2, 1, 1);
+
+        verticalSpacer_15 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
+
+        gridLayout_10->addItem(verticalSpacer_15, 0, 1, 1, 1);
+
+        recuadro_reg = new QFrame(fondo_2);
         recuadro_reg->setObjectName("recuadro_reg");
-        recuadro_reg->setGeometry(QRect(230, 0, 631, 561));
+        sizePolicy1.setHeightForWidth(recuadro_reg->sizePolicy().hasHeightForWidth());
+        recuadro_reg->setSizePolicy(sizePolicy1);
         recuadro_reg->setFrameShape(QFrame::Shape::StyledPanel);
         recuadro_reg->setFrameShadow(QFrame::Shadow::Raised);
         gridLayout_6 = new QGridLayout(recuadro_reg);
         gridLayout_6->setObjectName("gridLayout_6");
-        error_user = new QLabel(recuadro_reg);
-        error_user->setObjectName("error_user");
-        QSizePolicy sizePolicy6(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(error_user->sizePolicy().hasHeightForWidth());
-        error_user->setSizePolicy(sizePolicy6);
+        campo_cumple = new QDateEdit(recuadro_reg);
+        campo_cumple->setObjectName("campo_cumple");
 
-        gridLayout_6->addWidget(error_user, 3, 0, 1, 4);
+        gridLayout_6->addWidget(campo_cumple, 14, 1, 1, 1);
 
-        campo_correo = new QLineEdit(recuadro_reg);
-        campo_correo->setObjectName("campo_correo");
-        sizePolicy1.setHeightForWidth(campo_correo->sizePolicy().hasHeightForWidth());
-        campo_correo->setSizePolicy(sizePolicy1);
+        et_cumple = new QLabel(recuadro_reg);
+        et_cumple->setObjectName("et_cumple");
+        QSizePolicy sizePolicy8(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(et_cumple->sizePolicy().hasHeightForWidth());
+        et_cumple->setSizePolicy(sizePolicy8);
 
-        gridLayout_6->addWidget(campo_correo, 5, 0, 1, 4);
+        gridLayout_6->addWidget(et_cumple, 13, 1, 1, 1);
 
         campo_name = new QLineEdit(recuadro_reg);
         campo_name->setObjectName("campo_name");
-        sizePolicy1.setHeightForWidth(campo_name->sizePolicy().hasHeightForWidth());
-        campo_name->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(campo_name->sizePolicy().hasHeightForWidth());
+        campo_name->setSizePolicy(sizePolicy2);
 
-        gridLayout_6->addWidget(campo_name, 2, 0, 1, 4);
+        gridLayout_6->addWidget(campo_name, 5, 1, 1, 1);
 
         boton_registro = new QPushButton(recuadro_reg);
         boton_registro->setObjectName("boton_registro");
 
-        gridLayout_6->addWidget(boton_registro, 12, 2, 1, 1);
+        gridLayout_6->addWidget(boton_registro, 16, 1, 1, 1);
 
-        error_correo = new QLabel(recuadro_reg);
-        error_correo->setObjectName("error_correo");
+        et_pass_2 = new QLabel(recuadro_reg);
+        et_pass_2->setObjectName("et_pass_2");
 
-        gridLayout_6->addWidget(error_correo, 7, 3, 1, 1);
+        gridLayout_6->addWidget(et_pass_2, 6, 1, 1, 1);
 
-        error_pass = new QLabel(recuadro_reg);
-        error_pass->setObjectName("error_pass");
-        sizePolicy6.setHeightForWidth(error_pass->sizePolicy().hasHeightForWidth());
-        error_pass->setSizePolicy(sizePolicy6);
+        campo_pass_2 = new QLineEdit(recuadro_reg);
+        campo_pass_2->setObjectName("campo_pass_2");
+        sizePolicy2.setHeightForWidth(campo_pass_2->sizePolicy().hasHeightForWidth());
+        campo_pass_2->setSizePolicy(sizePolicy2);
+        campo_pass_2->setEchoMode(QLineEdit::EchoMode::Password);
 
-        gridLayout_6->addWidget(error_pass, 9, 0, 1, 3);
+        gridLayout_6->addWidget(campo_pass_2, 8, 1, 1, 1);
+
+        campo_correo = new QLineEdit(recuadro_reg);
+        campo_correo->setObjectName("campo_correo");
+        sizePolicy2.setHeightForWidth(campo_correo->sizePolicy().hasHeightForWidth());
+        campo_correo->setSizePolicy(sizePolicy2);
+
+        gridLayout_6->addWidget(campo_correo, 10, 1, 1, 1);
+
+        error_edad = new QLabel(recuadro_reg);
+        error_edad->setObjectName("error_edad");
+
+        gridLayout_6->addWidget(error_edad, 22, 0, 1, 3);
+
+        error_user = new QLabel(recuadro_reg);
+        error_user->setObjectName("error_user");
+        sizePolicy8.setHeightForWidth(error_user->sizePolicy().hasHeightForWidth());
+        error_user->setSizePolicy(sizePolicy8);
+
+        gridLayout_6->addWidget(error_user, 3, 0, 1, 5);
 
         et_registro = new QLabel(recuadro_reg);
         et_registro->setObjectName("et_registro");
         et_registro->setFont(font2);
 
-        gridLayout_6->addWidget(et_registro, 0, 1, 1, 3);
+        gridLayout_6->addWidget(et_registro, 1, 1, 1, 1);
 
-        et_cumple = new QLabel(recuadro_reg);
-        et_cumple->setObjectName("et_cumple");
-        sizePolicy6.setHeightForWidth(et_cumple->sizePolicy().hasHeightForWidth());
-        et_cumple->setSizePolicy(sizePolicy6);
+        error_pass = new QLabel(recuadro_reg);
+        error_pass->setObjectName("error_pass");
+        sizePolicy8.setHeightForWidth(error_pass->sizePolicy().hasHeightForWidth());
+        error_pass->setSizePolicy(sizePolicy8);
 
-        gridLayout_6->addWidget(et_cumple, 10, 0, 1, 1);
+        gridLayout_6->addWidget(error_pass, 19, 0, 1, 4);
 
-        campo_pass_2 = new QLineEdit(recuadro_reg);
-        campo_pass_2->setObjectName("campo_pass_2");
-        sizePolicy1.setHeightForWidth(campo_pass_2->sizePolicy().hasHeightForWidth());
-        campo_pass_2->setSizePolicy(sizePolicy1);
-        campo_pass_2->setEchoMode(QLineEdit::EchoMode::Password);
+        error_correo = new QLabel(recuadro_reg);
+        error_correo->setObjectName("error_correo");
 
-        gridLayout_6->addWidget(campo_pass_2, 8, 0, 1, 3);
-
-        error_edad = new QLabel(recuadro_reg);
-        error_edad->setObjectName("error_edad");
-
-        gridLayout_6->addWidget(error_edad, 12, 0, 1, 2);
+        gridLayout_6->addWidget(error_correo, 15, 4, 1, 1);
 
         et_name = new QLabel(recuadro_reg);
         et_name->setObjectName("et_name");
 
-        gridLayout_6->addWidget(et_name, 1, 0, 1, 1);
+        gridLayout_6->addWidget(et_name, 4, 1, 1, 1);
 
         et_correo = new QLabel(recuadro_reg);
         et_correo->setObjectName("et_correo");
 
-        gridLayout_6->addWidget(et_correo, 4, 0, 1, 1);
+        gridLayout_6->addWidget(et_correo, 9, 1, 1, 1);
 
-        et_pass_2 = new QLabel(recuadro_reg);
-        et_pass_2->setObjectName("et_pass_2");
 
-        gridLayout_6->addWidget(et_pass_2, 7, 0, 1, 1);
+        gridLayout_10->addWidget(recuadro_reg, 1, 1, 1, 1);
 
-        calendario = new QCalendarWidget(recuadro_reg);
-        calendario->setObjectName("calendario");
-        sizePolicy1.setHeightForWidth(calendario->sizePolicy().hasHeightForWidth());
-        calendario->setSizePolicy(sizePolicy1);
+        gridLayout_10->setRowStretch(0, 1);
+        gridLayout_10->setRowStretch(1, 2);
+        gridLayout_10->setRowStretch(2, 1);
+        gridLayout_10->setColumnStretch(0, 1);
+        gridLayout_10->setColumnStretch(1, 2);
+        gridLayout_10->setColumnStretch(2, 1);
 
-        gridLayout_6->addWidget(calendario, 8, 3, 5, 1);
-
-        campo_cumple = new QDateEdit(recuadro_reg);
-        campo_cumple->setObjectName("campo_cumple");
-
-        gridLayout_6->addWidget(campo_cumple, 11, 0, 1, 1);
+        gridLayout_5->addLayout(gridLayout_10, 0, 0, 1, 1);
 
         stackedWidget->addWidget(registro);
 
-        gridLayout_2->addWidget(stackedWidget, 1, 0, 1, 1);
+        gridLayout_2->addWidget(stackedWidget, 3, 0, 1, 1);
 
         MenuSup = new QWidget(centralwidget);
         MenuSup->setObjectName("MenuSup");
@@ -941,8 +1052,8 @@ public:
         horizontalLayout_4->setObjectName("horizontalLayout_4");
         boton_volver = new QPushButton(MenuSup);
         boton_volver->setObjectName("boton_volver");
-        sizePolicy1.setHeightForWidth(boton_volver->sizePolicy().hasHeightForWidth());
-        boton_volver->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(boton_volver->sizePolicy().hasHeightForWidth());
+        boton_volver->setSizePolicy(sizePolicy2);
 
         horizontalLayout_4->addWidget(boton_volver);
 
@@ -952,18 +1063,18 @@ public:
 
         boton_historial = new QPushButton(MenuSup);
         boton_historial->setObjectName("boton_historial");
-        sizePolicy1.setHeightForWidth(boton_historial->sizePolicy().hasHeightForWidth());
-        boton_historial->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(boton_historial->sizePolicy().hasHeightForWidth());
+        boton_historial->setSizePolicy(sizePolicy2);
 
         horizontalLayout_4->addWidget(boton_historial);
 
         B_MenuUsuario = new QPushButton(MenuSup);
         B_MenuUsuario->setObjectName("B_MenuUsuario");
-        QSizePolicy sizePolicy7(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Ignored);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(B_MenuUsuario->sizePolicy().hasHeightForWidth());
-        B_MenuUsuario->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy9(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Ignored);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(B_MenuUsuario->sizePolicy().hasHeightForWidth());
+        B_MenuUsuario->setSizePolicy(sizePolicy9);
         B_MenuUsuario->setAutoDefault(false);
 
         horizontalLayout_4->addWidget(B_MenuUsuario);
@@ -974,7 +1085,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 26));
+        menubar->setGeometry(QRect(0, 0, 989, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -982,7 +1093,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
         stackedWidget_2->setCurrentIndex(0);
         color->setDefault(false);
 
@@ -1010,13 +1121,13 @@ public:
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Fallos", nullptr));
         boton_aleat->setText(QCoreApplication::translate("MainWindow", "Problema aleatorio", nullptr));
         boton_lista->setText(QCoreApplication::translate("MainWindow", "Lista problemas", nullptr));
-        enunciado->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        answer1->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
-        answer2->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
         answer3->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
         answer4->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
-        corregir->setText(QCoreApplication::translate("MainWindow", "Corregir", nullptr));
+        answer1->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
+        enunciado->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        answer2->setText(QCoreApplication::translate("MainWindow", "RadioButton", nullptr));
         num_problema->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        corregir->setText(QCoreApplication::translate("MainWindow", "Corregir", nullptr));
 
         const bool __sortingEnabled = listWidget->isSortingEnabled();
         listWidget->setSortingEnabled(false);
@@ -1046,23 +1157,23 @@ public:
         Btransportador->setText(QString());
         Bregla->setText(QString());
         labelStatus->setText(QCoreApplication::translate("MainWindow", "labelStatus", nullptr));
-        label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
-        label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
-        perfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
-        nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
-        label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         avatar->setText(QString());
+        nombre->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
+        label_compleanios->setText(QCoreApplication::translate("MainWindow", "Cumplea\303\261os", nullptr));
         boton_guardar->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
-        error_user->setText(QString());
-        boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
-        error_correo->setText(QString());
-        error_pass->setText(QString());
-        et_registro->setText(QCoreApplication::translate("MainWindow", "      Registrarse", nullptr));
+        label_email->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
+        perfil->setText(QCoreApplication::translate("MainWindow", "Modificar Perfil", nullptr));
+        label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         et_cumple->setText(QCoreApplication::translate("MainWindow", "Cumple", nullptr));
+        boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
+        et_pass_2->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         error_edad->setText(QString());
+        error_user->setText(QString());
+        et_registro->setText(QCoreApplication::translate("MainWindow", "      Registrarse", nullptr));
+        error_pass->setText(QString());
+        error_correo->setText(QString());
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         et_correo->setText(QCoreApplication::translate("MainWindow", "Correo", nullptr));
-        et_pass_2->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         boton_volver->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         B_MenuUsuario->setText(QCoreApplication::translate("MainWindow", "perfil", nullptr));

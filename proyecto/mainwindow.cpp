@@ -49,6 +49,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget_2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);//declara sizepolicy de cada parte
     ui->verticalWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     splitter->setSizes({400, 400});  // tamaño inicial
+    // Después de añadir los widgets al splitter en tu constructor
+    splitter->setStretchFactor(0, 1); // stackedWidget_2 (Problema/Lista)
+    splitter->setStretchFactor(1, 3); // verticalWidget (Mapa)
     QHBoxLayout *layout = new QHBoxLayout(ui->horizontalWidget);
     layout->setContentsMargins(0, 0, 0, 0); // para que ocupe todo el widget
     layout->setSpacing(0);
@@ -165,11 +168,20 @@ MainWindow::MainWindow(QWidget *parent)
         ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
     });
 
-    //boton usuario
+    //************************************************************BOTÓN USUARIO
     ui->B_MenuUsuario->setFixedSize(60, 60);
     ui->boton_historial->setFixedSize(100, 40);
     ui->boton_volver->setFixedSize(60, 40);
+    ui->boton_editar_avatar->setFixedSize(42, 42);
+    //***********************************************************TABLA HISTORIAL
+    ui->tableViewHistorial->setShowGrid(false); // Quita todas las líneas de cuadrícula
+    ui->tableViewHistorial->setAlternatingRowColors(true); // Habilita el fondo distinto para filas pares/impares
+    ui->tableViewHistorial->verticalHeader()->setVisible(false); // Oculta los números de fila de la izquierda
+    ui->tableViewHistorial->setSelectionMode(QAbstractItemView::NoSelection); // Evita que se resalte en azul al clicar
+    ui->tableViewHistorial->setFocusPolicy(Qt::NoFocus); // Quita el recuadro punteado de enfoque
 
+    // Estirar las columnas para que ocupen todo el ancho disponible
+    ui->tableViewHistorial->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // view->setScene(sceneMenu);
     // view->setScene(sceneMapa);
@@ -227,14 +239,6 @@ MainWindow::~MainWindow()
 //################### historial ####################
 /*void MainWindow::setupHistorialTable()
 {
-    //DECORACIÓN:
-    // --- Configuración visual de la tabla ---
-    ui->tableViewHistorial->setShowGrid(false); // Quita las líneas de cuadrícula
-    ui->tableViewHistorial->setAlternatingRowColors(true); // Habilita colores alternos
-    ui->tableViewHistorial->setSelectionBehavior(QAbstractItemView::SelectRows); // Selecciona filas completas
-    ui->tableViewHistorial->verticalHeader()->setVisible(false); // Quita los números de fila (1, 2, 3...)
-    ui->tableViewHistorial->horizontalHeader()->setStretchLastSection(true); // La última columna ocupa el resto
-    ui->tableViewHistorial->setFrameShape(QFrame::NoFrame); // Quita el borde exterior
 
 
     // --- 1. Gestión de Excepciones y Acceso al Singleton ---
@@ -289,14 +293,6 @@ MainWindow::~MainWindow()
             // 4. INSERTAR LA FILA EN EL MODELO
             stdModel->appendRow(row);
 
-            //DECORACIÓN:
-            QStandardItem* itemAciertos = new QStandardItem(QString::number(s.hits()));
-            itemAciertos->setTextAlignment(Qt::AlignCenter); // Centrar texto
-            row.append(itemAciertos);
-
-            QStandardItem* itemFallos = new QStandardItem(QString::number(s.faults()));
-            itemFallos->setTextAlignment(Qt::AlignCenter); // Centrar texto
-            row.append(itemFallos);
         }
 
         // --- 5. Asignar el nuevo modelo a la tabla ---
