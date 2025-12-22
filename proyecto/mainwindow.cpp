@@ -22,7 +22,6 @@
 #include "navdaoexception.h"
 #include <QFileDialog>
 #include <QRandomGenerator>
-#include <QGraphicsOpacityEffect>
 
 
 //#define QString CurrentUser = "";
@@ -43,13 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
         this -> setStyleSheet(styleSheet);
         file.close();
     }
-
-    //***************************************BLOQUEAR MENU SUP
-    connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, [=]() {
-        actualizarEstadoMenuSuperior();
-    });
-    // Llamada inicial para bloquearlo al arrancar la app
-    actualizarEstadoMenuSuperior();
 
     //*****************************************************SPLITTER
     if (ui->horizontalWidget->layout()) {
@@ -148,7 +140,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //************************************************************BOTÓN USUARIO
     ui->B_MenuUsuario->setFixedSize(60, 60);
-    ui->B_MenuUsuario->setIconSize(QSize(55, 55));
     ui->boton_historial->setFixedSize(100, 40);
     ui->boton_volver->setFixedSize(60, 40);
     ui->boton_editar_avatar->setFixedSize(42, 42);
@@ -1161,29 +1152,9 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
     ui->labelStatus->setText(fullText);
 }
 
-//####################################_BLOQUEAR BARRA SUP_##########################################
-void MainWindow::actualizarEstadoMenuSuperior() {
-    QWidget* paginaActual = ui->stackedWidget->currentWidget();
-
-    // Creamos o recuperamos el efecto de opacidad
-    QGraphicsOpacityEffect *efecto = qobject_cast<QGraphicsOpacityEffect*>(ui->MenuSup->graphicsEffect());
-    if (!efecto) {
-        efecto = new QGraphicsOpacityEffect(ui->MenuSup);
-        ui->MenuSup->setGraphicsEffect(efecto);
-    }
-
-    if (paginaActual == ui->ini_sesion || paginaActual == ui->registro) {
-        ui->MenuSup->setEnabled(false);
-        efecto->setOpacity(0.5); // Ahora sí funciona a través del efecto
-    } else {
-        ui->MenuSup->setEnabled(true);
-        efecto->setOpacity(1.0);
-    }
-}
-
 
 //##################################_REGISTRO_INI.SESION_##########################################################
-// Registrarse
+//##################################_REGISTRO_##########################################################
 void MainWindow::on_boton_registro_clicked()
 {
     // Ocultar errores
@@ -1199,27 +1170,23 @@ void MainWindow::on_boton_registro_clicked()
 
     bool valido = true;
 
-    //He puesto QMessageBox para ver bien el error, si te gusta quita los ui->error_user
-
-    // Usuario
-    QRegularExpression reUser("^[A-Za-z0-9_-]{5,15}$");
-    if (!reUser.match(ui->labelNombre->text()).hasMatch()) {
+    // Usuario: 6–15 caracteres o dígitos, sin espacios, permite - y _
+    QRegularExpression reUser("^[A-Za-z0-9_-]{6,15}$");
+    if (!reUser.match(usuario).hasMatch()) {
         ui->error_user->setText(
-            "Usuario entre 6 y 15 caracteres (letras, números, - o _)"
+            "Usuario entre 6 y 15 caracteres o dígitos (letras, números, - o _)"
             );
         ui->error_user->setStyleSheet("color:red;");
         ui->error_user->show();
-        QMessageBox::information(this, "Error", "Usuario entre 6 y 15 caracteres (letras, números, - o _)");
         valido = false;
     }
 
-    // Correo
+    // Correo electrónico
     QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
-    if (!reMail.match(ui->labelEmail->text()).hasMatch()) {
+    if (!reMail.match(correo).hasMatch()) {
         ui->error_correo->setText("Correo electrónico no válido");
         ui->error_correo->setStyleSheet("color:red;");
         ui->error_correo->show();
-        QMessageBox::information(this, "Error", "Correo electrónico no válido");
         valido = false;
     }
 
@@ -1227,14 +1194,12 @@ void MainWindow::on_boton_registro_clicked()
     QRegularExpression rePass(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
         );
-
-    if (!rePass.match(ui->labelContrasenia->text()).hasMatch()) {
+    if (!rePass.match(password).hasMatch()) {
         ui->error_pass->setText(
             "8-20 caracteres, mayúscula, minúscula, número y carácter especial"
             );
         ui->error_pass->setStyleSheet("color:red;");
         ui->error_pass->show();
-        QMessageBox::information(this, "Error", "Contraseña: 8-20 caracteres, mayúscula, minúscula, número y carácter especial");
         valido = false;
     }
 
@@ -1243,8 +1208,6 @@ void MainWindow::on_boton_registro_clicked()
         ui->error_edad->setText("Debes tener más de 16 años");
         ui->error_edad->setStyleSheet("color:red;");
         ui->error_edad->show();
-        QMessageBox::information(this, "Error", "Debes tener más de 16 años");
-
         valido = false;
     }
 
@@ -1265,23 +1228,26 @@ void MainWindow::on_boton_registro_clicked()
                 usuario,
                 correo,
                 password,
-                QImage(),      // avatar por defecto
+                QImage(),   // avatar por defecto
                 nacimiento
                 );
 
             nav.addUser(u);
 
-            QMessageBox::information(this, "DEBUG", "Registro correcto");
+            // Limpiar campos
+            ui->campo_name->clear();
+            ui->campo_correo->clear();
+            ui->campo_pass_2->clear();
 
-            //
+            // Volver a inicio de sesión
             ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
-
 
         } catch (const NavDAOException &ex) {
             QMessageBox::critical(this, tr("DB error"), ex.what());
         }
     }
 }
+
 
 
 void MainWindow::on_calendario_clicked(const QDate &date)
