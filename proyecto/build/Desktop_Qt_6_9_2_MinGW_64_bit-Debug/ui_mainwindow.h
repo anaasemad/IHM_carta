@@ -54,17 +54,20 @@ public:
     QGridLayout *gridLayout_3;
     QFrame *recuadro_ini;
     QGridLayout *gridLayout_4;
-    QLabel *et_ini;
-    QLabel *et__nocuenta;
-    QSpacerItem *verticalSpacer_6;
-    QSpacerItem *verticalSpacer_7;
-    QLabel *et_user;
-    QPushButton *boton_entrar;
-    QLabel *et_pass;
-    QLineEdit *campo_user;
     QLineEdit *campo_pass;
-    QLabel *link_registro;
+    QLineEdit *campo_user;
+    QLabel *et_ini;
+    QSpacerItem *verticalSpacer_20;
+    QPushButton *boton_entrar;
     QSpacerItem *verticalSpacer_8;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *et__nocuenta;
+    QLabel *link_registro;
+    QSpacerItem *verticalSpacer_7;
+    QLabel *et_pass;
+    QLabel *et_user;
+    QSpacerItem *verticalSpacer_6;
+    QSpacerItem *verticalSpacer_21;
     QSpacerItem *verticalSpacer_4;
     QSpacerItem *horizontalSpacer_4;
     QSpacerItem *horizontalSpacer_5;
@@ -147,7 +150,6 @@ public:
     QSpacerItem *verticalSpacer_9;
     QLineEdit *labelEmail;
     QSpacerItem *verticalSpacer_13;
-    QLineEdit *labelContrasenia;
     QSpacerItem *horizontalSpacer_7;
     QSpacerItem *verticalSpacer_18;
     QLabel *nombre;
@@ -155,6 +157,7 @@ public:
     QLabel *label_email;
     QLabel *label_compleanios;
     QLabel *label_contrasenia;
+    QLineEdit *labelContrasenia;
     QLineEdit *labelNombre;
     QWidget *registro;
     QGridLayout *gridLayout_11;
@@ -164,27 +167,26 @@ public:
     QSpacerItem *horizontalSpacer_14;
     QWidget *widget;
     QGridLayout *gridLayout_6;
+    QLineEdit *campo_correo;
     QLabel *error_correo;
     QLabel *et_name;
-    QLabel *error_pass;
     QLineEdit *campo_pass_2;
     QWidget *widget_4;
     QVBoxLayout *verticalLayout_2;
     QLabel *avatarRegistro;
     QPushButton *editar_avatar2;
+    QLabel *error_pass;
+    QLineEdit *campo_name;
+    QLabel *error_user;
     QLabel *et_registro;
-    QLineEdit *campo_correo;
-    QWidget *widget_3;
-    QHBoxLayout *horizontalLayout_7;
+    QLabel *et_cumple;
+    QLabel *et_correo;
+    QLabel *et_pass_2;
+    QLabel *error_edad;
+    QDateEdit *campo_cumple;
+    QHBoxLayout *horizontalLayout_8;
     QSpacerItem *horizontalSpacer_15;
     QPushButton *boton_registro;
-    QLineEdit *campo_name;
-    QLabel *et_pass_2;
-    QLabel *et_correo;
-    QLabel *et_cumple;
-    QLabel *error_user;
-    QDateEdit *campo_cumple;
-    QLabel *error_edad;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -271,6 +273,25 @@ public:
         recuadro_ini->setFrameShadow(QFrame::Shadow::Raised);
         gridLayout_4 = new QGridLayout(recuadro_ini);
         gridLayout_4->setObjectName("gridLayout_4");
+        gridLayout_4->setContentsMargins(-1, 5, -1, -1);
+        campo_pass = new QLineEdit(recuadro_ini);
+        campo_pass->setObjectName("campo_pass");
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(campo_pass->sizePolicy().hasHeightForWidth());
+        campo_pass->setSizePolicy(sizePolicy4);
+        campo_pass->setEchoMode(QLineEdit::EchoMode::Password);
+
+        gridLayout_4->addWidget(campo_pass, 7, 0, 1, 1);
+
+        campo_user = new QLineEdit(recuadro_ini);
+        campo_user->setObjectName("campo_user");
+        sizePolicy.setHeightForWidth(campo_user->sizePolicy().hasHeightForWidth());
+        campo_user->setSizePolicy(sizePolicy);
+
+        gridLayout_4->addWidget(campo_user, 4, 0, 1, 1);
+
         et_ini = new QLabel(recuadro_ini);
         et_ini->setObjectName("et_ini");
         sizePolicy.setHeightForWidth(et_ini->sizePolicy().hasHeightForWidth());
@@ -281,6 +302,25 @@ public:
 
         gridLayout_4->addWidget(et_ini, 1, 0, 1, 1);
 
+        verticalSpacer_20 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_4->addItem(verticalSpacer_20, 10, 0, 1, 1);
+
+        boton_entrar = new QPushButton(recuadro_ini);
+        boton_entrar->setObjectName("boton_entrar");
+        sizePolicy.setHeightForWidth(boton_entrar->sizePolicy().hasHeightForWidth());
+        boton_entrar->setSizePolicy(sizePolicy);
+
+        gridLayout_4->addWidget(boton_entrar, 9, 0, 1, 1);
+
+        verticalSpacer_8 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_4->addItem(verticalSpacer_8, 0, 0, 1, 1);
+
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        horizontalLayout_6->setContentsMargins(-1, -1, -1, 14);
         et__nocuenta = new QLabel(recuadro_ini);
         et__nocuenta->setObjectName("et__nocuenta");
         sizePolicy.setHeightForWidth(et__nocuenta->sizePolicy().hasHeightForWidth());
@@ -289,51 +329,7 @@ public:
         font1.setPointSize(7);
         et__nocuenta->setFont(font1);
 
-        gridLayout_4->addWidget(et__nocuenta, 9, 0, 1, 1);
-
-        verticalSpacer_6 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
-
-        gridLayout_4->addItem(verticalSpacer_6, 7, 0, 1, 1);
-
-        verticalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
-
-        gridLayout_4->addItem(verticalSpacer_7, 2, 0, 1, 1);
-
-        et_user = new QLabel(recuadro_ini);
-        et_user->setObjectName("et_user");
-        sizePolicy.setHeightForWidth(et_user->sizePolicy().hasHeightForWidth());
-        et_user->setSizePolicy(sizePolicy);
-
-        gridLayout_4->addWidget(et_user, 3, 0, 1, 1);
-
-        boton_entrar = new QPushButton(recuadro_ini);
-        boton_entrar->setObjectName("boton_entrar");
-        sizePolicy.setHeightForWidth(boton_entrar->sizePolicy().hasHeightForWidth());
-        boton_entrar->setSizePolicy(sizePolicy);
-
-        gridLayout_4->addWidget(boton_entrar, 8, 0, 1, 1);
-
-        et_pass = new QLabel(recuadro_ini);
-        et_pass->setObjectName("et_pass");
-        sizePolicy.setHeightForWidth(et_pass->sizePolicy().hasHeightForWidth());
-        et_pass->setSizePolicy(sizePolicy);
-
-        gridLayout_4->addWidget(et_pass, 5, 0, 1, 1);
-
-        campo_user = new QLineEdit(recuadro_ini);
-        campo_user->setObjectName("campo_user");
-        sizePolicy.setHeightForWidth(campo_user->sizePolicy().hasHeightForWidth());
-        campo_user->setSizePolicy(sizePolicy);
-
-        gridLayout_4->addWidget(campo_user, 4, 0, 1, 1);
-
-        campo_pass = new QLineEdit(recuadro_ini);
-        campo_pass->setObjectName("campo_pass");
-        sizePolicy.setHeightForWidth(campo_pass->sizePolicy().hasHeightForWidth());
-        campo_pass->setSizePolicy(sizePolicy);
-        campo_pass->setEchoMode(QLineEdit::EchoMode::Password);
-
-        gridLayout_4->addWidget(campo_pass, 6, 0, 1, 1);
+        horizontalLayout_6->addWidget(et__nocuenta);
 
         link_registro = new QLabel(recuadro_ini);
         link_registro->setObjectName("link_registro");
@@ -344,23 +340,37 @@ public:
         link_registro->setOpenExternalLinks(false);
         link_registro->setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
 
-        gridLayout_4->addWidget(link_registro, 10, 0, 1, 1);
+        horizontalLayout_6->addWidget(link_registro);
 
-        verticalSpacer_8 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
-        gridLayout_4->addItem(verticalSpacer_8, 0, 0, 1, 1);
+        gridLayout_4->addLayout(horizontalLayout_6, 12, 0, 1, 1);
 
-        gridLayout_4->setRowStretch(0, 4);
-        gridLayout_4->setRowStretch(1, 3);
-        gridLayout_4->setRowStretch(2, 3);
-        gridLayout_4->setRowStretch(3, 3);
-        gridLayout_4->setRowStretch(4, 3);
-        gridLayout_4->setRowStretch(5, 1);
-        gridLayout_4->setRowStretch(6, 3);
-        gridLayout_4->setRowStretch(7, 3);
-        gridLayout_4->setRowStretch(8, 3);
-        gridLayout_4->setRowStretch(9, 1);
-        gridLayout_4->setRowStretch(10, 1);
+        verticalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        gridLayout_4->addItem(verticalSpacer_7, 2, 0, 1, 1);
+
+        et_pass = new QLabel(recuadro_ini);
+        et_pass->setObjectName("et_pass");
+        sizePolicy.setHeightForWidth(et_pass->sizePolicy().hasHeightForWidth());
+        et_pass->setSizePolicy(sizePolicy);
+
+        gridLayout_4->addWidget(et_pass, 6, 0, 1, 1);
+
+        et_user = new QLabel(recuadro_ini);
+        et_user->setObjectName("et_user");
+        sizePolicy.setHeightForWidth(et_user->sizePolicy().hasHeightForWidth());
+        et_user->setSizePolicy(sizePolicy);
+
+        gridLayout_4->addWidget(et_user, 3, 0, 1, 1);
+
+        verticalSpacer_6 = new QSpacerItem(5, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+
+        gridLayout_4->addItem(verticalSpacer_6, 8, 0, 1, 1);
+
+        verticalSpacer_21 = new QSpacerItem(20, 5, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
+
+        gridLayout_4->addItem(verticalSpacer_21, 5, 0, 1, 1);
+
 
         gridLayout_3->addWidget(recuadro_ini, 1, 1, 1, 1);
 
@@ -468,11 +478,11 @@ public:
         horizontalLayout_2->setContentsMargins(1, -1, -1, -1);
         stackedWidget_2 = new QStackedWidget(horizontalWidget);
         stackedWidget_2->setObjectName("stackedWidget_2");
-        QSizePolicy sizePolicy4(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(stackedWidget_2->sizePolicy().hasHeightForWidth());
-        stackedWidget_2->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(stackedWidget_2->sizePolicy().hasHeightForWidth());
+        stackedWidget_2->setSizePolicy(sizePolicy5);
         menu_principal = new QWidget();
         menu_principal->setObjectName("menu_principal");
         sizePolicy1.setHeightForWidth(menu_principal->sizePolicy().hasHeightForWidth());
@@ -485,11 +495,11 @@ public:
 
         boton_aleat = new QPushButton(menu_principal);
         boton_aleat->setObjectName("boton_aleat");
-        QSizePolicy sizePolicy5(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(boton_aleat->sizePolicy().hasHeightForWidth());
-        boton_aleat->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy6(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(boton_aleat->sizePolicy().hasHeightForWidth());
+        boton_aleat->setSizePolicy(sizePolicy6);
 
         gridLayout->addWidget(boton_aleat, 1, 1, 1, 1);
 
@@ -507,11 +517,11 @@ public:
 
         boton_lista = new QPushButton(menu_principal);
         boton_lista->setObjectName("boton_lista");
-        QSizePolicy sizePolicy6(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
-        boton_lista->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy7(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::MinimumExpanding);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(boton_lista->sizePolicy().hasHeightForWidth());
+        boton_lista->setSizePolicy(sizePolicy7);
 
         gridLayout->addWidget(boton_lista, 3, 1, 1, 1);
 
@@ -530,17 +540,17 @@ public:
         stackedWidget_2->addWidget(menu_principal);
         problema = new QWidget();
         problema->setObjectName("problema");
-        sizePolicy4.setHeightForWidth(problema->sizePolicy().hasHeightForWidth());
-        problema->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(problema->sizePolicy().hasHeightForWidth());
+        problema->setSizePolicy(sizePolicy5);
         gridLayout_5 = new QGridLayout(problema);
         gridLayout_5->setObjectName("gridLayout_5");
         enunciado = new QLabel(problema);
         enunciado->setObjectName("enunciado");
-        QSizePolicy sizePolicy7(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(enunciado->sizePolicy().hasHeightForWidth());
-        enunciado->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy8(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(enunciado->sizePolicy().hasHeightForWidth());
+        enunciado->setSizePolicy(sizePolicy8);
         enunciado->setWordWrap(true);
 
         gridLayout_5->addWidget(enunciado, 1, 1, 1, 1);
@@ -570,8 +580,8 @@ public:
 
         answer1 = new QRadioButton(problema);
         answer1->setObjectName("answer1");
-        sizePolicy7.setHeightForWidth(answer1->sizePolicy().hasHeightForWidth());
-        answer1->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(answer1->sizePolicy().hasHeightForWidth());
+        answer1->setSizePolicy(sizePolicy8);
 
         gridLayout_5->addWidget(answer1, 3, 1, 1, 1);
 
@@ -629,8 +639,8 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         widget_2 = new QWidget(verticalWidget);
         widget_2->setObjectName("widget_2");
-        sizePolicy7.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
-        widget_2->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
+        widget_2->setSizePolicy(sizePolicy8);
         widget_2->setStyleSheet(QString::fromUtf8(""));
         horizontalLayout = new QHBoxLayout(widget_2);
         horizontalLayout->setSpacing(0);
@@ -638,8 +648,8 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         barra_herramienta = new QWidget(widget_2);
         barra_herramienta->setObjectName("barra_herramienta");
-        sizePolicy7.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
-        barra_herramienta->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(barra_herramienta->sizePolicy().hasHeightForWidth());
+        barra_herramienta->setSizePolicy(sizePolicy8);
         barra_herramienta->setContextMenuPolicy(Qt::ContextMenuPolicy::DefaultContextMenu);
         barra_herramienta->setLayoutDirection(Qt::LayoutDirection::RightToLeft);
         barra_herramienta->setAutoFillBackground(false);
@@ -648,8 +658,9 @@ public:
         horizontalLayout_3->setContentsMargins(20, -1, 20, -1);
         horizontalSlider = new QSlider(barra_herramienta);
         horizontalSlider->setObjectName("horizontalSlider");
-        sizePolicy7.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
-        horizontalSlider->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
+        horizontalSlider->setSizePolicy(sizePolicy8);
+        horizontalSlider->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         horizontalSlider->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
         horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
 
@@ -662,9 +673,10 @@ public:
 
         limpiar = new QPushButton(barra_herramienta);
         limpiar->setObjectName("limpiar");
-        sizePolicy5.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
-        limpiar->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(limpiar->sizePolicy().hasHeightForWidth());
+        limpiar->setSizePolicy(sizePolicy6);
         limpiar->setMaximumSize(QSize(167, 167));
+        limpiar->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/img/icons/I_eliminar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         limpiar->setIcon(icon);
@@ -674,8 +686,9 @@ public:
 
         grosor = new QSpinBox(barra_herramienta);
         grosor->setObjectName("grosor");
-        sizePolicy7.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
-        grosor->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(grosor->sizePolicy().hasHeightForWidth());
+        grosor->setSizePolicy(sizePolicy8);
+        grosor->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         grosor->setMinimum(1);
         grosor->setMaximum(100);
         grosor->setValue(6);
@@ -684,9 +697,10 @@ public:
 
         color = new QPushButton(barra_herramienta);
         color->setObjectName("color");
-        sizePolicy5.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
-        color->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(color->sizePolicy().hasHeightForWidth());
+        color->setSizePolicy(sizePolicy6);
         color->setMaximumSize(QSize(167, 167));
+        color->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/img/icons/I_paleta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         color->setIcon(icon1);
@@ -703,8 +717,9 @@ public:
 
         texto = new QPushButton(barra_herramienta);
         texto->setObjectName("texto");
-        sizePolicy7.setHeightForWidth(texto->sizePolicy().hasHeightForWidth());
-        texto->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(texto->sizePolicy().hasHeightForWidth());
+        texto->setSizePolicy(sizePolicy8);
+        texto->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/img/icons/I_texto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         texto->setIcon(icon2);
@@ -714,9 +729,10 @@ public:
 
         linea = new QPushButton(barra_herramienta);
         linea->setObjectName("linea");
-        sizePolicy5.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
-        linea->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(linea->sizePolicy().hasHeightForWidth());
+        linea->setSizePolicy(sizePolicy6);
         linea->setMaximumSize(QSize(167, 167));
+        linea->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/img/icons/I_lapiz.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         linea->setIcon(icon3);
@@ -727,10 +743,11 @@ public:
 
         punto = new QPushButton(barra_herramienta);
         punto->setObjectName("punto");
-        sizePolicy5.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
-        punto->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(punto->sizePolicy().hasHeightForWidth());
+        punto->setSizePolicy(sizePolicy6);
         punto->setMinimumSize(QSize(0, 0));
         punto->setMaximumSize(QSize(167, 167));
+        punto->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon4;
         icon4.addFile(QString::fromUtf8(":/img/icons/punto.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         punto->setIcon(icon4);
@@ -741,9 +758,10 @@ public:
 
         goma = new QPushButton(barra_herramienta);
         goma->setObjectName("goma");
-        sizePolicy5.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
-        goma->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(goma->sizePolicy().hasHeightForWidth());
+        goma->setSizePolicy(sizePolicy6);
         goma->setMaximumSize(QSize(167, 167));
+        goma->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon5;
         icon5.addFile(QString::fromUtf8(":/img/icons/I_goma.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         goma->setIcon(icon5);
@@ -759,9 +777,10 @@ public:
         Bcompas = new QPushButton(barra_herramienta);
         Bcompas->setObjectName("Bcompas");
         Bcompas->setEnabled(true);
-        sizePolicy5.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
-        Bcompas->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(Bcompas->sizePolicy().hasHeightForWidth());
+        Bcompas->setSizePolicy(sizePolicy6);
         Bcompas->setMaximumSize(QSize(167, 167));
+        Bcompas->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon6;
         icon6.addFile(QString::fromUtf8(":/img/icons/I_compas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         Bcompas->setIcon(icon6);
@@ -772,13 +791,14 @@ public:
 
         Btransportador = new QPushButton(barra_herramienta);
         Btransportador->setObjectName("Btransportador");
-        sizePolicy5.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
-        Btransportador->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(Btransportador->sizePolicy().hasHeightForWidth());
+        Btransportador->setSizePolicy(sizePolicy6);
         Btransportador->setMaximumSize(QSize(167, 167));
         QFont font3;
         font3.setBold(false);
         font3.setKerning(true);
         Btransportador->setFont(font3);
+        Btransportador->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/img/icons/I_transportador.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         Btransportador->setIcon(icon7);
@@ -789,9 +809,10 @@ public:
 
         Bregla = new QPushButton(barra_herramienta);
         Bregla->setObjectName("Bregla");
-        sizePolicy5.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
-        Bregla->setSizePolicy(sizePolicy5);
+        sizePolicy6.setHeightForWidth(Bregla->sizePolicy().hasHeightForWidth());
+        Bregla->setSizePolicy(sizePolicy6);
         Bregla->setMaximumSize(QSize(167, 167));
+        Bregla->setCursor(QCursor(Qt::CursorShape::OpenHandCursor));
         QIcon icon8;
         icon8.addFile(QString::fromUtf8(":/img/icons/I_regla.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         Bregla->setIcon(icon8);
@@ -873,11 +894,11 @@ public:
 
         avatar = new QLabel(editar_perfil);
         avatar->setObjectName("avatar");
-        QSizePolicy sizePolicy8(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(avatar->sizePolicy().hasHeightForWidth());
-        avatar->setSizePolicy(sizePolicy8);
+        QSizePolicy sizePolicy9(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(avatar->sizePolicy().hasHeightForWidth());
+        avatar->setSizePolicy(sizePolicy9);
         avatar->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
         avatar->setScaledContents(true);
 
@@ -928,11 +949,6 @@ public:
 
         gridLayout_7->addItem(verticalSpacer_13, 16, 2, 1, 1);
 
-        labelContrasenia = new QLineEdit(editar_perfil);
-        labelContrasenia->setObjectName("labelContrasenia");
-
-        gridLayout_7->addWidget(labelContrasenia, 7, 1, 1, 1);
-
         horizontalSpacer_7 = new QSpacerItem(5, 5, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         gridLayout_7->addItem(horizontalSpacer_7, 10, 4, 1, 1);
@@ -965,10 +981,19 @@ public:
 
         gridLayout_7->addWidget(label_contrasenia, 6, 1, 1, 1);
 
+        labelContrasenia = new QLineEdit(editar_perfil);
+        labelContrasenia->setObjectName("labelContrasenia");
+        sizePolicy4.setHeightForWidth(labelContrasenia->sizePolicy().hasHeightForWidth());
+        labelContrasenia->setSizePolicy(sizePolicy4);
+
+        gridLayout_7->addWidget(labelContrasenia, 7, 1, 1, 1);
+
         labelNombre = new QLineEdit(editar_perfil);
         labelNombre->setObjectName("labelNombre");
+        sizePolicy.setHeightForWidth(labelNombre->sizePolicy().hasHeightForWidth());
+        labelNombre->setSizePolicy(sizePolicy);
 
-        gridLayout_7->addWidget(labelNombre, 4, 1, 1, 1);
+        gridLayout_7->addWidget(labelNombre, 4, 1, 1, 2);
 
         gridLayout_7->setRowStretch(0, 3);
         gridLayout_7->setRowStretch(16, 5);
@@ -997,6 +1022,13 @@ public:
         widget->setObjectName("widget");
         gridLayout_6 = new QGridLayout(widget);
         gridLayout_6->setObjectName("gridLayout_6");
+        campo_correo = new QLineEdit(widget);
+        campo_correo->setObjectName("campo_correo");
+        sizePolicy4.setHeightForWidth(campo_correo->sizePolicy().hasHeightForWidth());
+        campo_correo->setSizePolicy(sizePolicy4);
+
+        gridLayout_6->addWidget(campo_correo, 7, 0, 1, 2);
+
         error_correo = new QLabel(widget);
         error_correo->setObjectName("error_correo");
 
@@ -1007,23 +1039,13 @@ public:
 
         gridLayout_6->addWidget(et_name, 1, 0, 1, 1);
 
-        error_pass = new QLabel(widget);
-        error_pass->setObjectName("error_pass");
-        QSizePolicy sizePolicy9(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
-        sizePolicy9.setHorizontalStretch(0);
-        sizePolicy9.setVerticalStretch(0);
-        sizePolicy9.setHeightForWidth(error_pass->sizePolicy().hasHeightForWidth());
-        error_pass->setSizePolicy(sizePolicy9);
-
-        gridLayout_6->addWidget(error_pass, 11, 0, 1, 1);
-
         campo_pass_2 = new QLineEdit(widget);
         campo_pass_2->setObjectName("campo_pass_2");
-        sizePolicy7.setHeightForWidth(campo_pass_2->sizePolicy().hasHeightForWidth());
-        campo_pass_2->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(campo_pass_2->sizePolicy().hasHeightForWidth());
+        campo_pass_2->setSizePolicy(sizePolicy8);
         campo_pass_2->setEchoMode(QLineEdit::EchoMode::Password);
 
-        gridLayout_6->addWidget(campo_pass_2, 10, 0, 1, 1);
+        gridLayout_6->addWidget(campo_pass_2, 10, 0, 1, 2);
 
         widget_4 = new QWidget(widget);
         widget_4->setObjectName("widget_4");
@@ -1049,12 +1071,37 @@ public:
         editar_avatar2->setObjectName("editar_avatar2");
         sizePolicy.setHeightForWidth(editar_avatar2->sizePolicy().hasHeightForWidth());
         editar_avatar2->setSizePolicy(sizePolicy);
-        editar_avatar2->setIcon(icon3);
+        QIcon icon9(QIcon::fromTheme(QIcon::ThemeIcon::ListAdd));
+        editar_avatar2->setIcon(icon9);
 
         verticalLayout_2->addWidget(editar_avatar2);
 
 
         gridLayout_6->addWidget(widget_4, 0, 2, 1, 1);
+
+        error_pass = new QLabel(widget);
+        error_pass->setObjectName("error_pass");
+        QSizePolicy sizePolicy10(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
+        sizePolicy10.setHorizontalStretch(0);
+        sizePolicy10.setVerticalStretch(0);
+        sizePolicy10.setHeightForWidth(error_pass->sizePolicy().hasHeightForWidth());
+        error_pass->setSizePolicy(sizePolicy10);
+
+        gridLayout_6->addWidget(error_pass, 11, 0, 1, 1);
+
+        campo_name = new QLineEdit(widget);
+        campo_name->setObjectName("campo_name");
+        sizePolicy8.setHeightForWidth(campo_name->sizePolicy().hasHeightForWidth());
+        campo_name->setSizePolicy(sizePolicy8);
+
+        gridLayout_6->addWidget(campo_name, 2, 0, 1, 1);
+
+        error_user = new QLabel(widget);
+        error_user->setObjectName("error_user");
+        sizePolicy10.setHeightForWidth(error_user->sizePolicy().hasHeightForWidth());
+        error_user->setSizePolicy(sizePolicy10);
+
+        gridLayout_6->addWidget(error_user, 3, 0, 3, 2);
 
         et_registro = new QLabel(widget);
         et_registro->setObjectName("et_registro");
@@ -1065,59 +1112,27 @@ public:
 
         gridLayout_6->addWidget(et_registro, 0, 0, 1, 1);
 
-        campo_correo = new QLineEdit(widget);
-        campo_correo->setObjectName("campo_correo");
-        sizePolicy7.setHeightForWidth(campo_correo->sizePolicy().hasHeightForWidth());
-        campo_correo->setSizePolicy(sizePolicy7);
+        et_cumple = new QLabel(widget);
+        et_cumple->setObjectName("et_cumple");
+        sizePolicy10.setHeightForWidth(et_cumple->sizePolicy().hasHeightForWidth());
+        et_cumple->setSizePolicy(sizePolicy10);
 
-        gridLayout_6->addWidget(campo_correo, 7, 0, 1, 1);
-
-        widget_3 = new QWidget(widget);
-        widget_3->setObjectName("widget_3");
-        horizontalLayout_7 = new QHBoxLayout(widget_3);
-        horizontalLayout_7->setObjectName("horizontalLayout_7");
-        horizontalSpacer_15 = new QSpacerItem(50, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayout_7->addItem(horizontalSpacer_15);
-
-        boton_registro = new QPushButton(widget_3);
-        boton_registro->setObjectName("boton_registro");
-
-        horizontalLayout_7->addWidget(boton_registro);
-
-
-        gridLayout_6->addWidget(widget_3, 17, 1, 1, 2);
-
-        campo_name = new QLineEdit(widget);
-        campo_name->setObjectName("campo_name");
-        sizePolicy7.setHeightForWidth(campo_name->sizePolicy().hasHeightForWidth());
-        campo_name->setSizePolicy(sizePolicy7);
-
-        gridLayout_6->addWidget(campo_name, 2, 0, 1, 1);
-
-        et_pass_2 = new QLabel(widget);
-        et_pass_2->setObjectName("et_pass_2");
-
-        gridLayout_6->addWidget(et_pass_2, 9, 0, 1, 1);
+        gridLayout_6->addWidget(et_cumple, 12, 0, 1, 1);
 
         et_correo = new QLabel(widget);
         et_correo->setObjectName("et_correo");
 
         gridLayout_6->addWidget(et_correo, 6, 0, 1, 3);
 
-        et_cumple = new QLabel(widget);
-        et_cumple->setObjectName("et_cumple");
-        sizePolicy9.setHeightForWidth(et_cumple->sizePolicy().hasHeightForWidth());
-        et_cumple->setSizePolicy(sizePolicy9);
+        et_pass_2 = new QLabel(widget);
+        et_pass_2->setObjectName("et_pass_2");
 
-        gridLayout_6->addWidget(et_cumple, 12, 0, 1, 1);
+        gridLayout_6->addWidget(et_pass_2, 9, 0, 1, 1);
 
-        error_user = new QLabel(widget);
-        error_user->setObjectName("error_user");
-        sizePolicy9.setHeightForWidth(error_user->sizePolicy().hasHeightForWidth());
-        error_user->setSizePolicy(sizePolicy9);
+        error_edad = new QLabel(widget);
+        error_edad->setObjectName("error_edad");
 
-        gridLayout_6->addWidget(error_user, 3, 0, 3, 2);
+        gridLayout_6->addWidget(error_edad, 15, 0, 1, 1);
 
         campo_cumple = new QDateEdit(widget);
         campo_cumple->setObjectName("campo_cumple");
@@ -1127,10 +1142,19 @@ public:
 
         gridLayout_6->addWidget(campo_cumple, 13, 0, 1, 1);
 
-        error_edad = new QLabel(widget);
-        error_edad->setObjectName("error_edad");
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName("horizontalLayout_8");
+        horizontalSpacer_15 = new QSpacerItem(50, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        gridLayout_6->addWidget(error_edad, 14, 0, 1, 1);
+        horizontalLayout_8->addItem(horizontalSpacer_15);
+
+        boton_registro = new QPushButton(widget);
+        boton_registro->setObjectName("boton_registro");
+
+        horizontalLayout_8->addWidget(boton_registro);
+
+
+        gridLayout_6->addLayout(horizontalLayout_8, 15, 1, 1, 1);
 
 
         gridLayout_11->addWidget(widget, 1, 1, 1, 1);
@@ -1156,7 +1180,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(3);
         stackedWidget_2->setCurrentIndex(1);
         color->setDefault(false);
 
@@ -1171,12 +1195,12 @@ public:
         boton_historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         B_MenuUsuario->setText(QString());
         et_ini->setText(QCoreApplication::translate("MainWindow", "Iniciar Sesi\303\263n", nullptr));
-        et__nocuenta->setText(QCoreApplication::translate("MainWindow", "No tienes cuenta?", nullptr));
-        et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
-        et_pass->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
+        et__nocuenta->setText(QCoreApplication::translate("MainWindow", "No tienes cuenta?", nullptr));
         link_registro->setText(QCoreApplication::translate("MainWindow", "<a href=\"registro\">Reg\303\255strate</a>\n"
 "", nullptr));
+        et_pass->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
+        et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableViewHistorial->horizontalHeaderItem(0);
@@ -1232,16 +1256,16 @@ public:
         label_contrasenia->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         error_correo->setText(QString());
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
-        error_pass->setText(QString());
         avatarRegistro->setText(QString());
         editar_avatar2->setText(QString());
-        et_registro->setText(QCoreApplication::translate("MainWindow", "Registrarse", nullptr));
-        boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
-        et_pass_2->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
-        et_correo->setText(QCoreApplication::translate("MainWindow", "Correo", nullptr));
-        et_cumple->setText(QCoreApplication::translate("MainWindow", " Cumple", nullptr));
+        error_pass->setText(QString());
         error_user->setText(QString());
+        et_registro->setText(QCoreApplication::translate("MainWindow", "Registrarse", nullptr));
+        et_cumple->setText(QCoreApplication::translate("MainWindow", " Cumple", nullptr));
+        et_correo->setText(QCoreApplication::translate("MainWindow", "Correo", nullptr));
+        et_pass_2->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
         error_edad->setText(QString());
+        boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
     } // retranslateUi
 
 };
