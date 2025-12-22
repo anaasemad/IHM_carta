@@ -48,6 +48,7 @@ private slots:
     void on_boton_registro_clicked();
     void on_calendario_clicked(const QDate &date);
     void on_link_registro_linkActivated(const QString &link);
+    void on_editar_avatar2_clicked();
 
 
 //#################################################################################################################
@@ -99,7 +100,7 @@ private:
     //#########################################################################################################
 
 
-
+    QImage avatarRegistro;
     void applyZoom(double factor);
     QAction *m_actDrawLine = nullptr;
     bool m_eraserMode = false;

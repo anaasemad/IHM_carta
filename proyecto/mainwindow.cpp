@@ -1263,6 +1263,34 @@ void MainWindow::on_calendario_clicked(const QDate &date)
     ui->campo_cumple->setDate(date);
 }
 
+void MainWindow::on_editar_avatar2_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(
+        this,
+        tr("Seleccionar Imagen de Perfil"),
+        "",
+        tr("Imágenes (*.png *.jpg *.jpeg *.bmp)")
+        );
+
+    if (!fileName.isEmpty()) {
+        QImage imagen(fileName);
+
+        if (!imagen.isNull()) {
+            // Vista previa
+            ui->avatarRegistro->setPixmap(QPixmap::fromImage(imagen));
+            ui->avatarRegistro->setScaledContents(true);
+
+            // Guardar temporalmente
+            avatarRegistro = imagen;
+
+            qDebug() << "Avatar seleccionado en registro:" << fileName;
+        } else {
+            QMessageBox::warning(this, "Error", "No se pudo cargar la imagen.");
+        }
+    }
+}
+
+
 // Inicio sesión
 void MainWindow::on_boton_entrar_clicked()
 {
