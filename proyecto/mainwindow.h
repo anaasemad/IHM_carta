@@ -64,6 +64,8 @@ private slots:
 
     void on_Bcompas_clicked();
 
+    void on_pass_visible_clicked();
+
 private:
     Ui::MainWindow *ui;
    // QGraphicsScene *sceneMenu;

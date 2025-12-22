@@ -1505,3 +1505,13 @@ void MainWindow::on_boton_entrar_clicked()
         QMessageBox::critical(this, tr("DB error"), ex.what());
     }
 }
+
+void MainWindow::on_pass_visible_clicked()
+{
+    if (ui->campo_pass->echoMode() == QLineEdit::Password) {
+        ui->campo_pass->setEchoMode(QLineEdit::Normal);   // Mostrar texto
+    } else {
+        ui->campo_pass->setEchoMode(QLineEdit::Password); // Ocultar con *
+    }
+}
+
