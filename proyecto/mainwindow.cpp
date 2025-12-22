@@ -1277,19 +1277,38 @@ void MainWindow::on_editar_avatar2_clicked()
         QImage imagen(fileName);
 
         if (!imagen.isNull()) {
-            // Vista previa
+            // Vista previa en registro
             ui->avatarRegistro->setPixmap(QPixmap::fromImage(imagen));
             ui->avatarRegistro->setScaledContents(true);
 
-            // Guardar temporalmente
+            // Guardar temporalmente si lo necesitas
             avatarRegistro = imagen;
 
-            qDebug() << "Avatar seleccionado en registro:" << fileName;
+            // --- Crear avatar circular ---
+            int size = ui->B_MenuUsuario->width(); // Usamos el ancho del botón para tamaño
+            QPixmap pixmap = QPixmap::fromImage(imagen).scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+            QPixmap circularPixmap(size, size);
+            circularPixmap.fill(Qt::transparent);
+
+            QPainter painter(&circularPixmap);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, size, size); // Dibuja círculo
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, pixmap);
+
+            // Asignar al botón
+            ui->B_MenuUsuario->setIcon(QIcon(circularPixmap));
+            ui->B_MenuUsuario->setIconSize(QSize(size, size));
+
+            qDebug() << "Avatar actualizado en registro y en B_MenuUsuario:" << fileName;
         } else {
             QMessageBox::warning(this, "Error", "No se pudo cargar la imagen.");
         }
     }
 }
+
 
 
 // Inicio sesión
