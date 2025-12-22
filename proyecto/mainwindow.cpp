@@ -362,11 +362,10 @@ void MainWindow::setupPerfil()
     try {
         Navigation &nav = Navigation::instance();
 
-        // USUARIO QUE HA INICIADO SESIÓN
         const User *u = nav.findUser(m_usuarioActual);
-
         if (!u) return;
 
+        // Cargar datos en el formulario
         ui->labelNombre->setText(u->nickName());
         ui->labelEmail->setText(u->email());
         ui->labelContrasenia->setText(u->password());
@@ -376,9 +375,12 @@ void MainWindow::setupPerfil()
         if (!u->avatar().isNull()) {
             ui->avatar->setPixmap(QPixmap::fromImage(u->avatar()));
             ui->avatar->setScaledContents(true);
+        } else {
+            ui->avatar->setPixmap(QPixmap(":/recursos/default_avatar.png"));
+            ui->avatar->setScaledContents(true);
         }
 
-
+        // Evitar editar nombre de usuario
         ui->labelNombre->setEnabled(false);
 
     } catch (const NavDAOException &ex) {
@@ -417,41 +419,28 @@ void MainWindow::on_boton_guardar_clicked()
 {
     Navigation &nav = Navigation::instance();
     User *u = nav.findUser(m_usuarioActual);
+    if (!u) return;
+
     bool valido = true;
 
-    QRegularExpression reUser("^[A-Za-z0-9_-]{5,15}$");
-    if (!reUser.match(ui->labelNombre->text()).hasMatch()) {
-        ui->error_user->setText(
-            "Usuario entre 6 y 15 caracteres (letras, números, - o _)"
-            );
-        ui->error_user->setStyleSheet("color:red;");
-        ui->error_user->show();
-        QMessageBox::information(this, "Error", "Usuario entre 6 y 15 caracteres (letras, números, - o _)");
-        valido = false;
-    }
-
-    // Correo
+    // Validaciones (usuario, email, contraseña)
     QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
     if (!reMail.match(ui->labelEmail->text()).hasMatch()) {
         ui->error_correo->setText("Correo electrónico no válido");
         ui->error_correo->setStyleSheet("color:red;");
         ui->error_correo->show();
-        QMessageBox::information(this, "Error", "Correo electrónico no válido");
         valido = false;
     }
 
-    // Contraseña
     QRegularExpression rePass(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*()\\-+=]).{8,20}$"
         );
-
     if (!rePass.match(ui->labelContrasenia->text()).hasMatch()) {
         ui->error_pass->setText(
             "8-20 caracteres, mayúscula, minúscula, número y carácter especial"
             );
         ui->error_pass->setStyleSheet("color:red;");
         ui->error_pass->show();
-        QMessageBox::information(this, "Error", "Contraseña: 8-20 caracteres, mayúscula, minúscula, número y carácter especial");
         valido = false;
     }
 
@@ -459,15 +448,13 @@ void MainWindow::on_boton_guardar_clicked()
         u->setEmail(ui->labelEmail->text());
         u->setPassword(ui->labelContrasenia->text());
         u->setBirthdate(ui->dateEdit->date());
-        // 1. Obtenemos el QPixmap actual del label
+
         QPixmap pix = ui->avatar->pixmap();
-        // 2. Lo convertimos a QImage y se lo pasamos al usuario
-        u->setAvatar(pix.toImage());
-        //ui->B_MenuUsuario->setIcon(QPixmap::fromImage(u->avatar()));
+        if (!pix.isNull()) u->setAvatar(pix.toImage());
 
         nav.updateUser(*u);
 
-        QMessageBox::information(this, "Éxito", "Perfil actualizado");
+        QMessageBox::information(this, "Éxito", "Perfil actualizado correctamente");
     }
 }
 
@@ -1215,6 +1202,7 @@ void MainWindow::on_boton_registro_clicked()
     }
 
     // Registro correcto
+    // Registro correcto
     if (valido) {
         try {
             Navigation &nav = Navigation::instance();
@@ -1226,23 +1214,26 @@ void MainWindow::on_boton_registro_clicked()
                 return;
             }
 
-            // Crear usuario
+            // Crear usuario con avatar seleccionado
             User u(
                 usuario,
                 correo,
                 password,
-                QImage(),   // avatar por defecto
+                avatarRegistro,   // avatar que seleccionaste
                 nacimiento
                 );
 
             nav.addUser(u);
+
+            // Establecer usuario actual para modificar perfil
+            m_usuarioActual = usuario;
 
             // Limpiar campos
             ui->campo_name->clear();
             ui->campo_correo->clear();
             ui->campo_pass_2->clear();
 
-            // Volver a inicio de sesión
+            // NOTA: No cambiamos tu flujo, seguimos a menu_principal
             ui->stackedWidget->setCurrentWidget(ui->mapa);
             ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 
@@ -1250,6 +1241,7 @@ void MainWindow::on_boton_registro_clicked()
             QMessageBox::critical(this, tr("DB error"), ex.what());
         }
     }
+
 }
 void MainWindow::on_link_registro_linkActivated(const QString &)
 {
