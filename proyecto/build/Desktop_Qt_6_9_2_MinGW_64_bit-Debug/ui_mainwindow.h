@@ -70,11 +70,13 @@ public:
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *verticalSpacer_5;
     QWidget *historial;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout_5;
     QLabel *Historial;
-    QLabel *label_filtro;
+    QGridLayout *gridLayout_9;
+    QSpacerItem *horizontalSpacer_9;
     QDateEdit *dateEditFiltro;
-    QHBoxLayout *horizontalLayout_6;
+    QLabel *label_filtro;
+    QSpacerItem *verticalSpacer_19;
     QTableWidget *tableViewHistorial;
     QWidget *mapa;
     QVBoxLayout *verticalLayout;
@@ -390,32 +392,40 @@ public:
         stackedWidget->addWidget(ini_sesion);
         historial = new QWidget();
         historial->setObjectName("historial");
-        verticalLayout_6 = new QVBoxLayout(historial);
-        verticalLayout_6->setObjectName("verticalLayout_6");
+        verticalLayout_5 = new QVBoxLayout(historial);
+        verticalLayout_5->setObjectName("verticalLayout_5");
         Historial = new QLabel(historial);
         Historial->setObjectName("Historial");
         QFont font2;
         font2.setPointSize(20);
         Historial->setFont(font2);
 
-        verticalLayout_6->addWidget(Historial);
+        verticalLayout_5->addWidget(Historial);
 
-        label_filtro = new QLabel(historial);
-        label_filtro->setObjectName("label_filtro");
+        gridLayout_9 = new QGridLayout();
+        gridLayout_9->setObjectName("gridLayout_9");
+        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        verticalLayout_6->addWidget(label_filtro);
+        gridLayout_9->addItem(horizontalSpacer_9, 1, 0, 1, 1);
 
         dateEditFiltro = new QDateEdit(historial);
         dateEditFiltro->setObjectName("dateEditFiltro");
         sizePolicy.setHeightForWidth(dateEditFiltro->sizePolicy().hasHeightForWidth());
         dateEditFiltro->setSizePolicy(sizePolicy);
 
-        verticalLayout_6->addWidget(dateEditFiltro);
+        gridLayout_9->addWidget(dateEditFiltro, 1, 1, 1, 1);
 
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        label_filtro = new QLabel(historial);
+        label_filtro->setObjectName("label_filtro");
 
-        verticalLayout_6->addLayout(horizontalLayout_6);
+        gridLayout_9->addWidget(label_filtro, 0, 1, 1, 1);
+
+
+        verticalLayout_5->addLayout(gridLayout_9);
+
+        verticalSpacer_19 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        verticalLayout_5->addItem(verticalSpacer_19);
 
         tableViewHistorial = new QTableWidget(historial);
         if (tableViewHistorial->columnCount() < 3)
@@ -430,8 +440,12 @@ public:
         tableViewHistorial->setAutoScrollMargin(16);
         tableViewHistorial->horizontalHeader()->setDefaultSectionSize(300);
 
-        verticalLayout_6->addWidget(tableViewHistorial);
+        verticalLayout_5->addWidget(tableViewHistorial);
 
+        verticalLayout_5->setStretch(0, 1);
+        verticalLayout_5->setStretch(1, 1);
+        verticalLayout_5->setStretch(2, 1);
+        verticalLayout_5->setStretch(3, 30);
         stackedWidget->addWidget(historial);
         mapa = new QWidget();
         mapa->setObjectName("mapa");
@@ -1134,7 +1148,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 989, 22));
+        menubar->setGeometry(QRect(0, 0, 989, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -1142,7 +1156,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
         stackedWidget_2->setCurrentIndex(1);
         color->setDefault(false);
 

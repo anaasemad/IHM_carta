@@ -116,6 +116,13 @@ private:
     void updateToolPositions();
     void actualizarEstadoMenuSuperior();
     void updateStatusLabel(const QPointF &scenePos, const QString &status); //label coordenadas y actividad
+    bool cursorSobreRegla(QMouseEvent *e) const;
+    bool m_dibujandoConRegla = false;
+    QPainterPath m_freePath;
+    QGraphicsPathItem *m_currentPathItem = nullptr;
+    QPointF m_ruleP1;
+    QPointF m_ruleP2;
+    QPointF projectOntoLine(const QPointF &a, const QPointF &b, const QPointF &m);
 
 
 };

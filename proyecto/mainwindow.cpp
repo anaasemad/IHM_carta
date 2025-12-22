@@ -844,30 +844,124 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 }
                 return false;
             }
-            if (!m_drawLineMode)
-                return QMainWindow::eventFilter(obj, event);
-            // Dibujar línea
-            if (event->type() == QEvent::MouseButtonPress && e->button() == Qt::RightButton) {
-                m_lineStart = scenePos;
-                QPen pen(m_currentColor, gros); //cambia al color seleccionado
-                m_currentLineItem = new QGraphicsLineItem();
-                m_currentLineItem->setZValue(10);
-                m_currentLineItem->setPen(pen);
-                m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
-                sceneMapa->addItem(m_currentLineItem);
+            if (event->type() == QEvent::MouseButtonPress &&
+                e->button() == Qt::RightButton)
+            {
+                m_dibujandoConRegla = cursorSobreRegla(e);
+
+                qDebug() << "dibujando con regla:" << m_dibujandoConRegla;
+
+                QPen pen(m_currentColor, gros);
+                pen.setCapStyle(Qt::RoundCap);
+                pen.setJoinStyle(Qt::RoundJoin);
+
+                if (m_dibujandoConRegla) {
+
+                    // ---------- CALCULAR EXTREMOS DE LA REGLA ROTADA ----------
+                    QPointF center = regla->scenePos() + regla->boundingRect().center();
+                    double angleRad = qDegreesToRadians(regla->rotation());
+                    double halfWidth = regla->boundingRect().width() / 2.0;
+                    QPointF dx(halfWidth * std::cos(angleRad), halfWidth * std::sin(angleRad));
+                    m_ruleP1= regla->mapToScene(QPointF(0, regla->boundingRect().height()/2));//center-dx;
+                    m_ruleP2= regla->mapToScene(QPointF(regla->boundingRect().width(), regla->boundingRect().height()/2));//center + dx;
+
+                    // Escoger el extremo más cercano al ratón
+                    QPointF mouseScene = ui->graphicsView->mapToScene(e->pos());
+                    if ((mouseScene - m_ruleP1).manhattanLength() < (mouseScene - m_ruleP2).manhattanLength())
+                        m_lineStart = m_ruleP1;
+                    else
+                        m_lineStart = m_ruleP2;
+
+                    // Crear la línea
+                    m_currentLineItem = new QGraphicsLineItem();
+                    QPen pen(m_currentColor, gros);
+                    pen.setCapStyle(Qt::RoundCap);
+                    pen.setJoinStyle(Qt::RoundJoin);
+                    m_currentLineItem->setPen(pen);
+                    m_currentLineItem->setZValue(100);
+                    m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
+                    sceneMapa->addItem(m_currentLineItem);
+                    // MousePress
+                    /*if (m_dibujandoConRegla)
+                {
+                    // Calcular extremos dinámicamente
+                    QPointF viewCenter = ui->graphicsView->viewport()->rect().center();
+                    QRectF bounds = regla->boundingRect();
+                    double angleRad = qDegreesToRadians(regla->rotation());
+                    double halfWidth = bounds.width()/2.0;
+                    QPointF dx(halfWidth * std::cos(angleRad), halfWidth * std::sin(angleRad));
+
+                    QPointF p1_view = viewCenter - dx;
+                    QPointF p2_view = viewCenter + dx;
+
+                    QPointF p1 = ui->graphicsView->mapToScene(p1_view.toPoint());
+                    QPointF p2 = ui->graphicsView->mapToScene(p2_view.toPoint());
+
+                    // Escoger extremo más cercano al cursor
+                    QPointF mouseScene = scenePos;
+                    if ((mouseScene - p1).manhattanLength() < (mouseScene - p2).manhattanLength())
+                        m_lineStart = p1;
+                    else
+                        m_lineStart = p2;
+
+                    // Crear línea
+                    m_currentLineItem = new QGraphicsLineItem();
+                    QPen pen(m_currentColor, gros);
+                    pen.setCapStyle(Qt::RoundCap);
+                    pen.setJoinStyle(Qt::RoundJoin);
+                    m_currentLineItem->setPen(pen);
+                    m_currentLineItem->setZValue(100);
+                    m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
+                    sceneMapa->addItem(m_currentLineItem);
+
+*/
+                } else {
+                    // ✏️ Mano alzada
+                    m_freePath = QPainterPath(scenePos);
+                    m_currentPathItem = new QGraphicsPathItem();
+                    m_currentPathItem->setPen(pen);
+                    m_currentPathItem->setZValue(100);
+                    m_currentPathItem->setPath(m_freePath);
+                    sceneMapa->addItem(m_currentPathItem);
+                }
                 return true;
             }
-            else if (event->type() == QEvent::MouseMove && (e->buttons() & Qt::RightButton) && m_currentLineItem) {
-                QPointF p2 = scenePos;
-                m_currentLineItem->setLine(QLineF(m_lineStart, p2));
+
+
+
+            else if (event->type() == QEvent::MouseMove &&
+                     (e->buttons() & Qt::RightButton))
+            {
+
+                if (m_dibujandoConRegla && m_currentLineItem) {
+                    // 📏 Sigue la regla (recta)
+                    // ---------- PROYECTAR CURSOR SOBRE LA REGLA ROTADA ----------
+                    QPointF m_rulerP1 = regla->mapToScene(QPointF(0, regla->boundingRect().height()/2));
+                    QPointF m_rulerP2 = regla->mapToScene(QPointF(regla->boundingRect().width(), regla->boundingRect().height()/2));
+
+                    QPointF projected = projectOntoLine(m_ruleP1, m_ruleP2 , ui->graphicsView->mapToScene(e->pos()));
+                    m_currentLineItem->setLine(QLineF(m_lineStart, projected));
+                }
+                else if (m_currentPathItem) {
+                    // ✏️ Mano alzada
+                    m_freePath.lineTo(scenePos);
+                    m_currentPathItem->setPath(m_freePath);
+                }
                 return true;
             }
-            else if (event->type() == QEvent::MouseButtonRelease && e->button() == Qt::RightButton && m_currentLineItem) {
+
+            else if (event->type() == QEvent::MouseButtonRelease &&
+                     e->button() == Qt::RightButton)
+            {
                 m_currentLineItem = nullptr;
+                m_currentPathItem = nullptr;
+                m_dibujandoConRegla = false;
                 return true;
             }
+
         }
     }
+
     return QMainWindow::eventFilter(obj, event);
 }
 
@@ -972,6 +1066,37 @@ void MainWindow::on_color_clicked()
         qDebug() << "Nuevo color seleccionado:" << m_currentColor.name();
     }
 }
+
+bool MainWindow::cursorSobreRegla(QMouseEvent *e) const
+{
+    if (!regla || !regla->isVisible())
+        return false;
+
+    // Centro del viewport
+    QPoint viewCenter = ui->graphicsView->viewport()->rect().center();
+
+    // Tamaño real de la regla (en píxeles de pantalla)
+    QRectF bounds = regla->boundingRect();
+
+    QRect ruleRect(
+        viewCenter.x() - bounds.width() / 2,
+        viewCenter.y() - bounds.height() / 2,
+        bounds.width(),
+        bounds.height()
+        );
+
+    return ruleRect.contains(e->pos());
+}
+QPointF MainWindow:: projectOntoLine(const QPointF &a, const QPointF &b, const QPointF &m)
+{
+    QPointF ab = b - a;
+    QPointF am = m - a;
+
+    double t = (ab.x()*am.x() + ab.y()*am.y()) / (ab.x()*ab.x() + ab.y()*ab.y());
+    t = qBound(0.0, t, 1.0); // limitar a los extremos
+    return a + t*ab;
+}
+
 
 //################################################_TEXTO_###########################################################################
 void MainWindow::ponerTexto(bool enabled)
