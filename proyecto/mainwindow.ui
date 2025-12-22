@@ -118,7 +118,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -287,14 +287,17 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>&lt;a href=&quot;#&quot;&gt;Regístrate&lt;/a&gt;
-&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;a href=&quot;registro&quot;&gt;Regístrate&lt;/a&gt;
+</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::RichText</enum>
                 </property>
                 <property name="openExternalLinks">
                  <bool>false</bool>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::TextInteractionFlag::LinksAccessibleByMouse</set>
                 </property>
                </widget>
               </item>
@@ -1820,7 +1823,7 @@
      <x>0</x>
      <y>0</y>
      <width>989</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

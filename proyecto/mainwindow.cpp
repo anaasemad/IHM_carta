@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
 // ,sceneCompas(new QGraphicsScene(this))
 {
     ui->setupUi(this);
+    connect(ui->link_registro, &QLabel::linkActivated,
+            this, &MainWindow::on_link_registro_linkActivated);
+
 
     QFile file(":/qss/estilos/estilos.qss"); //ruta al css
 
@@ -1246,6 +1249,10 @@ void MainWindow::on_boton_registro_clicked()
             QMessageBox::critical(this, tr("DB error"), ex.what());
         }
     }
+}
+void MainWindow::on_link_registro_linkActivated(const QString &)
+{
+    ui->stackedWidget->setCurrentWidget(ui->registro);
 }
 
 
