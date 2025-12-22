@@ -43,6 +43,14 @@ QPushButton#B_MenuUsuario {
     background-color: #4E7592;
     border-radius: 30px; /* Mitad de 60px para que sea circular */
     border: 2px solid white;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+
+    /* Propiedades para centrar y agrandar la imagen */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-origin: content;
 }
 
 QPushButton#B_MenuUsuario::menu-indicator {

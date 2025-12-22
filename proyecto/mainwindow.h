@@ -112,7 +112,7 @@ private:
 
     QPointF getCurrentMapCenter() const; //función para saber el centro actual de la carta
     void updateToolPositions();
-
+    void actualizarEstadoMenuSuperior();
     void updateStatusLabel(const QPointF &scenePos, const QString &status); //label coordenadas y actividad
 
 
