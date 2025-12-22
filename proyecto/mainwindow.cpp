@@ -1243,7 +1243,8 @@ void MainWindow::on_boton_registro_clicked()
             ui->campo_pass_2->clear();
 
             // Volver a inicio de sesión
-            ui->stackedWidget->setCurrentWidget(ui->ini_sesion);
+            ui->stackedWidget->setCurrentWidget(ui->mapa);
+            ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 
         } catch (const NavDAOException &ex) {
             QMessageBox::critical(this, tr("DB error"), ex.what());
