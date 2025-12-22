@@ -168,7 +168,8 @@ public:
     QLineEdit *campo_pass_2;
     QWidget *widget_4;
     QVBoxLayout *verticalLayout_2;
-    QLabel *label;
+    QLabel *avatarRegistro;
+    QPushButton *editar_avatar2;
     QLabel *et_registro;
     QLineEdit *campo_correo;
     QWidget *widget_3;
@@ -339,6 +340,7 @@ public:
         link_registro->setFont(font1);
         link_registro->setTextFormat(Qt::TextFormat::RichText);
         link_registro->setOpenExternalLinks(false);
+        link_registro->setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
 
         gridLayout_4->addWidget(link_registro, 10, 0, 1, 1);
 
@@ -1016,18 +1018,26 @@ public:
         widget_4->setMinimumSize(QSize(120, 110));
         verticalLayout_2 = new QVBoxLayout(widget_4);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        label = new QLabel(widget_4);
-        label->setObjectName("label");
-        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy);
-        label->setMinimumSize(QSize(100, 80));
-        label->setMaximumSize(QSize(100, 100));
-        label->setSizeIncrement(QSize(0, 0));
-        label->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
-        label->setScaledContents(true);
-        label->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        avatarRegistro = new QLabel(widget_4);
+        avatarRegistro->setObjectName("avatarRegistro");
+        sizePolicy.setHeightForWidth(avatarRegistro->sizePolicy().hasHeightForWidth());
+        avatarRegistro->setSizePolicy(sizePolicy);
+        avatarRegistro->setMinimumSize(QSize(100, 80));
+        avatarRegistro->setMaximumSize(QSize(100, 100));
+        avatarRegistro->setSizeIncrement(QSize(0, 0));
+        avatarRegistro->setPixmap(QPixmap(QString::fromUtf8(":/img/icons/I_avatar.png")));
+        avatarRegistro->setScaledContents(true);
+        avatarRegistro->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
-        verticalLayout_2->addWidget(label);
+        verticalLayout_2->addWidget(avatarRegistro);
+
+        editar_avatar2 = new QPushButton(widget_4);
+        editar_avatar2->setObjectName("editar_avatar2");
+        sizePolicy.setHeightForWidth(editar_avatar2->sizePolicy().hasHeightForWidth());
+        editar_avatar2->setSizePolicy(sizePolicy);
+        editar_avatar2->setIcon(icon3);
+
+        verticalLayout_2->addWidget(editar_avatar2);
 
 
         gridLayout_6->addWidget(widget_4, 0, 2, 1, 1);
@@ -1132,7 +1142,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(0);
         stackedWidget_2->setCurrentIndex(1);
         color->setDefault(false);
 
@@ -1151,8 +1161,8 @@ public:
         et_user->setText(QCoreApplication::translate("MainWindow", "Usuario", nullptr));
         boton_entrar->setText(QCoreApplication::translate("MainWindow", "Entrar", nullptr));
         et_pass->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));
-        link_registro->setText(QCoreApplication::translate("MainWindow", "<a href=\"#\">Reg\303\255strate</a>\n"
-"<html><head/><body><p><br/></p></body></html>", nullptr));
+        link_registro->setText(QCoreApplication::translate("MainWindow", "<a href=\"registro\">Reg\303\255strate</a>\n"
+"", nullptr));
         Historial->setText(QCoreApplication::translate("MainWindow", "Historial", nullptr));
         label_filtro->setText(QCoreApplication::translate("MainWindow", "Filtar por fecha", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableViewHistorial->horizontalHeaderItem(0);
@@ -1209,7 +1219,8 @@ public:
         error_correo->setText(QString());
         et_name->setText(QCoreApplication::translate("MainWindow", "Nombre", nullptr));
         error_pass->setText(QString());
-        label->setText(QString());
+        avatarRegistro->setText(QString());
+        editar_avatar2->setText(QString());
         et_registro->setText(QCoreApplication::translate("MainWindow", "Registrarse", nullptr));
         boton_registro->setText(QCoreApplication::translate("MainWindow", "Registrar", nullptr));
         et_pass_2->setText(QCoreApplication::translate("MainWindow", "Contrase\303\261a", nullptr));

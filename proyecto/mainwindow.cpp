@@ -22,6 +22,7 @@
 #include "navdaoexception.h"
 #include <QFileDialog>
 #include <QRandomGenerator>
+#include <QGraphicsOpacityEffect>
 
 
 //#define QString CurrentUser = "";
@@ -45,6 +46,14 @@ MainWindow::MainWindow(QWidget *parent)
         this -> setStyleSheet(styleSheet);
         file.close();
     }
+
+    //***************************************BLOQUEAR MENU SUP
+    connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, [=]() {
+        actualizarEstadoMenuSuperior();
+    });
+    // Llamada inicial para bloquearlo al arrancar la app
+    actualizarEstadoMenuSuperior();
+
 
     //*****************************************************SPLITTER
     if (ui->horizontalWidget->layout()) {
@@ -143,6 +152,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //************************************************************BOTÓN USUARIO
     ui->B_MenuUsuario->setFixedSize(60, 60);
+    ui->B_MenuUsuario->setIconSize(QSize(55, 55));
     ui->boton_historial->setFixedSize(100, 40);
     ui->boton_volver->setFixedSize(60, 40);
     ui->boton_editar_avatar->setFixedSize(42, 42);
@@ -1142,6 +1152,25 @@ void MainWindow::updateStatusLabel(const QPointF &scenePos, const QString &statu
     ui->labelStatus->setText(fullText);
 }
 
+//####################################_BLOQUEAR BARRA SUP_##########################################
+void MainWindow::actualizarEstadoMenuSuperior() {
+    QWidget* paginaActual = ui->stackedWidget->currentWidget();
+
+    // Creamos o recuperamos el efecto de opacidad
+    QGraphicsOpacityEffect *efecto = qobject_cast<QGraphicsOpacityEffect*>(ui->MenuSup->graphicsEffect());
+    if (!efecto) {
+        efecto = new QGraphicsOpacityEffect(ui->MenuSup);
+        ui->MenuSup->setGraphicsEffect(efecto);
+    }
+
+    if (paginaActual == ui->ini_sesion || paginaActual == ui->registro) {
+        ui->MenuSup->setEnabled(false);
+        efecto->setOpacity(0.5); // Ahora sí funciona a través del efecto
+    } else {
+        ui->MenuSup->setEnabled(true);
+        efecto->setOpacity(1.0);
+    }
+}
 
 //##################################_REGISTRO_INI.SESION_##########################################################
 //##################################_REGISTRO_##########################################################

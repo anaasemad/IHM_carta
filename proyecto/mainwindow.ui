@@ -118,7 +118,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="ini_sesion">
        <property name="sizePolicy">
@@ -1840,7 +1840,7 @@
      <x>0</x>
      <y>0</y>
      <width>989</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
