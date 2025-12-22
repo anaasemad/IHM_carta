@@ -25,14 +25,12 @@
 #include <QGraphicsOpacityEffect>
 
 
-//#define QString CurrentUser = "";
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
     sceneMapa(new QGraphicsScene(this))
-// ,sceneCompas(new QGraphicsScene(this))
+
 {
     ui->setupUi(this);
     connect(ui->link_registro, &QLabel::linkActivated,
@@ -112,29 +110,23 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(actionCerrarSesion, &QAction::triggered, this, [=]() {
-        // Lógica para cerrar sesión, por ejemplo volver al login_________TEMPORAL!!!!
-        // 1. GUARDAR EN LA BASE DE DATOS
+        // Lógica para cerrar sesión,
         Navigation &nav = Navigation::instance();
-        User *u = nav.findUser(m_usuarioActual);                // CAMBIAR POR USUARIO LOGEADO!!!!
+        User *u = nav.findUser(m_usuarioActual);
 
-        // 2. Crear un objeto Session con los datos actuales
-        // (Asumiendo que Session tiene un constructor o setters para hits/faults)
-        //Session nuevaSesion;
         Session nuevaSesion(QDateTime::currentDateTime(), m_aciertosActuales, m_fallosActuales);
         qDebug() << "Aciertos totales: "<<m_aciertosActuales << "Fallos" << m_fallosActuales;
-        // 3. USAR LA FUNCIÓN: addSession
-        // Esto añade la sesión a la lista interna del objeto User
+        //añade sesión a la lista interna del objeto User
         u->addSession(nuevaSesion);
 
         qDebug() << "Sesión añadida al objeto User en memoria.";
 
-        // 4. Guardar en la Base de Datos (SQL)
+        //Guardar en la bbdd
         if(u->insertedInDb()){
             qDebug() << "Base de datos actualizada (creo)";
         } else {
             u->setInsertedInDb(true);
         }
-        // 2. RESETEAR VARIABLES LÓGICAS
         m_aciertosActuales = 0;
         m_fallosActuales = 0;
 
@@ -165,9 +157,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Estirar las columnas para que ocupen todo el ancho disponible
     ui->tableViewHistorial->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    // view->setScene(sceneMenu);
-    // view->setScene(sceneMapa);
 
     QPixmap mapa(":/img/carta_nautica");
 
@@ -220,92 +209,21 @@ MainWindow::~MainWindow()
 
 //#############################################################################################
 //################### historial ####################
-/*void MainWindow::setupHistorialTable()
-{
-
-
-    // --- 1. Gestión de Excepciones y Acceso al Singleton ---
-    try {
-        Navigation &nav = Navigation::instance();
-
-        // --- 2. Obtener el Usuario y Sesiones ---
-        const User *u = nav.findUser("user1");                                          //CAMBIAR POR USUARIO CONCRETO!!!!!
-        const QList<Session> &sessions = u->sessions();
-
-        // --- 3. Crear el QStandardItemModel (Modelo de Datos C++) ---
-        // 0 filas, 3 columnas (Fecha, Aciertos, Fallos)
-        // Usamos 'this' como padre para que se borre automáticamente.
-        QStandardItemModel *stdModel = new QStandardItemModel(0, 3, this);
-
-        // Configurar los encabezados (headers)
-        stdModel->setHeaderData(0, Qt::Horizontal, tr("Sesión"));
-        stdModel->setHeaderData(1, Qt::Horizontal, tr("Aciertos"));
-        stdModel->setHeaderData(2, Qt::Horizontal, tr("Fallos"));
-
-        // --- 4. Rellenar el Modelo con los Objetos Session ---
-        for (const Session &s : sessions) {
-            QList<QStandardItem*> row;
-
-            // 1. OBTENER EL DATETIME (Fecha y Hora)
-            // Usamos QDateTime porque el historial necesita saber la hora exacta de la sesión
-            //QDateTime sesion = s.timeStamp().toString("dd/MM/yyyy HH:mm");
-            QString sesion = s.timeStamp().toString("dd/MM/yyyy HH:mm");
-
-            // 2. CREAR EL OBJETO (¡Paso vital: el 'new'!)
-            // Sin el 'new', el programa intenta escribir en una memoria que no existe y se cierra.
-            QStandardItem* itemFecha = new QStandardItem();
-
-            // Guardamos el dato real (objeto QDateTime)
-            itemFecha->setData(sesion, Qt::EditRole);
-            qDebug() << "ItemFecha:" << sesion;
-            // Ponemos el texto que verá el usuario (Día/Mes/Año Hora:Min:Seg)
-            itemFecha->setText(sesion);
-            qDebug() << "ItemFecha_final:" << itemFecha;
-
-            // 3. AÑADIR LAS COLUMNAS A LA FILA
-            // Primera columna: El objeto que acabamos de configurar
-            //row.append(new QStandardItem(sesion.toString("dd/MM/yyyy HH:mm:ss")));
-            row.append(itemFecha);
-
-            // Segunda columna: Aciertos (hits)
-            row.append(new QStandardItem(QString::number(s.hits())));
-
-            // Tercera columna: Fallos (faults)
-            row.append(new QStandardItem(QString::number(s.faults())));
-
-            // 4. INSERTAR LA FILA EN EL MODELO
-            stdModel->appendRow(row);
-
-        }
-
-        // --- 5. Asignar el nuevo modelo a la tabla ---
-        // ¡IMPORTANTE! Si ya había un modelo, Qt lo liberará automáticamente si le pones 'this' como padre.
-        ui->tableViewHistorial->setModel(stdModel);
-        ui->tableViewHistorial->setColumnWidth(0, 180); // Un poco más ancho para el formato completo
-        ui->tableViewHistorial->resizeColumnsToContents();
-
-    } catch (const NavDAOException &ex) {
-        QMessageBox::critical(this, tr("DB error"), ex.what());
-    }
-}
-*/
-
 void MainWindow::setupHistorialTable()
 {
-    // Limpiamos la tabla (importante para que no se dupliquen datos al recargar)
+    // Limpia la tabla
     ui->tableViewHistorial->setRowCount(0);
 
     int totalAciertos = 0;
     int totalFallos = 0;
 
-    // Obtenemos la fecha del filtro (asegúrate de que el nombre coincida)
+    //fecha del filtro
     QDate fechaFiltro = ui->dateEditFiltro->date();
 
     Navigation &nav = Navigation::instance();
     const User *u = nav.findUser(m_usuarioActual);
 
     if (u) {
-        // Usamos el QVector de sesiones que tienes en tu .h
         const QVector<Session> &sesiones = u->sessions();
 
         qDebug() << "Filtrando desde:" << fechaFiltro << "Total Sesiones:" << sesiones.size();
@@ -313,9 +231,6 @@ void MainWindow::setupHistorialTable()
         // Bucle inverso para ver lo más reciente primero
         for(int i = sesiones.size() - 1; i >= 0; --i) {
             const Session &s = sesiones[i];
-
-            // Comprobamos la fecha de la sesión contra el filtro
-            //if (s.timeStamp().date() >= fechaFiltro) {
 
             int fila = ui->tableViewHistorial->rowCount();
             ui->tableViewHistorial->insertRow(fila);
@@ -345,16 +260,12 @@ void MainWindow::setupHistorialTable()
             }
             ui->tableViewHistorial->setItem(fila, 2, itemFaults);
 
-            // Sumamos para el resumen
             totalAciertos += s.hits();
             totalFallos += s.faults();
-            // }
+
         }
     }
 
-    // Actualizamos el label de resumen final
-    /*ui->lblSummary->setText(QString("Resumen del periodo: %1 Aciertos | %2 Fallos")
-                                .arg(totalAciertos).arg(totalFallos));*/
 }
 
 void MainWindow::on_boton_historial_clicked()
@@ -400,23 +311,17 @@ void MainWindow::setupPerfil()
 
 void MainWindow::on_boton_editar_avatar_clicked()
 {
-    // 1. Abrir el buscador de archivos
-    // Filtramos para que solo aparezcan imágenes
+
     QString fileName = QFileDialog::getOpenFileName(this, tr("Seleccionar Imagen de Perfil"), "", tr("Imágenes (*.png *.jpg *.jpeg *.bmp)"));
 
-    // 2. Comprobar si el usuario seleccionó algo o canceló
+
     if (!fileName.isEmpty()) {
-        QImage imagen(fileName); // Cargamos la imagen desde la ruta
+        QImage imagen(fileName); // Carga imagen
 
         if (!imagen.isNull()) {
-            // 3. Actualizar la PREVIA en la interfaz
-            // Como vimos antes, QLabel necesita QPixmap
+
             ui->avatar->setPixmap(QPixmap::fromImage(imagen));
             ui->avatar->setScaledContents(true);
-
-            // 4. Guardar la imagen en el objeto User para luego hacer el updateUser
-            // Suponiendo que 'u' es tu puntero al usuario
-            // u->setAvatar(imagen);
 
             qDebug() << "Nueva imagen cargada desde:" << fileName;
         } else {
@@ -433,7 +338,7 @@ void MainWindow::on_boton_guardar_clicked()
 
     bool valido = true;
 
-    // Validaciones (usuario, email, contraseña)
+    // Validaciones
     QRegularExpression reMail("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
     if (!reMail.match(ui->labelEmail->text()).hasMatch()) {
         ui->error_correo->setText("Correo electrónico no válido");
@@ -473,14 +378,10 @@ void MainWindow::on_boton_guardar_clicked()
 void MainWindow::cargarListaProblemas() {
     Navigation &nav = Navigation::instance();
 
-    // 1. Obtenemos la lista real de la base de datos
-    //const std::vector<Problem*>& problemas = nav.problems();
     auto problemas = nav.problems();
 
-    // 2. Limpiamos el QListWidget para no duplicar
     ui->listWidget->clear();
 
-    // 3. El bucle for sigue funcionando igual
     for (int i = 0; i < (int)problemas.size(); ++i) {
         QString nombre = "Problema " + QString::number(i + 1);
         ui->listWidget->addItem(nombre);
@@ -494,10 +395,10 @@ void MainWindow::on_boton_aleat_clicked()
     int totalProblemas = listaProblemas.size();
     int numeroRandom = QRandomGenerator::global()->bounded(1, totalProblemas + 1);
 
-    m_problema_actual = numeroRandom;     //en vez de index.row -> random
+    m_problema_actual = numeroRandom;
 
     if (m_problema_actual < totalProblemas) {
-        const Problem &p = listaProblemas.at(m_problema_actual); // Cambia '*' por '&' y añade 'const'
+        const Problem &p = listaProblemas.at(m_problema_actual);
         auto respuestas = p.answers();
 
         std::shuffle(respuestas.begin(), respuestas.end(),
@@ -523,15 +424,14 @@ void MainWindow::on_boton_lista_clicked()
 }
 void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 {
-    // index.row() te dará el número (0 para Problema 1, 1 para Problema 2...)
     int fila = index.row();
     m_problema_actual= fila;
 
     Navigation &nav = Navigation::instance();
-    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+    auto listaProblemas = nav.problems();
 
     if (fila < (int)listaProblemas.size()) {
-        const Problem &p = listaProblemas.at(fila); // Cambia '*' por '&' y añade 'const'
+        const Problem &p = listaProblemas.at(fila);
         auto respuestas = p.answers();
         ui->num_problema->setText(QString("Problema %1").arg(m_problema_actual + 1));
         ui->enunciado->setText(p.text());
@@ -542,34 +442,34 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
             ui->answer4->setText(respuestas.at(3).text());
         }
     }
-    // Cambiamos a la página del mapa/problema
+
     ui->stackedWidget_2->setCurrentWidget(ui->problema);
 }
 void MainWindow::corregirRespuesta(int indiceSeleccionado)
 {
     Navigation &nav = Navigation::instance();
-    auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
+    auto listaProblemas = nav.problems();
     const Problem &p = listaProblemas.at(m_problema_actual);//#######Averiguar en que problema estamos#######
-    // 1. Obtener la lista de respuestas del problema actual
+
     QVector<Answer> respuestas = p.answers();
 
-    // 2. Verificar si el índice es válido y comprobar la validez
+
     if (indiceSeleccionado >= 0 && indiceSeleccionado < respuestas.size())
     {
         if (respuestas[indiceSeleccionado].validity()) {
             m_aciertosActuales++;
             qDebug() << "¡Correcto! Aciertos:" << m_aciertosActuales;
-            // Aquí podrías mostrar un label en verde o un icono
+
         } else {
             m_fallosActuales++;
             qDebug() << "Incorrecto... Fallos:" << m_fallosActuales;
-            // Aquí podrías mostrar un label en rojo
+
         }
     }
 }
 void MainWindow::on_corregir_clicked()
 {
-    // 1. Averiguar cuál está marcado
+
     int indiceSeleccionado = -1;
     int indiceCorrecto = -1;
 
@@ -578,14 +478,14 @@ void MainWindow::on_corregir_clicked()
     else if (ui->answer3->isChecked()) indiceSeleccionado = 2;
     else if (ui->answer4->isChecked()) indiceSeleccionado = 3;
 
-    // 2. Validar que haya seleccionado algo
+
     if (indiceSeleccionado == -1) {
         qDebug() << "Debes elegir una respuesta.";
         QMessageBox::information(this, "Error", "Debes elegir una respuesta");
 
         return;
     }
-    // 3. Comparar con la respuesta correcta del problema actual
+
     Navigation &nav = Navigation::instance();
     auto listaProblemas = nav.problems(); // Usamos auto para evitar errores de tipo
     const Problem &p = listaProblemas.at(m_problema_actual); // /////Averiguar en que problema estamos#######
@@ -648,13 +548,11 @@ void MainWindow::on_corregir_clicked()
 
     qDebug() << "Indice Seleccionado: "<<indiceSeleccionado<<" Indice correcto: "<<indiceCorrecto;
 
-    // 4. Bloquear los radio buttons para que no pueda cambiar la respuesta ya corregida
+
     ui->answer1->setEnabled(false);
     ui->answer2->setEnabled(false);
     ui->answer3->setEnabled(false);
     ui->answer4->setEnabled(false);
-
-    // Y desactivamos el propio botón de corregir
     ui->corregir->setEnabled(false);
 }
 //############################################################################################
@@ -680,7 +578,7 @@ void MainWindow::on_boton_volver_clicked()
     for(auto* rb : rbs) {
         rb->setAutoExclusive(false); // Truco para poder desmarcarlo
         rb->setChecked(false);
-        //rb->setAutoExclusive(true);
+
         rb->setStyleSheet("color: black; font-weight: none;");       // Quitar rojos/verdes
         rb->setEnabled(true);
     }
@@ -690,11 +588,6 @@ void MainWindow::on_boton_volver_clicked()
 }
 //############################################################################################
 
-
-/*void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
-{
-    ui->stackedWidget_2->setCurrentWidget(ui->problema);
-}*/
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
@@ -710,8 +603,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
         if (event->type() == QEvent::MouseMove)
         {
-            // 1. RECOGIDA DE COORDENADAS:
-            // ASIGNAR el valor a la variable declarada arriba.
+            // RECOGIDA DE COORDENADAS:
             scenePos = ui->graphicsView->mapToScene(e->pos());
 
             QString currentStatus = "Navegación (Arrastrar mapa)";
@@ -856,8 +748,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                 pen.setJoinStyle(Qt::RoundJoin);
 
                 if (m_dibujandoConRegla) {
-
-                    // ---------- CALCULAR EXTREMOS DE LA REGLA ROTADA ----------
                     QPointF center = regla->scenePos() + regla->boundingRect().center();
                     double angleRad = qDegreesToRadians(regla->rotation());
                     double halfWidth = regla->boundingRect().width() / 2.0;
@@ -865,7 +755,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                     m_ruleP1= regla->mapToScene(QPointF(0, regla->boundingRect().height()/2));//center-dx;
                     m_ruleP2= regla->mapToScene(QPointF(regla->boundingRect().width(), regla->boundingRect().height()/2));//center + dx;
 
-                    // Escoger el extremo más cercano al ratón
                     QPointF mouseScene = ui->graphicsView->mapToScene(e->pos());
                     if ((mouseScene - m_ruleP1).manhattanLength() < (mouseScene - m_ruleP2).manhattanLength())
                         m_lineStart = m_ruleP1;
@@ -881,40 +770,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                     m_currentLineItem->setZValue(100);
                     m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
                     sceneMapa->addItem(m_currentLineItem);
-                    // MousePress
-                    /*if (m_dibujandoConRegla)
-                {
-                    // Calcular extremos dinámicamente
-                    QPointF viewCenter = ui->graphicsView->viewport()->rect().center();
-                    QRectF bounds = regla->boundingRect();
-                    double angleRad = qDegreesToRadians(regla->rotation());
-                    double halfWidth = bounds.width()/2.0;
-                    QPointF dx(halfWidth * std::cos(angleRad), halfWidth * std::sin(angleRad));
-
-                    QPointF p1_view = viewCenter - dx;
-                    QPointF p2_view = viewCenter + dx;
-
-                    QPointF p1 = ui->graphicsView->mapToScene(p1_view.toPoint());
-                    QPointF p2 = ui->graphicsView->mapToScene(p2_view.toPoint());
-
-                    // Escoger extremo más cercano al cursor
-                    QPointF mouseScene = scenePos;
-                    if ((mouseScene - p1).manhattanLength() < (mouseScene - p2).manhattanLength())
-                        m_lineStart = p1;
-                    else
-                        m_lineStart = p2;
-
-                    // Crear línea
-                    m_currentLineItem = new QGraphicsLineItem();
-                    QPen pen(m_currentColor, gros);
-                    pen.setCapStyle(Qt::RoundCap);
-                    pen.setJoinStyle(Qt::RoundJoin);
-                    m_currentLineItem->setPen(pen);
-                    m_currentLineItem->setZValue(100);
-                    m_currentLineItem->setLine(QLineF(m_lineStart, m_lineStart));
-                    sceneMapa->addItem(m_currentLineItem);
-
-*/
                 } else {
                     // ✏️ Mano alzada
                     m_freePath = QPainterPath(scenePos);
@@ -934,8 +789,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             {
 
                 if (m_dibujandoConRegla && m_currentLineItem) {
-                    // 📏 Sigue la regla (recta)
-                    // ---------- PROYECTAR CURSOR SOBRE LA REGLA ROTADA ----------
+
                     QPointF m_rulerP1 = regla->mapToScene(QPointF(0, regla->boundingRect().height()/2));
                     QPointF m_rulerP2 = regla->mapToScene(QPointF(regla->boundingRect().width(), regla->boundingRect().height()/2));
 
@@ -943,7 +797,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
                     m_currentLineItem->setLine(QLineF(m_lineStart, projected));
                 }
                 else if (m_currentPathItem) {
-                    // ✏️ Mano alzada
                     m_freePath.lineTo(scenePos);
                     m_currentPathItem->setPath(m_freePath);
                 }
@@ -1002,7 +855,7 @@ void MainWindow::limpiarTodo()
             sceneMapa->removeItem(text);
             delete text;
         }
-        // --- NUEVA CONDICIÓN PARA EL ARCO DEL COMPÁS ---
+
         else if (auto path = qgraphicsitem_cast<QGraphicsPathItem*>(item))
         {
             sceneMapa->removeItem(path);
@@ -1032,7 +885,6 @@ void MainWindow::borrarGoma(bool enabled)
             m_drawLineMode = false;
             ui->linea->setChecked(false);
             ui->graphicsView->unsetCursor();
-            //ui->graphicsView->setDragMode(QGraphicsView::NoDrag); // opcional según diseño
         }
         if(m_pointMode){
             m_pointMode=false;
@@ -1134,7 +986,7 @@ void MainWindow::ponerPunto(bool enabled)
 }
 
 //#####################################_REGLAS_#######################################################################################
-//funcion para saber las coordenadas actuales del centro de la carta
+
 QPointF MainWindow::getCurrentMapCenter() const
 {
     //punto central del viewport
@@ -1150,11 +1002,8 @@ void MainWindow::updateToolPositions()
 {
     QPoint viewCenter = ui->graphicsView->viewport()->rect().center();
 
-    // La posición Top-Left debe ser el centro del viewport menos la mitad del tamaño de la herramienta en PIXELES DE PANTALLA.
-
     //Regla:
     if (regla && regla->isVisible()) {
-        // Obtenemos el tamaño del objeto en coordenadas de ESCENA (que para ItemIgnoresTransformations es el tamaño en píxeles de pantalla)
         QRectF herrBounds = regla->boundingRect();
         QPointF screenPos = viewCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
         QPointF scenePos = ui->graphicsView->mapToScene(screenPos.toPoint());
@@ -1171,8 +1020,6 @@ void MainWindow::updateToolPositions()
     }
     //compas:
     if (compas && compas->isVisible()) {
-        // Obtenemos el tamaño del objeto en coordenadas de ESCENA
-        // (boundingRect funciona para el grupo)
         QRectF herrBounds = compas->boundingRect();
         QPointF screenPos = viewCenter - QPointF(herrBounds.width() / 2, herrBounds.height() / 2);
         QPointF scenePos = ui->graphicsView->mapToScene(screenPos.toPoint());
@@ -1297,7 +1144,7 @@ void MainWindow::actualizarEstadoMenuSuperior() {
     }
 }
 
-//##################################_REGISTRO_INI.SESION_##########################################################
+
 //##################################_REGISTRO_##########################################################
 void MainWindow::on_boton_registro_clicked()
 {
@@ -1356,7 +1203,6 @@ void MainWindow::on_boton_registro_clicked()
     }
 
     // Registro correcto
-    // Registro correcto
     if (valido) {
         try {
             Navigation &nav = Navigation::instance();
@@ -1387,7 +1233,6 @@ void MainWindow::on_boton_registro_clicked()
             ui->campo_correo->clear();
             ui->campo_pass_2->clear();
 
-            // NOTA: No cambiamos tu flujo, seguimos a menu_principal
             ui->stackedWidget->setCurrentWidget(ui->mapa);
             ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 
@@ -1498,8 +1343,6 @@ void MainWindow::on_boton_entrar_clicked()
         ui->stackedWidget->setCurrentWidget(ui->mapa);
         ui->stackedWidget_2->setCurrentWidget(ui->menu_principal);
 
-        // Mostrar problema aleatorio directamente
-        //on_boton_aleat_clicked();
 
     } catch (const NavDAOException &ex) {
         QMessageBox::critical(this, tr("DB error"), ex.what());

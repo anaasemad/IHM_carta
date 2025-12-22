@@ -16,13 +16,11 @@ SOURCES += \
     compass.cpp \
     main.cpp \
     mainwindow.cpp \
-    modificar_perfil.cpp \
     tool.cpp
 
 HEADERS += \
     compass.h \
     mainwindow.h \
-    modificar_perfil.h \
     tool.h
 
 FORMS += \

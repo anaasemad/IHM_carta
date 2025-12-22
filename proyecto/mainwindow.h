@@ -36,7 +36,7 @@ private slots:
     void on_Bregla_clicked();
     void on_boton_lista_clicked();
     void setDrawLineMode(bool enabled);
- //   void on_listWidget_itemClicked(QListWidgetItem *item);
+
     void on_horizontalSlider_valueChanged(int value);
     void limpiarTodo();
     void borrarGoma(bool enabled);
@@ -90,7 +90,6 @@ private:
     int m_problema_actual = -1;
     int m_origenProblema = -1;
 
-    //const Problem *problemaActual = nullptr;
 
     // --- Funciones de BBDD ---
     bool initDatabase(); // Inicializa la conexión y el modelo
